@@ -1,0 +1,28 @@
+{
+    "id": "79517C48",
+    "path": "~/edumer-ola1/processing/descriptivos.Rmd",
+    "project_path": "processing/descriptivos.Rmd",
+    "type": "r_markdown",
+    "hash": "3926949028",
+    "contents": "",
+    "dirty": false,
+    "created": 1702992973417.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "6,22",
+        "scrollLine": "0",
+        "chunk_output_type": "console"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1702995781,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1702995781284,
+    "read_only": false,
+    "read_only_alternatives": []
+}
