@@ -6,3 +6,5 @@ skimr
 pander
 knitr
 kableExtra
+sjlabelled
+summarytools

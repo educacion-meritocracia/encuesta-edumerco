@@ -1,0 +1,27 @@
+{
+    "id": "D65AFEC6",
+    "path": "~/merit-edjust/production/prod_prep.Rmd",
+    "project_path": null,
+    "type": "r_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1703183792635.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "chunk_output_type": "console",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "179,1",
+        "scrollLine": "160"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1701996385,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1701996385,
+    "read_only": false,
+    "read_only_alternatives": []
+}
