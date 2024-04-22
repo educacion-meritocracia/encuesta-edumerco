@@ -27,27 +27,14 @@ options(scipen=9999) # desactivar notacion cientifica
 remove(list = ls()) #limpieza del entorno de trabajo
 ```
 
-```{css, echo=FALSE}
-# /* expandir el espacio del documento*/
-body .main-container {
-      max-width: 1600px !important;
-      width: 1600px !important;
-    }
-#/* expandir width de la TOC*/
-div.tocify {
-    width: 22% !important;
-    max-width: 331px !important;
-    max-height: 102% !important;
-}
-```
 
 
 ```{r}
 if (!require("pacman")) install.packages("pacman") # instalar pacman
-pacman::p_load(haven, dplyr, sjmisc, skimr, pander, knitr, kableExtra, sjlabelled, summarytools)
+pacman::p_load(haven, dplyr, sjmisc, skimr, pander, knitr, kableExtra, sjlabelled, summarytools, sjmisc, sjPlot)
 
 
-data<- read_sav("input/data/original/211223_BDD_estudiantes_VF.sav")
+data<- read_sav("input/data/original/170124_BDD_estudiantes.sav")
 ```
 
 # Descriptivos
@@ -117,7 +104,7 @@ skim(bbdd_alumnos) %>% dplyr::select(skim_type, skim_variable, n_missing, numeri
 # Summarytools
 
 ```{r}
-df1 <- bbdd_alumnos %>% dplyr::select(tidyselect::starts_with("p1")) %>% 
+df1 <- bbdd_alumnos %>% #dplyr::select(tidyselect::starts_with("p1")) %>% 
   dfSummary(.,
                plain.ascii = FALSE,
                style = "grid",
@@ -134,3 +121,12 @@ df1$Variable <- NULL
 print(df1, method = "render")
 ```
 
+# Test experimento
+
+```{r}
+sjt.xtab(bbdd_alumnos$aleatorio, bbdd_alumnos$p1_1, encoding = "UTF-8", show.col.prc = TRUE, show.summary = FALSE)
+```
+
+```{r}
+sjt.xtab(bbdd_alumnos$aleatorio, bbdd_alumnos$p1_2, encoding = "UTF-8", show.col.prc = TRUE, show.summary = FALSE)
+```
