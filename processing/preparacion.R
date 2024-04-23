@@ -1,1 +1,145 @@
-jdksdks 
+# 0. Preparacion encuesta estudiantes ola 1. Se realiza un procesamiento a 9 variables 
+      #referidas al experimento, merito, meritocracia en la escuela y justificacion de la desigualdad 
+
+# 1. cargar librerias ---------------------------------------------------------
+install.packages("pacman")
+pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer)
+library(haven)
+
+# 2. cargar bbdd --------------------------------------------------------------
+rm(list=ls())       # borrar todos los objetos en el espacio de trabajo
+options(scipen=999) # valores sin notación científica
+
+
+datos_estudiantes <- read_sav("input/data/original/170124_BDD_estudiantes.sav")
+
+
+# 3. seleccionar variables ----------------------------------------------------
+
+#p1_1 (en chile, las personas son recompensadas por su esfuerzo)
+#p1_2 (en chile, las personas son recompensadas por su inteligencia y habilidad)
+#p2_1 (quienes se esfuerzan obtienen buenas notas)
+#p2_2 (en esta esceula, queines son inteligentes obtienen buenas notas)
+#p2_3 (en esta escuela, los/as estudiantes obtienen las notas que se merecen)
+#p9_3 (esta bien que aquellos que puedan pagar mas tengan mejor educación)
+#p9_4 (esta bien que aquellos que puedan pagar mas tengan mejor acceso a salud)
+#p9_5 (esta bien que en Chile las personas con mayores ingresos puedan tener 
+        #mejores pensiones que las personas de ingresos mas bajos) 
+
+proc_datos_estudiantes <- datos_estudiantes %>% select(aleatorio, p1_1, p1_2, 
+                                                       p2_1, p2_2, p2_3, p9_3, 
+                                                       p9_4, p9_5)
+#renombrar 
+proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
+                                                           merit_esfuerzo = p1_1,
+                                                           merit_talento = p1_2,
+                                                           school_esfuerzo = p2_1,
+                                                           school_talento = p2_2,
+                                                           school_merito = p2_3,
+                                                           just_educ = p9_3,
+                                                           just_salud = p9_4,
+                                                           just_pensiones = p9_5) 
+
+# Comprobar
+names(proc_datos_estudiantes)
+
+# 4. procesamiento de variables -----------------------------------------------
+
+#ordenar por variable (9)
+
+## aleatorio ----
+
+get_label(proc_datos_estudiantes$aleatorio)
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$aleatorio) #no tiene etiquetas y no presenta casos perdidos
+
+### b. etiquetamiento ----
+proc_datos_estudiantes$aleatorio <- set_labels(proc_datos_estudiantes$aleatorio,
+                             labels=c( "Tratamiento"= 1,
+                                       "Control"= 2))
+
+## merit_esfuerzo  ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$merit_esfuerzo) #buen sentido. Etiquetda.Casos perdidos:
+  #88 no sabe tiene 2 casos y 99 preferiria no responder 0 casos. 
+
+### b. recodificacion ----
+proc_datos_estudiantes$merit_esfuerzo <- recode(proc_datos_estudiantes$merit_esfuerzo, "c(88,99)=NA")
+
+### c. etiqutamiento ----
+proc_datos_estudiantes$merit_esfuerzo <- set_label(x = proc_datos_estudiantes$merit_esfuerzo,label = 
+                                           "En Chile, las personas son recompensadas por su esfuerzo")
+
+get_label(proc_datos_estudiantes$merit_esfuerzo)
+
+## merit_talento ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$merit_talento) #buen sentido. Etiquetada. Casos perdidos: 
+  #88 no sabe 7 casos, 99 preferiria no responder 1 caso 
+
+### b. recodificacion ----
+proc_datos_estudiantes$merit_talento <- recode(proc_datos_estudiantes$merit_talento, "c(88,99)=NA")
+
+## school_esfuerzo ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$school_esfuerzo) #buen sentido. Etiquetada. Casos perdidos: 
+  #88 no sabe 0 casos, 99 preferiria no responder 2 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$school_esfuerzo <- recode(proc_datos_estudiantes$school_esfuerzo, "c(88,99)=NA")
+
+## school_talento ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$school_talento) #buen sentido. Etiquetada. Casos perdidos: 
+#88 no sabe 0 casos, 99 preferiria no responder 1 caso. 
+
+### b. recodificacion ----
+proc_datos_estudiantes$school_talento <- recode(proc_datos_estudiantes$school_talento, "c(88,99)=NA")
+
+## school_merito ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$school_merito) #buen sentido. Etiquetada. Casos perdidos: 
+  #88 no sabe 3 casos, 99 preferiria no responder 3 casos.
+
+### b. recodificacion ----
+proc_datos_estudiantes$school_merito <- recode(proc_datos_estudiantes$school_merito, "c(88,99)=NA")
+
+## just_educ ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$just_educ) #buen sentido. Etiquetada. Casos perdidos: 
+  #88 no sabe 3 casos, 99 preferiria no responder 0 casos.
+
+### b. recodificacion ----
+proc_datos_estudiantes$just_educ <- recode(proc_datos_estudiantes$just_educ, "c(88,99)=NA")
+
+## just_salud ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$just_salud) #buen sentido. Etiquetada. Casos perdidos: 
+  #88 no sabe 3 casos, 99 preferiria no responder 2 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$just_salud <- recode(proc_datos_estudiantes$just_salud, "c(88,99)=NA")
+
+## just_pensiones ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$just_pensiones) #buen sentido. Etiquetada. Casos perdidos: 
+  #88 no sabe 2 casos, 99 preferiria no responder 1 caso
+
+### b. recodificacion ----
+proc_datos_estudiantes$just_pensiones <- recode(proc_datos_estudiantes$just_pensiones, "c(88,99)=NA")
+
+
+# 5. base procesada -----------------------------------------------------------
+proc_datos_estudiantes <-as.data.frame(proc_datos_estudiantes)
+stargazer(proc_datos_estudiantes, type="text")
+
+save(proc_datos_estudiantes,file = "C:/Users/LENOVO/Documents/GitHub/edumer-ola1/input/data/proc/es_ola1.RData")
