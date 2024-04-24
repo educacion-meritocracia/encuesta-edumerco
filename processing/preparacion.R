@@ -25,10 +25,14 @@ datos_estudiantes <- read_sav("input/data/original/170124_BDD_estudiantes.sav")
 #p9_4 (esta bien que aquellos que puedan pagar mas tengan mejor acceso a salud)
 #p9_5 (esta bien que en Chile las personas con mayores ingresos puedan tener 
         #mejores pensiones que las personas de ingresos mas bajos) 
+#d3_def (en que curso estas)
+#p26 (nivel de estudios de la madre)
+#p27 (nivel de estudios del padre)
+#p30 (cantidad de libros en el hogar)
 
 proc_datos_estudiantes <- datos_estudiantes %>% select(aleatorio, p1_1, p1_2, 
                                                        p2_1, p2_2, p2_3, p9_3, 
-                                                       p9_4, p9_5)
+                                                       p9_4, p9_5, d3_def, p26, p27, p30)
 #renombrar 
 proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
                                                            merit_esfuerzo = p1_1,
@@ -38,7 +42,11 @@ proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
                                                            school_merito = p2_3,
                                                            just_educ = p9_3,
                                                            just_salud = p9_4,
-                                                           just_pensiones = p9_5) 
+                                                           just_pensiones = p9_5,
+                                                           curso_estudiante = d3_def,
+                                                           ne_madre = p26,
+                                                           ne_padre = p27, 
+                                                           libros_hogar = p30) 
 
 # Comprobar
 names(proc_datos_estudiantes)
@@ -137,6 +145,13 @@ frq(proc_datos_estudiantes$just_pensiones) #buen sentido. Etiquetada. Casos perd
 ### b. recodificacion ----
 proc_datos_estudiantes$just_pensiones <- recode(proc_datos_estudiantes$just_pensiones, "c(88,99)=NA")
 
+## curso_estudiante ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$curso_estudiante) #no tiene NA 
+
+### b. recodificacion ----
+proc_datos_estudiantes$curso_estudiante <- car::recode(proc_datos_estudiantes$curso_estudiante, recodes = c("'1a' = 'Media'; '1b' = 'Media'; '1c' = 'Media'; '6a' = 'Basica'; '6b' = 'Basica'; '6c' = 'Basica'"))
 
 # 5. base procesada -----------------------------------------------------------
 proc_datos_estudiantes <-as.data.frame(proc_datos_estudiantes)
