@@ -67,6 +67,13 @@ proc_datos_estudiantes$aleatorio <- set_labels(proc_datos_estudiantes$aleatorio,
                              labels=c( "Tratamiento"= 1,
                                        "Control"= 2))
 
+### c. recodificacion ----
+proc_datos_estudiantes$aleatorio <- factor(proc_datos_estudiantes$aleatorio, 
+                             levels=c(1,2),
+                             labels=c("Tratamiento","Control"))
+
+summary(proc_datos_estudiantes$aleatorio) #confirmar
+
 ## merit_esfuerzo  ----
 
 ### a. descriptivo basico ----
@@ -104,7 +111,7 @@ proc_datos_estudiantes$school_esfuerzo <- recode(proc_datos_estudiantes$school_e
 
 ### a. descriptivo basico ----
 frq(proc_datos_estudiantes$school_talento) #buen sentido. Etiquetada. Casos perdidos: 
-#88 no sabe 0 casos, 99 preferiria no responder 1 caso. 
+  #88 no sabe 0 casos, 99 preferiria no responder 1 caso. 
 
 ### b. recodificacion ----
 proc_datos_estudiantes$school_talento <- recode(proc_datos_estudiantes$school_talento, "c(88,99)=NA")
