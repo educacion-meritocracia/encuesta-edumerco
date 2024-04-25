@@ -1,0 +1,46 @@
+---
+title: "test-experiment"
+author: "Equipo EDUMER"
+format: html
+editor: visual
+---
+
+```{r}
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra)
+
+load("../input/data/proc/es_ola1.RData")
+
+```
+
+```{r}
+sjmisc::descr(proc_datos_estudiantes,
+      show = c("label","range", "mean", "sd", "NA.prc", "n"))%>% # Selecciona estadísticos
+      kable(.,"markdown") # Esto es para que se vea bien en quarto
+```
+
+## Meritocracia en la sociedad
+
+```{r}
+proc_datos_estudiantes %>% group_by(aleatorio, curso_estudiante) %>% 
+  summarise(merit_esfuerzo=mean(merit_esfuerzo, na.rm=TRUE),
+            merit_talento=mean(merit_talento, na.rm=TRUE))
+  
+```
+
+## Meritocracia en la escuela
+
+```{r}
+proc_datos_estudiantes %>% group_by(aleatorio, curso_estudiante) %>% 
+  summarise(school_esfuerzo=mean(school_esfuerzo, na.rm=TRUE),
+            school_talento=mean(school_talento, na.rm=TRUE),
+            school_merito=mean(school_merito, na.rm=TRUE))
+```
+
+## Justificación desigualdad
+
+```{r}
+proc_datos_estudiantes %>% group_by(aleatorio, curso_estudiante) %>% 
+  summarise(just_pensiones=mean(just_pensiones, na.rm=TRUE),
+            just_educ=mean(just_educ, na.rm=TRUE),
+            just_salud=mean(just_salud, na.rm=TRUE))
+```
