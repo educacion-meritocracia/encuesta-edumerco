@@ -102,14 +102,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr, sjPlot, stargazer, kableExtra)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr, sjPlot, stargazer, kableExtra, texreg, haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"../input/data/proc/es_ola1.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"../input/data/proc/es_ola1.RData"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sjmisc<span class="sc">::</span><span class="fu">frq</span>(proc_datos_estudiantes<span class="sc">$</span>aleatorio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x &lt;categorical&gt; 
+# total N=575 valid N=575 mean=1.48 sd=0.50
+
+Value       |   N | Raw % | Valid % | Cum. %
+--------------------------------------------
+Tratamiento | 300 | 52.17 |   52.17 |  52.17
+Control     | 275 | 47.83 |   47.83 | 100.00
+&lt;NA&gt;        |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>proc_datos_estudiantes<span class="sc">$</span>aleatorio <span class="ot">&lt;-</span> <span class="fu">factor</span>(proc_datos_estudiantes<span class="sc">$</span>aleatorio, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Tratamiento"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sjmisc<span class="sc">::</span><span class="fu">frq</span>(proc_datos_estudiantes<span class="sc">$</span>aleatorio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x &lt;categorical&gt; 
+# total N=575 valid N=575 mean=1.52 sd=0.50
+
+Value       |   N | Raw % | Valid % | Cum. %
+--------------------------------------------
+Control     | 275 | 47.83 |   47.83 |  47.83
+Tratamiento | 300 | 52.17 |   52.17 | 100.00
+&lt;NA&gt;        |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sjmisc<span class="sc">::</span><span class="fu">descr</span>(proc_datos_estudiantes,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">show =</span> <span class="fu">c</span>(<span class="st">"label"</span>,<span class="st">"range"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"NA.prc"</span>, <span class="st">"n"</span>))<span class="sc">%&gt;%</span> <span class="co"># Selecciona estadísticos</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable</span>(.,<span class="st">"markdown"</span>) <span class="co"># Esto es para que se vea bien en quarto</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sjmisc<span class="sc">::</span><span class="fu">descr</span>(proc_datos_estudiantes,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">show =</span> <span class="fu">c</span>(<span class="st">"label"</span>,<span class="st">"range"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"NA.prc"</span>, <span class="st">"n"</span>))<span class="sc">%&gt;%</span> <span class="co"># Selecciona estadísticos</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">kable</span>(.,<span class="st">"markdown"</span>) <span class="co"># Esto es para que se vea bien en quarto</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <colgroup>
@@ -141,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">aleatorio</td>
 <td style="text-align: right;">575</td>
 <td style="text-align: right;">0.0000000</td>
-<td style="text-align: right;">1.478261</td>
+<td style="text-align: right;">1.521739</td>
 <td style="text-align: right;">0.4999621</td>
 <td style="text-align: left;">1 (1-2)</td>
 </tr>
@@ -262,9 +285,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="meritocracia-en-la-sociedad" class="level2">
 <h2 class="anchored" data-anchor-id="meritocracia-en-la-sociedad">Meritocracia en la sociedad</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>proc_datos_estudiantes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(aleatorio, curso_estudiante) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">merit_esfuerzo=</span><span class="fu">mean</span>(merit_esfuerzo, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">merit_talento=</span><span class="fu">mean</span>(merit_talento, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>proc_datos_estudiantes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(aleatorio, curso_estudiante) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">merit_esfuerzo=</span><span class="fu">mean</span>(merit_esfuerzo, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">merit_talento=</span><span class="fu">mean</span>(merit_talento, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'aleatorio'. You can override using the
 `.groups` argument.</code></pre>
@@ -273,21 +296,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 4 × 4
 # Groups:   aleatorio [2]
   aleatorio   curso_estudiante merit_esfuerzo merit_talento
-  &lt;fct&gt;       &lt;chr&gt;                &lt;hvn_lbll&gt;    &lt;hvn_lbll&gt;
-1 Tratamiento Basica                 3.012422      2.974843
-2 Tratamiento Media                  2.446043      2.719424
-3 Control     Basica                 2.945783      2.888889
-4 Control     Media                  2.485981      2.663551</code></pre>
+  &lt;fct&gt;       &lt;chr&gt;                     &lt;dbl&gt;         &lt;dbl&gt;
+1 Control     Basica                     2.95          2.89
+2 Control     Media                      2.49          2.66
+3 Tratamiento Basica                     3.01          2.97
+4 Tratamiento Media                      2.45          2.72</code></pre>
 </div>
 </div>
 </section>
 <section id="meritocracia-en-la-escuela" class="level2">
 <h2 class="anchored" data-anchor-id="meritocracia-en-la-escuela">Meritocracia en la escuela</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>proc_datos_estudiantes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(aleatorio, curso_estudiante) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">school_esfuerzo=</span><span class="fu">mean</span>(school_esfuerzo, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">school_talento=</span><span class="fu">mean</span>(school_talento, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">school_merito=</span><span class="fu">mean</span>(school_merito, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>proc_datos_estudiantes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(aleatorio, curso_estudiante) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">school_esfuerzo=</span><span class="fu">mean</span>(school_esfuerzo, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">school_talento=</span><span class="fu">mean</span>(school_talento, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">school_merito=</span><span class="fu">mean</span>(school_merito, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'aleatorio'. You can override using the
 `.groups` argument.</code></pre>
@@ -296,21 +319,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 4 × 5
 # Groups:   aleatorio [2]
   aleatorio   curso_estudiante school_esfuerzo school_talento school_merito
-  &lt;fct&gt;       &lt;chr&gt;                 &lt;hvn_lbll&gt;     &lt;hvn_lbll&gt;    &lt;hvn_lbll&gt;
-1 Tratamiento Basica                  3.268750       3.173913      2.937107
-2 Tratamiento Media                   3.086331       3.122302      2.905797
-3 Control     Basica                  3.227545       3.149701      2.866667
-4 Control     Media                   3.102804       3.046729      2.859813</code></pre>
+  &lt;fct&gt;       &lt;chr&gt;                      &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;
+1 Control     Basica                      3.23           3.15          2.87
+2 Control     Media                       3.10           3.05          2.86
+3 Tratamiento Basica                      3.27           3.17          2.94
+4 Tratamiento Media                       3.09           3.12          2.91</code></pre>
 </div>
 </div>
 </section>
 <section id="justificación-desigualdad" class="level2">
 <h2 class="anchored" data-anchor-id="justificación-desigualdad">Justificación desigualdad</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>proc_datos_estudiantes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(aleatorio, curso_estudiante) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">just_pensiones=</span><span class="fu">mean</span>(just_pensiones, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">just_educ=</span><span class="fu">mean</span>(just_educ, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">just_salud=</span><span class="fu">mean</span>(just_salud, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>proc_datos_estudiantes <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(aleatorio, curso_estudiante) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">just_pensiones=</span><span class="fu">mean</span>(just_pensiones, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">just_educ=</span><span class="fu">mean</span>(just_educ, <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">just_salud=</span><span class="fu">mean</span>(just_salud, <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'aleatorio'. You can override using the
 `.groups` argument.</code></pre>
@@ -318,14 +341,1181 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
 # Groups:   aleatorio [2]
-  aleatorio   curso_estudiante just_pensiones  just_educ just_salud
-  &lt;fct&gt;       &lt;chr&gt;                &lt;hvn_lbll&gt; &lt;hvn_lbll&gt; &lt;hvn_lbll&gt;
-1 Tratamiento Basica                 2.062112   2.293750   2.107595
-2 Tratamiento Media                  1.913043   1.971014   1.712230
-3 Control     Basica                 2.131737   2.227545   2.084337
-4 Control     Media                  1.820755   2.074766   1.738318</code></pre>
+  aleatorio   curso_estudiante just_pensiones just_educ just_salud
+  &lt;fct&gt;       &lt;chr&gt;                     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+1 Control     Basica                     2.13      2.23       2.08
+2 Control     Media                      1.82      2.07       1.74
+3 Tratamiento Basica                     2.06      2.29       2.11
+4 Tratamiento Media                      1.91      1.97       1.71</code></pre>
 </div>
 </div>
+</section>
+<section id="regresiones-simples" class="level2">
+<h2 class="anchored" data-anchor-id="regresiones-simples">Regresiones simples</h2>
+<section id="todos-los-cursos" class="level3">
+<h3 class="anchored" data-anchor-id="todos-los-cursos">Todos los cursos</h3>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(merit_esfuerzo<span class="sc">~</span>aleatorio, <span class="at">data=</span>proc_datos_estudiantes)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>reg2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(merit_talento<span class="sc">~</span>aleatorio, <span class="at">data=</span>proc_datos_estudiantes)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">knitreg</span>(<span class="fu">list</span>(reg1, reg2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.77<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.80<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.05)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.05)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+aleatorioTratamiento
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.02
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Adj. R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+573
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+567
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="3">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+
+</table>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>reg3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(school_esfuerzo<span class="sc">~</span>aleatorio, <span class="at">data=</span>proc_datos_estudiantes)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>reg4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(school_talento<span class="sc">~</span>aleatorio, <span class="at">data=</span>proc_datos_estudiantes)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>reg5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(school_merito<span class="sc">~</span>aleatorio, <span class="at">data=</span>proc_datos_estudiantes)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">knitreg</span>(<span class="fu">list</span>(reg3, reg4, reg5))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+3.18<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+3.11<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.86<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.05)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.05)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.05)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+aleatorioTratamiento
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.01
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Adj. R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+573
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+574
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+569
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="4">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+
+</table>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>reg6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(just_educ<span class="sc">~</span>aleatorio, <span class="at">data=</span>proc_datos_estudiantes)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>reg7 <span class="ot">&lt;-</span> <span class="fu">lm</span>(just_salud<span class="sc">~</span>aleatorio, <span class="at">data=</span>proc_datos_estudiantes)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>reg8 <span class="ot">&lt;-</span> <span class="fu">lm</span>(just_pensiones<span class="sc">~</span>aleatorio, <span class="at">data=</span>proc_datos_estudiantes)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">knitreg</span>(<span class="fu">list</span>(reg6, reg7, reg8))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.17<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+1.95<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.01<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.05)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.05)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+aleatorioTratamiento
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.02
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.03
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.02
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Adj. R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+572
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+570
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+572
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="4">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+
+</table>
+</section>
+<section id="básica" class="level3">
+<h3 class="anchored" data-anchor-id="básica">Básica</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> proc_datos_estudiantes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(curso_estudiante<span class="sc">==</span><span class="st">"Basica"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(merit_esfuerzo<span class="sc">~</span>aleatorio, <span class="at">data=</span>data) </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>reg2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(merit_talento<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)  </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">knitreg</span>(<span class="fu">list</span>(reg1, reg2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.95<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.89<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+aleatorioTratamiento
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.07
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.09
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Adj. R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+327
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+321
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="3">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+
+</table>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>reg3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(school_esfuerzo<span class="sc">~</span>aleatorio, <span class="at">data=</span>data) </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>reg4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(school_talento<span class="sc">~</span>aleatorio, <span class="at">data=</span>data) </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>reg5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(school_merito<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)  </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">knitreg</span>(<span class="fu">list</span>(reg3, reg4, reg5))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+3.23<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+3.15<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.87<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.06)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+aleatorioTratamiento
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.04
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.02
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.07
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.09)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.09)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Adj. R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+327
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+328
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+324
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="4">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+
+</table>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>reg6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(just_educ<span class="sc">~</span>aleatorio, <span class="at">data=</span>data) </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>reg7 <span class="ot">&lt;-</span> <span class="fu">lm</span>(just_salud<span class="sc">~</span>aleatorio, <span class="at">data=</span>data) </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>reg8 <span class="ot">&lt;-</span> <span class="fu">lm</span>(just_pensiones<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)  </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">knitreg</span>(<span class="fu">list</span>(reg6, reg7, reg8))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.23<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.08<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.13<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+aleatorioTratamiento
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.07
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.02
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.07
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.10)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.11)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.09)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Adj. R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+327
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+324
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+328
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="4">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+
+</table>
+</section>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
+</section>
+<section id="media" class="level3">
+<h3 class="anchored" data-anchor-id="media">Media</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> proc_datos_estudiantes <span class="sc">%&gt;%</span> <span class="fu">filter</span>(curso_estudiante<span class="sc">==</span><span class="st">"Media"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(merit_esfuerzo<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)  </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>reg2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(merit_talento<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)    </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">knitreg</span>(<span class="fu">list</span>(reg1, reg2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.49<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.66<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+aleatorioTratamiento
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.04
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.06
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.10)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.10)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Adj. R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+246
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+246
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="3">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+
+</table>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>reg3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(school_esfuerzo<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)  </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>reg4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(school_talento<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)  </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>reg5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(school_merito<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)    </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">knitreg</span>(<span class="fu">list</span>(reg3, reg4, reg5))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+3.10<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+3.05<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.86<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.07)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+aleatorioTratamiento
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.02
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.08
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.05
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.10)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.10)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.09)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Adj. R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+246
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+246
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+245
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="4">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+
+</table>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>reg6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(just_educ<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>reg7 <span class="ot">&lt;-</span> <span class="fu">lm</span>(just_salud<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)  </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>reg8 <span class="ot">&lt;-</span> <span class="fu">lm</span>(just_pensiones<span class="sc">~</span>aleatorio, <span class="at">data=</span>data)    </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>texreg<span class="sc">::</span><span class="fu">knitreg</span>(<span class="fu">list</span>(reg6, reg7, reg8))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<table class="texreg" style="margin: 10px auto;border-collapse: collapse;border-spacing: 0px;caption-side: bottom;color: #000000;border-top: 2px solid #000000;">
+<caption>
+Statistical models
+</caption>
+<thead>
+<tr>
+<th style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 1
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 2
+</th>
+<th style="padding-left: 5px;padding-right: 5px;">
+Model 3
+</th>
+</tr>
+</thead>
+<tbody>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+(Intercept)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+2.07<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+1.74<sup>***</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+1.82<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.08)
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+aleatorioTratamiento
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.10
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.03
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.09
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+&nbsp;
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.11)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.11)
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+(0.11)
+</td>
+</tr>
+<tr style="border-top: 1px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="padding-left: 5px;padding-right: 5px;">
+Adj. R<sup>2</sup>
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+-0.00
+</td>
+</tr>
+<tr style="border-bottom: 2px solid #000000;">
+<td style="padding-left: 5px;padding-right: 5px;">
+Num. obs.
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+245
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+246
+</td>
+<td style="padding-left: 5px;padding-right: 5px;">
+244
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="font-size: 0.8em;" colspan="4">
+<sup>***</sup>p &lt; 0.001; <sup>**</sup>p &lt; 0.01; <sup>*</sup>p &lt; 0.05
+</td>
+</tr>
+</tfoot>
+
+</table>
+</section>
+<section id="section-1" class="level3">
+<h3 class="anchored" data-anchor-id="section-1"></h3>
+</section>
+<section id="section-2" class="level3">
+<h3 class="anchored" data-anchor-id="section-2"></h3>
+</section>
 </section>
 
 </main>

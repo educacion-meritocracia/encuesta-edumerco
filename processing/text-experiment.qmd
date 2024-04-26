@@ -6,10 +6,12 @@ editor: visual
 ---
 
 ```{r}
-pacman::p_load(dplyr, sjPlot, stargazer, kableExtra)
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven)
 
 load("../input/data/proc/es_ola1.RData")
-
+sjmisc::frq(proc_datos_estudiantes$aleatorio)
+proc_datos_estudiantes$aleatorio <- factor(proc_datos_estudiantes$aleatorio, levels = c("Control", "Tratamiento"))
+sjmisc::frq(proc_datos_estudiantes$aleatorio)
 ```
 
 ```{r}
@@ -44,3 +46,94 @@ proc_datos_estudiantes %>% group_by(aleatorio, curso_estudiante) %>%
             just_educ=mean(just_educ, na.rm=TRUE),
             just_salud=mean(just_salud, na.rm=TRUE))
 ```
+
+## Regresiones simples
+
+### Todos los cursos
+
+```{r results='asis'}
+reg1 <- lm(merit_esfuerzo~aleatorio, data=proc_datos_estudiantes)
+reg2 <- lm(merit_talento~aleatorio, data=proc_datos_estudiantes)
+
+texreg::knitreg(list(reg1, reg2))
+```
+
+```{r results='asis'}
+reg3 <- lm(school_esfuerzo~aleatorio, data=proc_datos_estudiantes)
+reg4 <- lm(school_talento~aleatorio, data=proc_datos_estudiantes)
+reg5 <- lm(school_merito~aleatorio, data=proc_datos_estudiantes)
+
+texreg::knitreg(list(reg3, reg4, reg5))
+```
+
+```{r results='asis'}
+reg6 <- lm(just_educ~aleatorio, data=proc_datos_estudiantes)
+reg7 <- lm(just_salud~aleatorio, data=proc_datos_estudiantes)
+reg8 <- lm(just_pensiones~aleatorio, data=proc_datos_estudiantes)
+
+texreg::knitreg(list(reg6, reg7, reg8))
+```
+
+### Básica
+
+```{r}
+data <- proc_datos_estudiantes %>% filter(curso_estudiante=="Basica")
+```
+
+```{r results='asis'}
+reg1 <- lm(merit_esfuerzo~aleatorio, data=data) 
+reg2 <- lm(merit_talento~aleatorio, data=data)  
+
+texreg::knitreg(list(reg1, reg2))
+```
+
+```{r results='asis'}
+reg3 <- lm(school_esfuerzo~aleatorio, data=data) 
+reg4 <- lm(school_talento~aleatorio, data=data) 
+reg5 <- lm(school_merito~aleatorio, data=data)  
+
+texreg::knitreg(list(reg3, reg4, reg5))
+```
+
+```{r results='asis'}
+reg6 <- lm(just_educ~aleatorio, data=data) 
+reg7 <- lm(just_salud~aleatorio, data=data) 
+reg8 <- lm(just_pensiones~aleatorio, data=data)  
+
+texreg::knitreg(list(reg6, reg7, reg8))
+```
+
+### 
+
+### Media
+
+```{r}
+data <- proc_datos_estudiantes %>% filter(curso_estudiante=="Media")
+```
+
+```{r results='asis'}
+reg1 <- lm(merit_esfuerzo~aleatorio, data=data)  
+reg2 <- lm(merit_talento~aleatorio, data=data)    
+
+texreg::knitreg(list(reg1, reg2))
+```
+
+```{r results='asis'}
+reg3 <- lm(school_esfuerzo~aleatorio, data=data)  
+reg4 <- lm(school_talento~aleatorio, data=data)  
+reg5 <- lm(school_merito~aleatorio, data=data)    
+
+texreg::knitreg(list(reg3, reg4, reg5))
+```
+
+```{r results='asis'}
+reg6 <- lm(just_educ~aleatorio, data=data)
+reg7 <- lm(just_salud~aleatorio, data=data)  
+reg8 <- lm(just_pensiones~aleatorio, data=data)    
+
+texreg::knitreg(list(reg6, reg7, reg8))
+```
+
+### 
+
+### 
