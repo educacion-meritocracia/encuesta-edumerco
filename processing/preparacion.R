@@ -198,6 +198,18 @@ proc_datos_estudiantes$check_control <- factor(proc_datos_estudiantes$check_cont
                                            levels=c(1,2),
                                            labels=c("Colegio Municipal","Colegio Privado"))
 
+### c. otros ajustes ----
+
+#variable check_comprension
+proc_datos_estudiantes <- proc_datos_estudiantes %>% 
+  mutate(check_comprension = case_when(
+    check_tratamiento == "Colegio Privado" | check_control == "Colegio Privado" ~ 1,
+    is.na(check_tratamiento) | is.na(check_control) ~ 0,
+    TRUE ~ 0
+  ))
+
+frq(proc_datos_estudiantes$check_comprension)
+
 ## check_atencion ----
 
 ### a. descriptivo basico ----
@@ -208,4 +220,4 @@ frq(proc_datos_estudiantes$check_atencion) #en desacuerdo 88.17% (507 casos).
 proc_datos_estudiantes <-as.data.frame(proc_datos_estudiantes)
 stargazer(proc_datos_estudiantes, type="text")
 
-save(proc_datos_estudiantes,file = "C:/Users/LENOVO/Documents/GitHub/edumer-ola1/input/data/proc/es_ola1.RData")
+save(proc_datos_estudiantes,file = "input/data/proc/es_ola1.RData")
