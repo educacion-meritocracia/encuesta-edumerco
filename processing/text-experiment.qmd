@@ -6,9 +6,12 @@ editor: visual
 ---
 
 ```{r}
-pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjmisc, ggplot2)
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjmisc, ggplot2, quarto, here, ggpubr)
 
-load("../input/data/proc/es_ola1.RData")
+```
+
+```{r}
+load(here::here("input/data/proc/es_ola1.RData"))
 sjmisc::frq(proc_datos_estudiantes$aleatorio)
 proc_datos_estudiantes$aleatorio <- factor(proc_datos_estudiantes$aleatorio, levels = c("Control", "Tratamiento"))
 sjmisc::frq(proc_datos_estudiantes$aleatorio)
@@ -24,7 +27,7 @@ frq(proc_datos_estudiantes$genero)
 frq(proc_datos_estudiantes$curso_estudiante)
 ```
 
-###  Establecimientos
+### Establecimientos
 
 -   Pilto: Escuela Capitán José Luis Araneda de Renca (29 estudiantes). RBD 10204. Dependencia Municipal
 
@@ -54,16 +57,64 @@ sjmisc::descr(proc_datos_estudiantes,
 
 # Revisión check's de respuesta
 
+-   Tratamiento
+
 ```{r}
 frq(proc_datos_estudiantes$check_tratamiento)
 ```
+
+```{r}
+sjt.xtab(proc_datos_estudiantes$check_tratamiento, proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc=TRUE,
+         show.summary=FALSE,
+         encoding="UTF-8")
+```
+
+```{r}
+sjt.xtab(proc_datos_estudiantes$check_tratamiento, proc_datos_estudiantes$genero, 
+         show.col.prc=TRUE,
+         show.summary=FALSE,
+         encoding="UTF-8")
+```
+
+-   Control
 
 ```{r}
 frq(proc_datos_estudiantes$check_control)
 ```
 
 ```{r}
+sjt.xtab(proc_datos_estudiantes$check_control, proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc=TRUE,
+         show.summary=FALSE,
+         encoding="UTF-8")
+```
+
+```{r}
+sjt.xtab(proc_datos_estudiantes$check_control, proc_datos_estudiantes$genero, 
+         show.col.prc=TRUE,
+         show.summary=FALSE,
+         encoding="UTF-8")
+```
+
+-   Atención
+
+```{r}
 frq(proc_datos_estudiantes$check_atencion)
+```
+
+```{r}
+sjt.xtab(proc_datos_estudiantes$check_atencion, proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc=TRUE,
+         show.summary=FALSE,
+         encoding="UTF-8")
+```
+
+```{r}
+sjt.xtab(proc_datos_estudiantes$check_atencion, proc_datos_estudiantes$genero, 
+         show.col.prc=TRUE,
+         show.summary=FALSE,
+         encoding="UTF-8")
 ```
 
 -   Filtramos por solo aquellos estudiantes que responden correctamente en las variables tratamiento y control. Por el momento mantendremos las respuestas del check de atención.
@@ -117,21 +168,21 @@ data %>%
 -   Experimento
 
 ```{r}
-experimento <- data %>% 
-  group_by(aleatorio) %>% 
-  summarise(merit_esfuerzo=mean(merit_esfuerzo, na.rm=TRUE),
-            merit_talento=mean(merit_talento, na.rm=TRUE))
+plot_trat <- data %>% filter(aleatorio=="Tratamiento") %>% 
+  dplyr::select(merit_esfuerzo, merit_talento) %>%
+  sjPlot::plot_stackfrq()+
+  theme(legend.position = "bottom")+
+  labs(title="Tratamiento")
 
-experimento <- experimento %>% tidyr::pivot_longer(c("merit_esfuerzo", "merit_talento"), 
-                              names_to="merit", 
-                              values_to="mean")
+plot_ctrl <- data %>% filter(aleatorio=="Control") %>% 
+  dplyr::select(merit_esfuerzo, merit_talento) %>%
+  sjPlot::plot_stackfrq()+
+  theme(legend.position = "bottom")+
+  labs(title="Control")
 ```
 
 ```{r}
-experimento %>% ggplot(aes(x=aleatorio, y=mean))+
-  geom_point()+
-  ylim(1,4)+
-  facet_wrap(~merit)
+ggarrange(plot_trat, plot_ctrl, common.legend = TRUE, nrow=2)
 ```
 
 -   Experimento x genero
@@ -189,22 +240,19 @@ data %>%
 -   Experimento
 
 ```{r}
-experimento <- data %>% 
-  group_by(aleatorio) %>% 
-  summarise(school_esfuerzo=mean(school_esfuerzo, na.rm=TRUE),
-            school_talento=mean(school_talento, na.rm=TRUE),
-            school_merito=mean(school_merito, na.rm=TRUE))
+plot_trat <- data %>% filter(aleatorio=="Tratamiento") %>% 
+  dplyr::select(school_esfuerzo, school_talento, school_merito) %>%
+  sjPlot::plot_stackfrq()+
+  theme(legend.position = "bottom")+
+  labs(title="Tratamiento")
+plot_ctrl <- data %>% filter(aleatorio=="Control") %>% 
+  dplyr::select(school_esfuerzo, school_talento, school_merito) %>%
+  sjPlot::plot_stackfrq()+
+  theme(legend.position = "bottom")+
+  labs(title="Control")
 
-experimento <- experimento %>% tidyr::pivot_longer(c("school_esfuerzo", "school_talento", "school_merito"),
-                              names_to="merit", 
-                              values_to="mean")
-```
 
-```{r}
-experimento %>% ggplot(aes(x=aleatorio, y=mean))+
-  geom_point()+
-  ylim(1,4)+
-  facet_wrap(~merit)
+ggarrange(plot_trat, plot_ctrl, common.legend = TRUE, nrow=2)
 ```
 
 -   Experimento x Género
@@ -263,21 +311,19 @@ data %>%
 -   Experimento
 
 ```{r}
-experimento <- data %>% group_by(aleatorio) %>% 
-  summarise(just_pensiones=mean(just_pensiones, na.rm=TRUE),
-            just_educ=mean(just_educ, na.rm=TRUE),
-            just_salud=mean(just_salud, na.rm=TRUE))
+plot_trat <- data %>% filter(aleatorio=="Tratamiento") %>% 
+  dplyr::select(just_salud, just_educ, just_pensiones) %>%
+  sjPlot::plot_stackfrq()+
+  theme(legend.position = "bottom")+
+  labs(title="Tratamiento")
+plot_ctrl <- data %>% filter(aleatorio=="Control") %>% 
+  dplyr::select(just_salud, just_educ, just_pensiones) %>%
+  sjPlot::plot_stackfrq()+
+  theme(legend.position = "bottom")+
+  labs(title="Control")
 
-experimento <- experimento %>% tidyr::pivot_longer(c("just_pensiones", "just_educ", "just_salud"),
-                              names_to="justificacion", 
-                              values_to="mean")
-```
 
-```{r}
-experimento %>% ggplot(aes(x=aleatorio, y=mean))+
-  geom_point()+
-  ylim(1,4)+
-  facet_wrap(~justificacion)
+ggarrange(plot_trat, plot_ctrl, common.legend = TRUE, nrow=2)
 ```
 
 -   Experimento x genero

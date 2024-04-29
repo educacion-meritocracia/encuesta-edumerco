@@ -208,4 +208,4 @@ frq(proc_datos_estudiantes$check_atencion) #en desacuerdo 88.17% (507 casos).
 proc_datos_estudiantes <-as.data.frame(proc_datos_estudiantes)
 stargazer(proc_datos_estudiantes, type="text")
 
-save(proc_datos_estudiantes,file = "C:/Users/LENOVO/Documents/GitHub/edumer-ola1/input/data/proc/es_ola1.RData")
+save(proc_datos_estudiantes,file = "input/data/proc/es_ola1.RData")
