@@ -30,9 +30,11 @@ datos_estudiantes <- read_sav("input/data/original/170124_BDD_estudiantes.sav")
 #p27 (nivel de estudios del padre)
 #p30 (cantidad de libros en el hogar)
 
+frq(datos_estudiantes$tratamiento)
+
 proc_datos_estudiantes <- datos_estudiantes %>% select(aleatorio, p1_1, p1_2, 
                                                        p2_1, p2_2, p2_3, p9_3, 
-                                                       p9_4, p9_5, d3_def, p26, p27, p30)
+                                                       p9_4, p9_5, d3_def, p26, p27, p30, p20, check_atencion, tratamiento, control)
 #renombrar 
 proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
                                                            merit_esfuerzo = p1_1,
@@ -46,7 +48,10 @@ proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
                                                            curso_estudiante = d3_def,
                                                            ne_madre = p26,
                                                            ne_padre = p27, 
-                                                           libros_hogar = p30) 
+                                                           libros_hogar = p30,
+                                                           genero = p20,
+                                                           check_tratamiento = tratamiento,
+                                                           check_control = control)                                                            
 
 # Comprobar
 names(proc_datos_estudiantes)
@@ -160,8 +165,59 @@ frq(proc_datos_estudiantes$curso_estudiante) #no tiene NA
 ### b. recodificacion ----
 proc_datos_estudiantes$curso_estudiante <- car::recode(proc_datos_estudiantes$curso_estudiante, recodes = c("'1a' = 'Media'; '1b' = 'Media'; '1c' = 'Media'; '6a' = 'Basica'; '6b' = 'Basica'; '6c' = 'Basica'"))
 
+## genero ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$genero) #muestra con una mayoria de muejeres 48.52% y 
+  #categoria otro: 4.52%. No tiene casos perdidos
+
+### b. recodificacion ----
+proc_datos_estudiantes$genero <- factor(proc_datos_estudiantes$genero, 
+                                           levels=c(1,2,3),
+                                           labels=c("Hombre","Mujer","Otro"))
+
+## check_tratamiento ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$check_tratamiento) #colegio privado 39.13%. Casos perdidos: 
+  #concentra la mayoria de las respuestas 47.83% (275 casos)
+
+### b. recodificacion ---- 
+proc_datos_estudiantes$check_tratamiento <- factor(proc_datos_estudiantes$check_tratamiento, 
+                                           levels=c(1,2),
+                                           labels=c("Colegio Municipal","Colegio Privado"))
+
+## check_control ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$check_control) #colegio privado 38.43%. Casos perdidos: 
+  #concentra la mayoria de las respuestas 52.17% (300 casos)
+
+### b. recodificacion ----
+proc_datos_estudiantes$check_control <- factor(proc_datos_estudiantes$check_control, 
+                                           levels=c(1,2),
+                                           labels=c("Colegio Municipal","Colegio Privado"))
+
+### c. otros ajustes ----
+
+#variable check_comprension
+proc_datos_estudiantes <- proc_datos_estudiantes %>% 
+  mutate(check_comprension = case_when(
+    check_tratamiento == "Colegio Privado" | check_control == "Colegio Privado" ~ 1,
+    is.na(check_tratamiento) | is.na(check_control) ~ 0,
+    TRUE ~ 0
+  ))
+
+frq(proc_datos_estudiantes$check_comprension)
+
+## check_atencion ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$check_atencion) #en desacuerdo 88.17% (507 casos). 
+  #no presenta casos perdidos
+
 # 5. base procesada -----------------------------------------------------------
 proc_datos_estudiantes <-as.data.frame(proc_datos_estudiantes)
 stargazer(proc_datos_estudiantes, type="text")
 
-save(proc_datos_estudiantes,file = "C:/Users/LENOVO/Documents/GitHub/edumer-ola1/input/data/proc/es_ola1.RData")
+save(proc_datos_estudiantes,file = "input/data/proc/es_ola1.RData")

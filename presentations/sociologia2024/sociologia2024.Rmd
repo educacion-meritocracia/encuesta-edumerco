@@ -1,0 +1,309 @@
+---
+title: "Meritocracia en la etapa escolar: Un experimento de encuesta"
+subtitle: ""
+author: "Juan Carlos Castillo, Mauricio Salgado, Kevin Carrasco, Andreas Laffert, Maria Fernanda Nuñez"
+institute: ".small[**FONDECYT N°1210847 Meritocracia en la escuela**]"
+output:
+  xaringan::moon_reader:
+    css: ["custom_lisa.css"]
+    seal: false
+    nature:
+      highlightStyle: solarized-dark
+      highlightLines: true
+      countIncrementalSlides: false
+      beforeInit: "xaringan_custom/macros.js"
+      ratio: '16:9'
+---
+
+class: middle title-slide
+
+```{r xaringanExtra, echo = FALSE}
+  xaringanExtra::use_progress_bar(color = "red", location = c("top"))
+```
+
+
+```{r xaringan-tile-view, echo=FALSE}
+xaringanExtra::use_tile_view()
+```
+
+.pull-left-narrow[
+
+![:scale 70%](images/edumer.png)
+.small[.red[FONDECYT N°1210847 Meritocracia en la Escuela]
+
+<br>
+<br>
+
+
+![:scale 70%](images/logocoes.png)
+
+<div style="line-height:150%;">
+Congreso de Sociología
+<br>Santiago, Chile 
+2-4 de Mayo 2024
+</div>
+]]
+
+
+.pull-right-wide[
+.right[
+
+.content-box-red[
+## Meritocracia en la etapa escolar: Un experimento de encuesta
+
+]
+
+----
+
+
+
+.medium[
+<div style="line-height:150%;">
+Juan Carlos Castillo, 
+<br>Kevin Carrasco,
+<br> María Fernanda Nuñez 
+<br> & Andreas Laffert<br>
+</div>
+]
+<br>
+.small[
+<div style="line-height:150%;">
+*Departmento de Sociología, Universidad de Chile - COES
+</div>
+Contacto: [juancastillov@uchile.cl](juancastillov@uchile.cl) - [jc-castillo.com](https://jc-castillo.com)
+
+]
+]
+]
+
+---
+
+layout: true
+class: animated, fadeIn
+
+
+---
+class: roja bottom
+
+# Contexto y motivación
+
+
+---
+
+.pull-left-narrow[
+![:scale 70%](images/edumer.png)
+]
+
+.pull-right-wide[
+.red[Meritocracia en la escuela: Fundamentos morales de los mercados educativos e implicaciones para la educación ciudadana] 
+
+ANID/FONDECYT 2021-2024
+
+- Primera etapa:
+
+  - Estudio cualitativo
+  - análisis de datos secundarios
+  
+- Segunda etapa
+
+  - panel de estudio
+  - experimentos de encuestas
+
+
+
+.small[
+Más información:
+[jc-castillo.com/project/fondecyt-edumer/](https://jc-castillo.com/project/fondecyt-edumer/)
+
+
+]
+]
+
+---
+class: roja bottom
+
+# Este estudio
+
+---
+
+
+---
+class:middle center
+
+![:scale 120%](general-scheme.png)
+
+---
+### Tratamiento
+
+.center[Tipos de colegio y acceso a la universidad]
+
+* Para entrar a la universidad se necesita tener buenas notas en el colegio y también un buen puntaje en una prueba de selección de lenguaje y matemáticas
+
+* En Chile existen colegios de distinto tipo: municipales, subvencionados y privados. En los colegios municipales no se debe pagar por estudiar, mientras que en los colegios privados las familias tienen que pagar. 
+* Existen grandes diferencias en los puntajes de la prueba de acceso a la universidad entre colegios municipales (no pagados) y privados (pagados): 2 de cada 10 estudiantes de colegios municipales logran entrar a la universidad, mientras en el caso de los colegios privados son 8 de cada 10
+
+---
+class:middle center
+
+![:scale 100%](tratamiento.png)
+
+
+---
+### Control
+
+.center[Tipos de colegio y acceso a deportes]
+
+* En Chile existen colegios de distinto tipo: municipales, subvencionados y privados. En los colegios municipales no se debe pagar por estudiar, mientras que en los colegios privados las familias tienen que pagar. 
+
+* Existen grandes diferencias respecto a la práctica de algún deporte por parte de estudiantes de colegios municipales (no pagados) y estudiantes de colegios privados (pagados): 2 de cada 10 estudiantes de colegios municipales practican deportes, mientras en el caso de colegios privados son 8 de cada 10, como se presenta en la siguiente figura: 
+---
+class:middle center
+
+![:scale 100%](control.png)
+
+
+
+---
+class: roja bottom
+# Métodos
+
+---
+class: middle
+
+# Datos
+.pull-left-narrow[
+
+----]
+
+.pull-right-wide[
+* Primera ola aplicada entre octubre y diciembre 2023
+
+* 575 estudiantes.  de 6° básico y de 1° medio de 8 escuelas
+]
+
+
+---
+class: roja bottom right
+
+# Resultados 
+
+
+---
+.pull-left-narrow[
+####**Comprensión del experimento**]
+.pull-right-wide[
+![:scale 100%](../../output/tables/comprension_genero.png)
+]
+
+---
+.pull-left-narrow[
+####**Comprensión del experimento**]
+.pull-right-wide[
+![:scale 100%](../../output/tables/comprension_curso.png)
+]
+
+---
+class: center
+
+![:scale 85%](../../output/graphs/likert_merito_social.png)
+
+---
+class: center
+
+![:scale 85%](../../output/graphs/likert_school_merit.png)
+
+---
+class: center
+
+![:scale 85%](../../output/graphs/socialmerit_genero.png)
+
+---
+class: center
+
+![:scale 85%](../../output/graphs/socialmerit_curso.png)
+---
+class: center
+
+![:scale 85%](../../output/graphs/schoolmerit_genero.png)
+
+---
+class: center
+
+![:scale 85%](../../output/graphs/schoolmerit_curso.png)
+
+---
+class: roja
+
+.pull-left[
+### **.orange[Conclusiones]**
+
+
+--
+
+.pull-right[
+### **.orange[A futuro]**
+
+]
+
+---
+class: roja middle
+
+# ¡Muchas gracias!
+
+<br>
+
+
+.right[
+Github Repo: [.yellow[ github.com/educacion-meritocracia/edumer-ola1]](https://github.com/educacion-meritocracia/edumer-ola1)
+.white[Más información sobre este y otros proyectos: 
+
+[.yellow[www.ciudadania-escolar.cl]](https://ciudadania-escolar.cl/)
+]
+]
+---
+class: middle title-slide
+
+
+.pull-left-narrow[
+
+![:scale 70%](images/edumer.png)
+.small[.red[FONDECYT N°1210847 Meritocracia en la Escuela]
+
+
+![:scale 70%](images/logocoes.png)
+
+<div style="line-height:150%;">
+Congreso de Sociología
+<br>Santiago, Chile 
+2-4 de Mayo 2024
+</div>
+]]
+
+
+.pull-right-wide[
+.right[
+
+.content-box-red[
+## Meritocracia en la etapa escolar: Un experimento de encuesta
+
+]
+
+----
+.medium[
+<div style="line-height:150%;">
+Juan Carlos Castillo, 
+<br>Kevin Carrasco,
+<br> María Fernanda Nuñez 
+<br> & Andreas Laffert<br>
+</div>
+]
+<br>
+.small[
+<div style="line-height:150%;">
+*Departmento de Sociología, Universidad de Chile - COES
+</div>
+Contacto: [juancastillov@uchile.cl](juancastillov@uchile.cl) - [jc-castillo.com](https://jc-castillo.com)
+
+]
+]
+]
