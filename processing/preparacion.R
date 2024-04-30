@@ -198,6 +198,18 @@ proc_datos_estudiantes$check_control <- factor(proc_datos_estudiantes$check_cont
                                            levels=c(1,2),
                                            labels=c("Colegio Municipal","Colegio Privado"))
 
+### c. otros ajustes ----
+
+#variable check_comprension
+proc_datos_estudiantes <- proc_datos_estudiantes %>% 
+  mutate(check_comprension = case_when(
+    check_tratamiento == "Colegio Privado" | check_control == "Colegio Privado" ~ 1,
+    is.na(check_tratamiento) | is.na(check_control) ~ 0,
+    TRUE ~ 0
+  ))
+
+frq(proc_datos_estudiantes$check_comprension)
+
 ## check_atencion ----
 
 ### a. descriptivo basico ----

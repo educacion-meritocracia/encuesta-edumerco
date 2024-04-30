@@ -6,7 +6,7 @@ editor: visual
 ---
 
 ```{r}
-pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjmisc, ggplot2, quarto, here, ggpubr)
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjmisc, ggplot2, quarto, here, ggpubr, sjlabelled, webshot)
 
 ```
 
@@ -15,6 +15,7 @@ load(here::here("input/data/proc/es_ola1.RData"))
 sjmisc::frq(proc_datos_estudiantes$aleatorio)
 proc_datos_estudiantes$aleatorio <- factor(proc_datos_estudiantes$aleatorio, levels = c("Control", "Tratamiento"))
 sjmisc::frq(proc_datos_estudiantes$aleatorio)
+proc_datos_estudiantes$curso_estudiante <- set_label(x = proc_datos_estudiantes$curso_estudiante,label = "Curso estudiante")
 ```
 
 # Caracterización de la muestra
@@ -117,33 +118,40 @@ sjt.xtab(proc_datos_estudiantes$check_atencion, proc_datos_estudiantes$genero,
          encoding="UTF-8")
 ```
 
--   Filtramos por solo aquellos estudiantes que responden correctamente en las variables tratamiento y control. Por el momento mantendremos las respuestas del check de atención.
+Hay 129 casos que no cumplen el Check de comprensión. \
 
 ```{r}
-data <- proc_datos_estudiantes %>% 
-  filter(check_tratamiento!="Colegio Municipal"
-         | check_control!="Colegio Municipal")
-
-```
-
-Se eliminan 129 casos. Quedando con una muestra de 446. La distribución del tratamiento que se utilizará es la siguiente:\
-
-```{r}
-frq(data$genero)
+frq(proc_datos_estudiantes$check_comprension)
+proc_datos_estudiantes$check_comprension <- factor(proc_datos_estudiantes$check_comprension, labels = c("Colegio municipal", "Colegio privado"))
 ```
 
 ```{r}
-frq(data$curso_estudiante)
-
+sjt.xtab(proc_datos_estudiantes$check_comprension, proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc=TRUE,
+         show.summary=FALSE,
+         encoding="UTF-8",
+         file = here::here("output/tables/comprension_curso.html"))
 ```
 
 ```{r}
-frq(data$aleatorio)
+sjt.xtab(proc_datos_estudiantes$check_comprension, proc_datos_estudiantes$genero, 
+         show.col.prc=TRUE,
+         show.summary=FALSE,
+         encoding="UTF-8",
+         file = here::here("output/tables/comprension_genero.html"))
+```
+
+```{r}
+webshot2::webshot(url = here::here("output/tables/comprension_curso.html"),
+                 file= here::here("output/tables/comprension_curso.png"))
+webshot2::webshot(url = here::here("output/tables/comprension_genero.html"),
+                 file= here::here("output/tables/comprension_genero.png"))
 ```
 
 # Analisis experimento
 
 ```{r}
+data <- proc_datos_estudiantes
 for (i in c("just_educ", "just_pensiones", "just_salud",
             "merit_esfuerzo","merit_talento",
             "school_esfuerzo","school_talento","school_merito")) {
@@ -182,7 +190,9 @@ plot_ctrl <- data %>% filter(aleatorio=="Control") %>%
 ```
 
 ```{r}
-ggarrange(plot_trat, plot_ctrl, common.legend = TRUE, nrow=2)
+merito_social<-ggarrange(plot_trat, plot_ctrl, common.legend = TRUE, nrow=2, legend = c("bottom", "right"))
+merito_social
+ggsave(merito_social, file=here::here("output/graphs/likert_merito_social.png"))
 ```
 
 -   Experimento x genero
@@ -199,17 +209,28 @@ experimento <- experimento %>% tidyr::pivot_longer(c("merit_esfuerzo", "merit_ta
 ```
 
 ```{r}
-experimento %>% ggplot(aes(x=genero, y=mean, color=aleatorio, shape=aleatorio))+
-  geom_point()+
-  ylim(1,4)+
-  facet_wrap(~merit)+
+experimento$merit <- factor(experimento$merit, labels = c("Esfuerzo social", "Talento social"))
+
+nombres_eje_Y <- c("Muy en\ndesacuerdo", "En desacuerdo", "De acuerdo", "Muy de\nacuerdo")
+
+socialmerit_genero<-experimento %>%
+  ggplot(aes(x=genero, y=mean, color=aleatorio, shape=aleatorio)) +
+  geom_point(size=3) +
+  ylab("") +
+  scale_y_continuous(breaks = c(1,2,3,4), limits = c(1,4), labels = nombres_eje_Y)+
+  facet_wrap(~merit) + 
+  scale_color_discrete(name = "Experimento") +
+  scale_shape_discrete(name = "Experimento") +
   theme(legend.position = "bottom")
+
+socialmerit_genero
+ggsave(socialmerit_genero, file=here::here("output/graphs/socialmerit_genero.png"))
 ```
 
 -   Experimento x curso
 
 ```{r}
-experimento <- data %>% 
+experimento <- data %>%
   group_by(aleatorio, curso_estudiante) %>% 
   summarise(merit_esfuerzo=mean(merit_esfuerzo, na.rm=TRUE),
             merit_talento=mean(merit_talento, na.rm=TRUE))
@@ -221,11 +242,21 @@ experimento <- experimento %>% tidyr::pivot_longer(c("merit_esfuerzo", "merit_ta
 ```
 
 ```{r}
-experimento %>% ggplot(aes(x=curso_estudiante, y=mean, color=aleatorio, shape=aleatorio))+
-  geom_point()+
-  ylim(1,4)+
-  facet_wrap(~merit)+
+experimento$merit <- factor(experimento$merit, labels = c("Esfuerzo social", "Talento social"))
+
+socialmerit_curso<-experimento %>%
+  ggplot(aes(x=curso_estudiante, y=mean, color=aleatorio, shape=aleatorio)) +
+  geom_point(size=3) +
+  ylab("") +
+  xlab("Curso estudiante")+
+  scale_y_continuous(breaks = c(1,2,3,4), limits = c(1,4), labels = nombres_eje_Y)+
+  facet_wrap(~merit) + 
+  scale_color_discrete(name = "Experimento") +
+  scale_shape_discrete(name = "Experimento") +
   theme(legend.position = "bottom")
+
+socialmerit_curso
+ggsave(socialmerit_curso, file=here::here("output/graphs/socialmerit_curso.png"))
 ```
 
 ## Meritocracia en la escuela
@@ -251,8 +282,10 @@ plot_ctrl <- data %>% filter(aleatorio=="Control") %>%
   theme(legend.position = "bottom")+
   labs(title="Control")
 
+school_merit<-ggarrange(plot_trat, plot_ctrl, common.legend = TRUE, nrow=2, legend = "bottom")
+school_merit
 
-ggarrange(plot_trat, plot_ctrl, common.legend = TRUE, nrow=2)
+ggsave(school_merit, file=here::here("output/graphs/likert_school_merit.png"))
 ```
 
 -   Experimento x Género
@@ -270,11 +303,21 @@ experimento <- experimento %>% tidyr::pivot_longer(c("school_esfuerzo", "school_
 ```
 
 ```{r}
-experimento %>% ggplot(aes(x=genero, y=mean, color=aleatorio, shape=aleatorio))+
-  geom_point()+
-  ylim(1,4)+
-  facet_wrap(~merit)+
+experimento$merit <- factor(experimento$merit, labels = c("Esfuerzo escolar", "Merito escolar", "Talento escolar"))
+
+schoolmerit_genero<-experimento %>%
+  ggplot(aes(x=genero, y=mean, color=aleatorio, shape=aleatorio)) +
+  geom_point(size=3) +
+  ylab("") +
+  xlab("Género")+
+  scale_y_continuous(breaks = c(1,2,3,4), limits = c(1,4), labels = nombres_eje_Y)+
+  facet_wrap(~merit) + 
+  scale_color_discrete(name = "Experimento") +
+  scale_shape_discrete(name = "Experimento") +
   theme(legend.position = "bottom")
+
+schoolmerit_genero
+ggsave(schoolmerit_genero, file=here::here("output/graphs/schoolmerit_genero.png"))
 ```
 
 -   Experimento x curso
@@ -292,11 +335,21 @@ experimento <- experimento %>% tidyr::pivot_longer(c("school_esfuerzo", "school_
 ```
 
 ```{r}
-experimento %>% ggplot(aes(x=curso_estudiante, y=mean, color=aleatorio, shape=aleatorio))+
-  geom_point()+
-  ylim(1,4)+
-  facet_wrap(~merit)+
+experimento$merit <- factor(experimento$merit, labels = c("Esfuerzo escolar", "Merito escolar", "Talento escolar"))
+
+schoolmerit_curso<-experimento %>%
+  ggplot(aes(x=curso_estudiante, y=mean, color=aleatorio, shape=aleatorio)) +
+  geom_point(size=3) +
+  ylab("") +
+  xlab("Género")+
+  scale_y_continuous(breaks = c(1,2,3,4), limits = c(1,4), labels = nombres_eje_Y)+
+  facet_wrap(~merit) + 
+  scale_color_discrete(name = "Experimento") +
+  scale_shape_discrete(name = "Experimento") +
   theme(legend.position = "bottom")
+
+schoolmerit_curso
+ggsave(schoolmerit_curso, file=here::here("output/graphs/schoolmerit_curso.png"))
 ```
 
 ## Justificación desigualdad
@@ -312,18 +365,18 @@ data %>%
 
 ```{r}
 plot_trat <- data %>% filter(aleatorio=="Tratamiento") %>% 
-  dplyr::select(just_salud, just_educ, just_pensiones) %>%
+  dplyr::select(just_pensiones, just_salud, just_educ) %>%
   sjPlot::plot_stackfrq()+
   theme(legend.position = "bottom")+
   labs(title="Tratamiento")
 plot_ctrl <- data %>% filter(aleatorio=="Control") %>% 
-  dplyr::select(just_salud, just_educ, just_pensiones) %>%
+  dplyr::select(just_pensiones, just_salud, just_educ) %>%
   sjPlot::plot_stackfrq()+
   theme(legend.position = "bottom")+
   labs(title="Control")
 
 
-ggarrange(plot_trat, plot_ctrl, common.legend = TRUE, nrow=2)
+ggarrange(plot_trat, plot_ctrl, common.legend = TRUE, nrow=2, legend="bottom")
 ```
 
 -   Experimento x genero
@@ -369,129 +422,125 @@ experimento %>% ggplot(aes(x=curso_estudiante, y=mean, color=aleatorio, shape=al
 
 ## Regresiones simples
 
-### Check experimento
-
--   Tratamiento
+### Check comprensión
 
 ```{r}
-frq(proc_datos_estudiantes$check_tratamiento)
-
+frq(data$check_comprension)
+data$check_comprension <- as_factor(data$check_comprension)
 ```
 
 ```{r results='asis'}
-tratamiento <- proc_datos_estudiantes %>% filter(!is.na(check_tratamiento))
+reg01 <- glm(check_comprension~genero, data=data, family = "binomial")
+reg02 <- glm(check_comprension~curso_estudiante, data=data, family = "binomial")
+reg03 <- glm(check_comprension~genero+curso_estudiante, data=data, family = "binomial")
 
-reg1 <- glm(check_tratamiento~genero, data=tratamiento, family = "binomial")
-reg2 <- glm(check_tratamiento~curso_estudiante, data=tratamiento, family = "binomial")
-reg3 <- glm(check_tratamiento~genero+curso_estudiante, data=tratamiento, family = "binomial")
-
-texreg::knitreg(list(reg1, reg2, reg3))
-```
-
--   Control
-
-```{r}
-frq(proc_datos_estudiantes$check_control)
-```
-
-```{r results='asis'}
-control <- proc_datos_estudiantes %>% filter(!is.na(check_control))
-
-reg1 <- glm(check_control~genero, data=control, family = "binomial")
-reg2 <- glm(check_control~curso_estudiante, data=control, family = "binomial")
-reg3 <- glm(check_control~genero+curso_estudiante, data=control, family = "binomial")
-
-texreg::knitreg(list(reg1, reg2, reg3))
+texreg::knitreg(list(reg01, reg02, reg03))
 ```
 
 ### Todos los cursos
 
+```{r}
+h1 <- "aleatorio"
+h2 <- "genero"
+h3 <- "curso_estudiante"
+h4 <- "check_comprension"
+h5 <- "aleatorio+genero+curso_estudiante+check_comprension"
+```
+
 -   Esfuerzo social
 
 ```{r results='asis'}
-reg1 <- lm(merit_esfuerzo~aleatorio, data=data)
-reg2 <- lm(merit_esfuerzo~aleatorio+genero, data=data)
-reg3 <- lm(merit_esfuerzo~aleatorio+curso_estudiante, data=data)
-reg4 <- lm(merit_esfuerzo~aleatorio+genero+curso_estudiante, data=data)
+reg1 <- lm(formula(paste0("merit_esfuerzo~",h1)), data=data)
+reg2 <- lm(formula(paste0("merit_esfuerzo~",h2)), data=data)
+reg3 <- lm(formula(paste0("merit_esfuerzo~",h3)), data=data)
+reg4 <- lm(formula(paste0("merit_esfuerzo~",h4)), data=data)
+reg5 <- lm(formula(paste0("merit_esfuerzo~",h5)), data=data)
 
-texreg::knitreg(list(reg1, reg2, reg3, reg4))
+texreg::knitreg(list(reg1, reg2, reg3, reg4, reg5))
 ```
 
 -   Talento social
 
 ```{r results='asis'}
-reg1 <- lm(merit_talento~aleatorio, data=data)
-reg2 <- lm(merit_talento~aleatorio+genero, data=data)
-reg3 <- lm(merit_talento~aleatorio+curso_estudiante, data=data)
-reg4 <- lm(merit_talento~aleatorio+genero+curso_estudiante, data=data)
+reg6 <- lm(formula(paste0("merit_talento~",h1)), data=data)
+reg7 <- lm(formula(paste0("merit_talento~",h2)), data=data)
+reg8 <- lm(formula(paste0("merit_talento~",h3)), data=data)
+reg9 <- lm(formula(paste0("merit_talento~",h4)), data=data)
+reg10 <- lm(formula(paste0("merit_talento~",h5)), data=data)
 
-texreg::knitreg(list(reg1, reg2, reg3, reg4))
+texreg::knitreg(list(reg6, reg7, reg8, reg9, reg10))
 ```
 
 -   Esfuerzo escolar
 
 ```{r results='asis'}
-reg1 <- lm(school_esfuerzo~aleatorio, data=data)
-reg2 <- lm(school_esfuerzo~aleatorio+genero, data=data)
-reg3 <- lm(school_esfuerzo~aleatorio+curso_estudiante, data=data)
-reg4 <- lm(school_esfuerzo~aleatorio+genero+curso_estudiante, data=data)
+reg11 <- lm(formula(paste0("school_esfuerzo~",h1)), data=data)
+reg12 <- lm(formula(paste0("school_esfuerzo~",h2)), data=data)
+reg13 <- lm(formula(paste0("school_esfuerzo~",h3)), data=data)
+reg14 <- lm(formula(paste0("school_esfuerzo~",h4)), data=data)
+reg15 <- lm(formula(paste0("school_esfuerzo~",h5)), data=data)
 
-texreg::knitreg(list(reg1, reg2, reg3, reg4))
+texreg::knitreg(list(reg11, reg12, reg13, reg14, reg15))
 ```
 
 -   Talento escolar
 
 ```{r results='asis'}
-reg1 <- lm(school_talento~aleatorio, data=data)
-reg2 <- lm(school_talento~aleatorio+genero, data=data)
-reg3 <- lm(school_talento~aleatorio+curso_estudiante, data=data)
-reg4 <- lm(school_talento~aleatorio+genero+curso_estudiante, data=data)
+reg16 <- lm(formula(paste0("school_talento~",h1)), data=data)
+reg17 <- lm(formula(paste0("school_talento~",h2)), data=data)
+reg18 <- lm(formula(paste0("school_talento~",h3)), data=data)
+reg19 <- lm(formula(paste0("school_talento~",h4)), data=data)
+reg20 <- lm(formula(paste0("school_talento~",h5)), data=data)
 
-texreg::knitreg(list(reg1, reg2, reg3, reg4))
+texreg::knitreg(list(reg16, reg17, reg18, reg19, reg20))
 ```
 
 -   Merito escolar
 
 ```{r results='asis'}
-reg1 <- lm(school_merito~aleatorio, data=data)
-reg2 <- lm(school_merito~aleatorio+genero, data=data)
-reg3 <- lm(school_merito~aleatorio+curso_estudiante, data=data)
-reg4 <- lm(school_merito~aleatorio+genero+curso_estudiante, data=data)
+reg21 <- lm(formula(paste0("school_merito~",h1)), data=data)
+reg22 <- lm(formula(paste0("school_merito~",h2)), data=data)
+reg23 <- lm(formula(paste0("school_merito~",h3)), data=data)
+reg24 <- lm(formula(paste0("school_merito~",h4)), data=data)
+reg25 <- lm(formula(paste0("school_merito~",h5)), data=data)
 
-texreg::knitreg(list(reg1, reg2, reg3, reg4))
+texreg::knitreg(list(reg21, reg22, reg23, reg24, reg25))
 ```
 
 -   Justificación educación
 
 ```{r results='asis'}
-reg1 <- lm(just_educ~aleatorio, data=data)
-reg2 <- lm(just_educ~aleatorio+genero, data=data)
-reg3 <- lm(just_educ~aleatorio+curso_estudiante, data=data)
-reg4 <- lm(just_educ~aleatorio+genero+curso_estudiante, data=data)
+reg26 <- lm(formula(paste0("just_educ~",h1)), data=data)
+reg27 <- lm(formula(paste0("just_educ~",h2)), data=data)
+reg28 <- lm(formula(paste0("just_educ~",h3)), data=data)
+reg29 <- lm(formula(paste0("just_educ~",h4)), data=data)
+reg30 <- lm(formula(paste0("just_educ~",h5)), data=data)
 
-texreg::knitreg(list(reg1, reg2, reg3, reg4))
+texreg::knitreg(list(reg26, reg27, reg28, reg29, reg30))
 ```
 
 -   Justificación salud
 
 ```{r results='asis'}
-reg1 <- lm(just_salud~aleatorio, data=data)
-reg2 <- lm(just_salud~aleatorio+genero, data=data)
-reg3 <- lm(just_salud~aleatorio+curso_estudiante, data=data)
-reg4 <- lm(just_salud~aleatorio+genero+curso_estudiante, data=data)
+reg31 <- lm(formula(paste0("just_salud~",h1)), data=data)
+reg32 <- lm(formula(paste0("just_salud~",h2)), data=data)
+reg33 <- lm(formula(paste0("just_salud~",h3)), data=data)
+reg34 <- lm(formula(paste0("just_salud~",h4)), data=data)
+reg35 <- lm(formula(paste0("just_salud~",h5)), data=data)
 
-texreg::knitreg(list(reg1, reg2, reg3, reg4))
+texreg::knitreg(list(reg31, reg32, reg33, reg34, reg35))
 ```
 
 -   Justificación pensiones
 
 ```{r results='asis'}
-reg1 <- lm(just_pensiones~aleatorio, data=data)
-reg2 <- lm(just_pensiones~aleatorio+genero, data=data)
-reg3 <- lm(just_pensiones~aleatorio+curso_estudiante, data=data)
-reg4 <- lm(just_pensiones~aleatorio+genero+curso_estudiante, data=data)
+reg36 <- lm(formula(paste0("just_pensiones~",h1)), data=data)
+reg37 <- lm(formula(paste0("just_pensiones~",h2)), data=data)
+reg38 <- lm(formula(paste0("just_pensiones~",h3)), data=data)
+reg39 <- lm(formula(paste0("just_pensiones~",h4)), data=data)
+reg40 <- lm(formula(paste0("just_pensiones~",h5)), data=data)
 
-texreg::knitreg(list(reg1, reg2, reg3, reg4))
+texreg::knitreg(list(reg36, reg37, reg38, reg39, reg40))
 ```
 
 ### Básica
