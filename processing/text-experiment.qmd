@@ -118,7 +118,7 @@ sjt.xtab(proc_datos_estudiantes$check_atencion, proc_datos_estudiantes$genero,
          encoding="UTF-8")
 ```
 
-Hay 129 casos que no cumplen el Check de comprensión. \
+Hay 129 casos que no cumplen el Check de comprensión.\
 
 ```{r}
 frq(proc_datos_estudiantes$check_comprension)
