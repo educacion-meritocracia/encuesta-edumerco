@@ -11,7 +11,7 @@ rm(list=ls())       # borrar todos los objetos en el espacio de trabajo
 options(scipen=999) # valores sin notación científica
 
 
-datos_estudiantes <- read_sav("input/data/original/170124_BDD_estudiantes.sav")
+datos_estudiantes <- read_sav("input/data/original/300424_BDD_estudiantes.sav")
 
 
 # 3. seleccionar variables ----------------------------------------------------
@@ -34,7 +34,8 @@ frq(datos_estudiantes$tratamiento)
 
 proc_datos_estudiantes <- datos_estudiantes %>% select(aleatorio, p1_1, p1_2, 
                                                        p2_1, p2_2, p2_3, p9_3, 
-                                                       p9_4, p9_5, d3_def, p26, p27, p30, p20, check_atencion, tratamiento, control)
+                                                       p9_4, p9_5, d3_def, p26, p27, 
+                                                       p30, p20, check_atencion, tratamiento, control, d2)
 #renombrar 
 proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
                                                            merit_esfuerzo = p1_1,
@@ -51,7 +52,8 @@ proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
                                                            libros_hogar = p30,
                                                            genero = p20,
                                                            check_tratamiento = tratamiento,
-                                                           check_control = control)                                                            
+                                                           check_control = control,
+                                                           school_dependencia = d2)                                                            
 
 # Comprobar
 names(proc_datos_estudiantes)
@@ -215,6 +217,32 @@ frq(proc_datos_estudiantes$check_comprension)
 ### a. descriptivo basico ----
 frq(proc_datos_estudiantes$check_atencion) #en desacuerdo 88.17% (507 casos). 
   #no presenta casos perdidos
+
+## school_dependencia ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$school_dependencia) #particular subvencionado 2, 3, 4, 7, 8, 10, 11
+                                    #Municipal 5 
+                                     #Privado  6
+                                      
+#10  Instituto del Puerto, San Antonio -> particular subvencionado  
+#11  Liceo Santa Teresa de Los Andes -> particular subvencionado 
+#12 tambien particular subvencionado
+
+### b. recodificacion ----
+proc_datos_estudiantes <- proc_datos_estudiantes %>%
+  mutate(school_dependencia = case_when(
+    school_dependencia %in% c(2, 3, 4, 7, 8, 10, 11) ~ 1,
+    school_dependencia == 5 ~ 2,
+    school_dependencia == 6 ~ 3,
+    TRUE ~ NA_integer_
+  ))
+
+proc_datos_estudiantes$school_dependencia <- factor(proc_datos_estudiantes$school_dependencia, 
+                                               levels=c(1,2,3),
+                                               labels=c("Colegio Particular Subvencionado", "Colegio Municipal","Colegio Privado"))
+
+
 
 # 5. base procesada -----------------------------------------------------------
 proc_datos_estudiantes <-as.data.frame(proc_datos_estudiantes)
