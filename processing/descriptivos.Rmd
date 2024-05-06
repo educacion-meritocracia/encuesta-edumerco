@@ -94,13 +94,6 @@ for (i in names(dplyr::select(bbdd_alumnos, tidyselect::starts_with("p18_")))) {
 frq(bbdd_alumnos$p18_1)
 ```
 
-# Skim
-
-```{r alumnos-desc, echo=TRUE, eval=TRUE}
-#Exploramos la base de datos
-skim(bbdd_alumnos) %>% dplyr::select(skim_type, skim_variable, n_missing, numeric.mean, numeric.sd, numeric.p0, numeric.p100, numeric.hist)  
-```
-
 # Summarytools
 
 ```{r}
