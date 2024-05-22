@@ -30,12 +30,18 @@ datos_estudiantes <- read_sav("input/data/original/300424_BDD_estudiantes.sav")
 #p27 (nivel de estudios del padre)
 #p30 (cantidad de libros en el hogar)
 
-frq(datos_estudiantes$tratamiento)
+frq(datos_estudiantes$p18_6)
+
 
 proc_datos_estudiantes <- datos_estudiantes %>% select(aleatorio, p1_1, p1_2, 
                                                        p2_1, p2_2, p2_3, p9_3, 
                                                        p9_4, p9_5, d3_def, p26, p27, 
-                                                       p30, p20, check_atencion, tratamiento, control, d2)
+                                                       p30, p20, check_atencion, 
+                                                       tratamiento, control, d2,
+                                                       p5, p7, p17_1, p17_2, p19, p10_1, p10_2,
+                                                       p10_5, p10_6, p11_2, p11_3, p12_1,
+                                                       p12_3, p13_2, p13_4, p13_6, p18_1,
+                                                       p18_2, p18_5, p18_6)
 #renombrar 
 proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
                                                            merit_esfuerzo = p1_1,
@@ -53,7 +59,27 @@ proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
                                                            genero = p20,
                                                            check_tratamiento = tratamiento,
                                                            check_control = control,
-                                                           school_dependencia = d2)                                                            
+                                                           school_dependencia = d2,
+                                                           notas_merit = p5,
+                                                           notas_esfuerzo = p7,
+                                                           pp_futura_pol = p17_1,
+                                                           pp_presente_pol = p17_2, 
+                                                           school_ciudadania = p19,
+                                                           ciudadania_voto = p10_1,
+                                                           ciudadania_pp = p10_2,
+                                                           ciudadania_ley = p10_5, 
+                                                           ciudadania_op = p10_6, 
+                                                           pp_futura_voto = p11_2,
+                                                           pp_futura_candidatos = p11_3, 
+                                                           pp_presente_marcha = p12_1,
+                                                           pp_presente_toma = p12_3, 
+                                                           pp_presente_rrss = p13_2,
+                                                           pp_presente_compartir = p13_4, 
+                                                           pp_presente_like = p13_6,
+                                                           school_ciudadania_es = p18_1,
+                                                           school_ciudadania_op = p18_2,
+                                                           school_ciudadania_dif = p18_5, 
+                                                           school_ciudadania_class = p18_6)                                                            
 
 # Comprobar
 names(proc_datos_estudiantes)
@@ -242,6 +268,196 @@ proc_datos_estudiantes$school_dependencia <- factor(proc_datos_estudiantes$schoo
                                                levels=c(1,2,3),
                                                labels=c("Colegio Particular Subvencionado", "Colegio Municipal","Colegio Privado"))
 
+## notas_merit ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$notas_merit) #Buen sentido. Casos perdidos: 
+  #88 (no sabe) 1 caso; 99 (preferiria no responder) 0 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$notas_merit <- recode(proc_datos_estudiantes$notas_merit, "c(88,99)=NA")
+
+
+## notas_esfuerzo ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$notas_esfuerzo) #Buen sentido. Casos perdidos: 
+#88 (no sabe) 4 casos; 99 (preferiria no responder) 3 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$notas_esfuerzo <- recode(proc_datos_estudiantes$notas_esfuerzo, "c(88,99)=NA")
+
+## pp_futura_pol ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$pp_futura_pol) #Buen sentido. Casos perdidos: 
+#88 (no sabe) 1 caso; 99 (preferiria no responder) 0 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$pp_futura_pol <- recode(proc_datos_estudiantes$pp_futura_pol, "c(88,99)=NA")
+
+
+## pp_presente_pol ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$pp_presente_pol) #Buen sentido. Casos perdidos: 
+#88 (no sabe) 1 caso; 99 (preferiria no responder) 4 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$pp_presente_pol <- recode(proc_datos_estudiantes$pp_presente_pol, "c(88,99)=NA")
+
+
+## school_ciudadania ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$school_ciudadania) #Buen sentido. Casos perdidos: 
+#88 (no sabe) 2 casos; 99 (preferiria no responder) 2 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$school_ciudadania <- recode(proc_datos_estudiantes$school_ciudadania, "c(88,99)=NA")
+
+## ciudadania_voto ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$ciudadania_voto) #Buen sentido. Casos perdidos: 
+#88 (no sabe) 1 caso; 99 (preferiria no responder) 0 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$ciudadania_voto <- recode(proc_datos_estudiantes$ciudadania_voto, "c(88,99)=NA")
+
+
+## ciudadania_ley ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$ciudadania_ley)#Buen sentido. Casos perdidos: 
+#88 (no sabe) 0 casos; 99 (preferiria no responder) 1 caso
+
+### b. recodificacion ----
+proc_datos_estudiantes$ciudadania_ley <- recode(proc_datos_estudiantes$ciudadania_ley, "c(88,99)=NA")
+
+
+## ciudadania_op ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$ciudadania_op)#Buen sentido. Casos perdidos: 
+#88 (no sabe) 0 casos; 99 (preferiria no responder) 1 caso
+
+### b. recodificacion ----
+proc_datos_estudiantes$ciudadania_op <- recode(proc_datos_estudiantes$ciudadania_op, "c(88,99)=NA")
+
+
+## ciudadania_pp ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$ciudadania_pp)#Buen sentido. Casos perdidos: 
+#88 (no sabe) 2 casos; 99 (preferiria no responder) 0 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$ciudadania_pp <- recode(proc_datos_estudiantes$ciudadania_pp, "c(88,99)=NA")
+
+
+## pp_futura_voto ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$pp_futura_voto) #Buen sentido. Casos perdidos: 
+#88 (no sabe) 1 caso; 99 (preferiria no responder) 0 casos
+
+
+### b. recodificacion ----
+proc_datos_estudiantes$pp_futura_voto <- recode(proc_datos_estudiantes$pp_futura_voto, "c(88,99)=NA")
+
+
+## pp_futura_candidatos ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$pp_futura_candidatos) #Buen sentido. Casos perdidos: 
+#88 (no sabe) 0 casos; 99 (preferiria no responder) 0 casos
+
+
+## pp_presente_marcha ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$pp_presente_marcha) #Buen sentido. Casos perdidos: 
+ #99 (preferiria no responder) 3 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$pp_presente_marcha <- recode(proc_datos_estudiantes$pp_presente_marcha, "c(99)=NA")
+
+
+## pp_presente_toma ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$pp_presente_toma)#Buen sentido. Casos perdidos: 
+#99 (preferiria no responder) 5 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$pp_presente_toma <- recode(proc_datos_estudiantes$pp_presente_toma, "c(99)=NA")
+
+
+## pp_presente_like ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$pp_presente_like)#Buen sentido. Casos perdidos: 
+#99 (preferiria no responder) 1 caso; 88 (No sabe) 0 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$pp_presente_like <- recode(proc_datos_estudiantes$pp_presente_like, "c(88,99)=NA")
+
+
+## pp_presente_rrss ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$pp_presente_rrss)#Buen sentido. Casos perdidos: 
+#99 (preferiria no responder) 1 caso; 88 (No sabe) 0 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$pp_presente_rrss <- recode(proc_datos_estudiantes$pp_presente_rrss, "c(88,99)=NA")
+
+
+## pp_presente_compartir ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$pp_presente_compartir)#Buen sentido. Casos perdidos: 
+#99 (preferiria no responder) 0 casos; 88 (No sabe) 1 caso
+
+### b. recodificacion ----
+proc_datos_estudiantes$pp_presente_compartir <- recode(proc_datos_estudiantes$pp_presente_compartir, "c(88,99)=NA")
+
+
+## school_ciudadania_class ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$school_ciudadania_class)#Buen sentido. Casos perdidos: 
+#99 (preferiria no responder) 1 caso; 88 (No sabe) 0 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$school_ciudadania_class <- recode(proc_datos_estudiantes$school_ciudadania_class, "c(88,99)=NA")
+
+
+## school_ciudadania_dif ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$school_ciudadania_dif) #Buen sentido. Casos perdidos: 
+#99 (preferiria no responder) 1 caso; 88 (No sabe) 3 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$school_ciudadania_dif <- recode(proc_datos_estudiantes$school_ciudadania_dif, "c(88,99)=NA")
+
+
+## school_ciudadania_es ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$school_ciudadania_es)
+
+
+## school_ciudadania_op ----
+
+### a. descriptivo basico ----
+frq(proc_datos_estudiantes$school_ciudadania_op)#Buen sentido. Casos perdidos: 
+#99 (preferiria no responder) 1 caso; 88 (No sabe) 0 casos
+
+### b. recodificacion ----
+proc_datos_estudiantes$school_ciudadania_op <- recode(proc_datos_estudiantes$school_ciudadania_op, "c(88,99)=NA")
 
 
 # 5. base procesada -----------------------------------------------------------

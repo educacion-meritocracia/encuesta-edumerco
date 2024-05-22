@@ -1,0 +1,74 @@
+---
+title: "Documento devolución colegios"
+author: "Equipo Edumer"
+format: pdf
+editor: visual
+---
+
+## Introducción
+
+Se estructurá de acuerdo a tres grandes módulos
+
+Esta es la idea para cuando tengamos todos los datos.
+
+## Reporte metodológico
+
+## 1. Meritocracia
+
+### 1.1. Meritocracia en la escuela
+
+Algunos temas de este modulo no incluyen a los tres actores. Se indicaran en cada caso.
+
+#### 1.1.1. Justicia en la notas
+
+Solo estudiantes
+
+#### 1.1.2. Creencias en la meritocracia
+
+Estudiantes, docentes y apoderados
+
+#### 1.1.3. Prácticas pedagógicas (?)
+
+Solo docentes
+
+### 1.2. Meritocracia en la sociedad
+
+#### 1.2.1. Creencias en la meritocracia
+
+Estudiantes docentes y apoderados
+
+## 2. Desigualdad
+
+### 2.1. Justificación de la desigualdad
+
+Estudiantes, docentes y apoderados
+
+## 3. Ciudadania
+
+### 3.1. Buena ciudadanía
+
+Estudiantes, docentes y apoderados
+
+### 3.2. Participación política
+
+#### 3.2.1. Participación política actual
+
+Estudiantes, docentes y apoderados
+
+#### 3.2.2. Participación política futura
+
+Estudiantes, docentes y apoderados
+
+### 3.3. Formacióm ciudadana en la escuela
+
+Algunos temas de este módulo no incluyen a los tres actores. Se indicarán en cada uno.
+
+#### 3.3.1. En el espacio de clases
+
+Estudiantes y docentes
+
+#### 3.3.2. Percepción respecto a la importancia que le entrega la escuela
+
+Estudiantes, docentes y apoderados
+
+### 
