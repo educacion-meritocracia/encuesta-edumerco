@@ -191,7 +191,13 @@ proc_datos_estudiantes$just_pensiones <- recode(proc_datos_estudiantes$just_pens
 frq(proc_datos_estudiantes$curso_estudiante) #no tiene NA 
 
 ### b. recodificacion ----
-proc_datos_estudiantes$curso_estudiante <- car::recode(proc_datos_estudiantes$curso_estudiante, recodes = c("'1a' = 'Media'; '1b' = 'Media'; '1c' = 'Media'; '6a' = 'Basica'; '6b' = 'Basica'; '6c' = 'Basica'"))
+proc_datos_estudiantes <- proc_datos_estudiantes %>%
+  mutate(curso_estudiante = case_when(
+    grepl("^(2|1|II|segundo|Segundo|sugundo|Media)", curso_estudiante, ignore.case = TRUE) ~ 'Media',
+    grepl("^(7|Basica|Septimo|Séptimo|septimo|séptimo|sexto)", curso_estudiante, ignore.case = TRUE) ~ 'Básica',
+    TRUE ~ curso_estudiante  # mantener el valor original si no coincide con ninguna condición
+  ))
+
 
 ## genero ----
 
