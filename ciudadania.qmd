@@ -1,0 +1,887 @@
+# Ciudadanía
+
+```{r, echo=FALSE, include=FALSE}
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled)
+
+load("input/data/proc/es_ola1.RData")
+
+
+
+
+```
+
+```{r, echo=FALSE, eval=TRUE}
+#Base General con el cuestionario para estudiantes
+#Codificamos los valores 99-88 como missing para todas las variables
+proc_datos_estudiantes <- proc_datos_estudiantes %>% set_na(., na = c(99, 88))
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p1_"), starts_with("p2_"), starts_with("p8_"), starts_with("p9_"), starts_with("p17_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p10_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Nada importante", "Algo importante", "Importante", "Muy importante")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p11_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")
+  )
+}
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p12_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Si", "No")
+  )
+}
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p13_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p18_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Nunca", "Casi nunca", "Casi siempre", "Siempre")
+  )
+}
+
+```
+
+## Formación ciudadana en la escuela
+
+### Percepción respecto a la importancia que le entrega la escuela
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br> Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+### En el espacio de clases
+
+**Preguntas presentadas en la reunión anterior:**
+
+-   *school_ciudadania_es*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania_es, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br> Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania_es, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *school_ciudadania_op*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania_op, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br> Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania_op, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *school_ciudadania_dif*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania_dif, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br> Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania_dif, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *school_ciudadania_class*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania_class, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")                       
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_ciudadania_class, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+------------------------------------------------------------------------
+
+**Otra pregunta referente a este módulo:**
+
+-   *p18_3*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p18_3, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p18_3, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+## Participación política
+
+### Participación politica actual (o en el presente escolar)
+
+**Preguntas presentadas en la reunión anterior:**
+
+-   *pp_presente_pol*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_pol, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_pol, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *pp_presente_marcha*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_marcha, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_marcha, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *pp_presente_toma*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_toma, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_toma, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *pp_presente_rrss*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_rrss, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_marcha, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *pp_presente_compartir*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_compartir, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_compartir, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *pp_presente_like*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_like, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_presente_like, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+------------------------------------------------------------------------
+
+**Otras preguntas referentes a este módulo:**
+
+-   *p12_2*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p12_2,      
+         proc_datos_estudiantes$genero,     
+         show.col.prc = TRUE,               
+         show.summary = FALSE,             
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p12_2,           
+         proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc = TRUE,                      
+         show.summary = FALSE,                     
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *p13_1*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p13_1,    
+         proc_datos_estudiantes$genero,    
+         show.col.prc = TRUE,              
+         show.summary = FALSE,            
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p13_1,    
+         proc_datos_estudiantes$curso_estudiante,    
+         show.col.prc = TRUE,                        
+         show.summary = FALSE,                       
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *p13_5*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p13_5,             
+         proc_datos_estudiantes$genero,            
+         show.col.prc = TRUE,                      
+         show.summary = FALSE,                   
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p13_5,         
+         proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc = TRUE,                     
+         show.summary = FALSE,                     
+         encoding = "UTF-8")
+
+```
+
+### Participación política futura (en mayoría de edad)
+
+**Preguntas presentadas en la reunión anterior:**
+
+-   *pp_futura_voto*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_futura_voto, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_futura_voto, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *pp_futura_candidatos*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_futura_candidatos, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$pp_futura_candidatos, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+------------------------------------------------------------------------
+
+**Otra pregunta referente a este módulo:**
+
+-   *p11_1*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p11_1,   
+         proc_datos_estudiantes$genero,     
+         show.col.prc = TRUE,               
+         show.summary = FALSE,            
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p11_1,       
+         proc_datos_estudiantes$curso_estudiante,   
+         show.col.prc = TRUE,                     
+         show.summary = FALSE,                     
+         encoding = "UTF-8")
+
+```
+
+## Buena ciudadanía
+
+**Preguntas presentadas en la reunión anterior:**
+
+-   *ciudadania_voto*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$ciudadania_voto, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$ciudadania_voto, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *ciudadania_pp*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$ciudadania_pp, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$ciudadania_voto, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *ciudadania_ley*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$ciudadania_ley, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$ciudadania_ley, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *ciudadania_op*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$ciudadania_op, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$ciudadania_op, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+------------------------------------------------------------------------
+
+**Otras preguntas referentes a este módulo:**
+
+-   *p10_3*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p10_3, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p10_3, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *p10_4*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p10_4, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p10_4, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *p10_7*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p10_7, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p10_7, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *p10_8*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p10_8, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p10_8, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+------------------------------------------------------------------------
+
+## Extra: Relación con el adulto en el hogar
+
+-   *p14*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p14,          
+         proc_datos_estudiantes$genero,     
+         show.col.prc = TRUE,             
+         show.summary = FALSE,          
+         encoding = "UTF-8")
+
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p14,        
+         proc_datos_estudiantes$curso_estudiante,  
+         show.col.prc = TRUE,                     
+         show.summary = FALSE,                   
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *p15*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p15,       
+         proc_datos_estudiantes$genero,    
+         show.col.prc = TRUE,            
+         show.summary = FALSE,        
+         encoding = "UTF-8")
+
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p15,     
+         proc_datos_estudiantes$curso_estudiante,  
+         show.col.prc = TRUE,                      
+         show.summary = FALSE,                     
+         encoding = "UTF-8")
+```
+
+------------------------------------------------------------------------
+
+-   **p16**
+
+1.  *Categoría "Colegio":*
+
+```{r, echo=FALSE}
+
+table(proc_datos_estudiantes$P16_o1)
+
+```
+
+<br>
+
+2.  *Categoría "Deportes":*
+
+```{r, echo=FALSE}
+
+table(proc_datos_estudiantes$P16_o2)
+
+```
+
+<br>
+
+3.  *Categoría "Política":*
+
+```{r, echo=FALSE}
+
+table(proc_datos_estudiantes$P16_o3)
+
+
+```
+
+<br>
+
+4.  *Categoría "Películas o series":*
+
+```{r, echo=FALSE}
+
+table(proc_datos_estudiantes$P16_o4)
+
+```
+
+<br>
+
+5.  *Categoría "Juegos":*
+
+```{r, echo=FALSE}
+
+table(proc_datos_estudiantes$P16_o5)
+
+```
+
+<br>
+
+6.  *Categoría "Otro, ¿Cuál?":*
+
+```{r, echo=FALSE}
+
+table(proc_datos_estudiantes$P16_o6)
+
+```

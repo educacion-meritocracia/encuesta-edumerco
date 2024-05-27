@@ -1,0 +1,538 @@
+# Meritocracia
+
+La meritocracia se ha operacionalizado para efectos de este estudio en la noción de creencias en la meritocracia.
+
+Este primer módulo consta de dos secciones, donde se diferencian dichas creencias en el espacio escolar y en la sociedad.
+
+## Meritocracia en la escuela
+
+Para medir la meritocracia en el espacio escolar se tienen en cuenta dos elementos: la asiganción de notas (o experencia con las notas) y las creencias en la meritocracia dentro de la escuela.
+
+### Justicia en las notas
+
+**Preguntas presentadas en la reunión anterior:**
+
+-   *Percepción de merecimiento de la nota obtenida*
+
+```{r, echo=FALSE, include=FALSE}
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled)
+
+load("input/data/proc/es_ola1.RData")
+
+
+
+
+```
+
+```{r, echo=FALSE, eval=TRUE}
+#Base General con el cuestionario para estudiantes
+#Codificamos los valores 99-88 como missing para todas las variables
+proc_datos_estudiantes <- proc_datos_estudiantes %>% set_na(., na = c(99, 88))
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p1_"), starts_with("p2_"), starts_with("p8_"), starts_with("p9_"), starts_with("p17_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p10_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Nada importante", "Algo importante", "Importante", "Muy importante")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p11_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")
+  )
+}
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p12_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Si", "No")
+  )
+}
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p13_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p18_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Nunca", "Casi nunca", "Casi siempre", "Siempre")
+  )
+}
+
+```
+
+Cruce con género:
+
+```{r , echo=FALSE}
+# Crear la tabla cruzada
+sjt.xtab(proc_datos_estudiantes$notas_merit, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$notas_merit, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *Percepción de merecimiento de la nota obtenida en razón del tiempo dedicado al estudio*
+
+Cruce con género:
+
+```{r , echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$notas_esfuerzo, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$notas_esfuerzo, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+
+```
+
+------------------------------------------------------------------------
+
+**Otras preguntas referentes a este módulo:**
+
+Estas preguntas refieren a la nota obtenida.
+
+-   *p4*
+
+-   *p6*
+
+### Creencias en la meritocracia
+
+**Preguntas presentadas en la reunión anterior:**
+
+-   *Talento*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_talento, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br> Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_talento, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *Esfuerzo*
+
+Cruce con género
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_esfuerzo, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_esfuerzo, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *Mérito*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_merito, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$school_merito, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+
+```
+
+------------------------------------------------------------------------
+
+**Otra pregunta referentes a este módulo:**
+
+-   *p3*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p3, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p3, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+
+```
+
+## Meritocracia en la sociedad
+
+### Creencias en la meritocracia
+
+**Preguntas presentadas en la reunión anterior:**
+
+-   *Esfuerzo*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$merit_esfuerzo, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br> Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$merit_esfuerzo, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+<br>
+
+-   *Talento*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$merit_talento, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br> Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$merit_talento, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+------------------------------------------------------------------------
+
+**Otras preguntas referentes a este módulo:**
+
+-   *p1_3*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_3, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_3, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *p1_4*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_4,     
+         proc_datos_estudiantes$genero,   
+         show.col.prc = TRUE,              
+         show.summary = FALSE,             
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_4,       
+         proc_datos_estudiantes$curso_estudiante,   
+         show.col.prc = TRUE,                     
+         show.summary = FALSE,                   
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *p1_5*
+
+*nota*: el fraseo correcto es **"Quienes más se esfuerzan deberían obtener mayores recompensas que quienes se esfuerzan menos"**
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_5,         
+         proc_datos_estudiantes$genero,      
+         show.col.prc = TRUE,          
+         show.summary = FALSE,                 
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+
+sjt.xtab(proc_datos_estudiantes$p1_5, proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc = TRUE,             
+         show.summary = FALSE,                           
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *p1_6*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_6,              
+         proc_datos_estudiantes$genero,           
+         show.col.prc = TRUE,             
+         show.summary = FALSE,            
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_6, 
+         proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc = TRUE,                
+         show.summary = FALSE,    
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *p1_7*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_7,    
+         proc_datos_estudiantes$genero,  
+         show.col.prc = TRUE,           
+         show.summary = FALSE,        
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_7,    
+         proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc = TRUE,                   
+         show.summary = FALSE,             
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+-   *p1_8*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_8, 
+         proc_datos_estudiantes$genero, 
+         show.col.prc = TRUE,           
+         show.summary = FALSE,            
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_8,     
+         proc_datos_estudiantes$curso_estudiante,   
+         show.col.prc = TRUE,                    
+         show.summary = FALSE,                  
+         encoding = "UTF-8")
+
+
+```
+
+<br>
+
+-   *p1_9*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_9,    
+         proc_datos_estudiantes$genero, 
+         show.col.prc = TRUE,         
+         show.summary = FALSE,        
+         encoding = "UTF-8")
+
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_9,     
+         proc_datos_estudiantes$curso_estudiante,   
+         show.col.prc = TRUE,                   
+         show.summary = FALSE,                  
+         encoding = "UTF-8")
+
+
+```
+
+<br>
+
+-   *p1_10*
+
+Cruce con género:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_10,  
+         proc_datos_estudiantes$genero,   
+         show.col.prc = TRUE,            
+         show.summary = FALSE,         
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p1_10,
+         proc_datos_estudiantes$curso_estudiante,     
+         show.col.prc = TRUE,                       
+         show.summary = FALSE,                  
+         encoding = "UTF-8")
+
+```

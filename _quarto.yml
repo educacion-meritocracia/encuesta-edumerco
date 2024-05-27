@@ -1,0 +1,27 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Informe descriptivo colegios"
+  author: "Equipo Edumer"
+  date: "22-05-2024"
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - reporte_metodologico.qmd
+    - meritocracia.qmd
+    - ciudadania.qmd
+    - desigualdad.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+
