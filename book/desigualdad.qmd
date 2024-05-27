@@ -1,0 +1,229 @@
+# Desigualdad
+
+```{r, echo=FALSE, include=FALSE}
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled)
+
+load("../input/data/proc/es_ola1.RData")
+
+
+```
+
+```{r, echo=FALSE, eval=TRUE}
+#Base General con el cuestionario para estudiantes
+#Codificamos los valores 99-88 como missing para todas las variables
+proc_datos_estudiantes <- proc_datos_estudiantes %>% set_na(., na = c(99, 88))
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p1_"), starts_with("p2_"), starts_with("p8_"), starts_with("p9_"), starts_with("p17_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p10_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Nada importante", "Algo importante", "Importante", "Muy importante")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p11_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")
+  )
+}
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p12_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Si", "No")
+  )
+}
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p13_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p18_")))) {
+  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
+    x = proc_datos_estudiantes[[i]],
+    labels = c("Nunca", "Casi nunca", "Casi siempre", "Siempre")
+  )
+}
+
+```
+
+
+## Justificación de la desigualdad
+
+**Preguntas presentadas en la reunión anterior:**
+
+- *Educación*
+
+Cruce con género:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$just_educ, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$just_educ, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+- *Salud*
+
+Cruce con género:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$just_salud, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$just_salud, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+<br>
+
+- *Pensiones*
+
+Cruce con género:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$just_pensiones, 
+                          proc_datos_estudiantes$genero, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+
+```
+
+
+<br>
+
+Cruce con curso:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$just_pensiones, 
+                          proc_datos_estudiantes$curso_estudiante, 
+                          show.col.prc = TRUE,
+                          show.summary = FALSE,
+                          encoding = "UTF-8")
+```
+
+---
+
+**Otras preguntas referentes a este módulo:**
+
+- *p9_1*
+
+Cruce con género:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p9_1,    
+         proc_datos_estudiantes$genero,      
+         show.col.prc = TRUE,               
+         show.summary = FALSE,             
+         encoding = "UTF-8")
+
+
+```
+
+<br>
+
+Cruce con curso:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p9_1,       
+         proc_datos_estudiantes$curso_estudiante,
+         show.col.prc = TRUE,                    
+         show.summary = FALSE,               
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+- *p9_2*
+
+Cruce con género:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p9_2,             
+         proc_datos_estudiantes$genero,          
+         show.col.prc = TRUE,                  
+         show.summary = FALSE,              
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p9_2,                  
+         proc_datos_estudiantes$curso_estudiante,     
+         show.col.prc = TRUE,                        
+         show.summary = FALSE,                       
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+- *p9_6*
+
+Cruce con género:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p9_6,    
+         proc_datos_estudiantes$genero,   
+         show.col.prc = TRUE,             
+         show.summary = FALSE,           
+         encoding = "UTF-8")
+
+```
+
+<br>
+
+Cruce con curso:
+```{r, echo=FALSE}
+sjt.xtab(proc_datos_estudiantes$p9_6,       
+         proc_datos_estudiantes$curso_estudiante, 
+         show.col.prc = TRUE,             
+         show.summary = FALSE,          
+         encoding = "UTF-8")
+
+```
+
+
+
+
+
+

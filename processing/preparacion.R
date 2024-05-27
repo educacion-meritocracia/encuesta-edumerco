@@ -12,7 +12,7 @@ options(scipen=999) # valores sin notación científica
 
 
 datos_estudiantes <- read_sav("input/data/original/300424_BDD_estudiantes.sav")
-
+frq(proc_datos_estudiantes$p1_5)
 
 # 3. seleccionar variables ----------------------------------------------------
 
@@ -30,7 +30,7 @@ datos_estudiantes <- read_sav("input/data/original/300424_BDD_estudiantes.sav")
 #p27 (nivel de estudios del padre)
 #p30 (cantidad de libros en el hogar)
 
-frq(datos_estudiantes$p18_6)
+frq(datos_estudiantes$p26)
 
 
 proc_datos_estudiantes <- datos_estudiantes %>% select(aleatorio, p1_1, p1_2, 
@@ -41,7 +41,11 @@ proc_datos_estudiantes <- datos_estudiantes %>% select(aleatorio, p1_1, p1_2,
                                                        p5, p7, p17_1, p17_2, p19, p10_1, p10_2,
                                                        p10_5, p10_6, p11_2, p11_3, p12_1,
                                                        p12_3, p13_2, p13_4, p13_6, p18_1,
-                                                       p18_2, p18_5, p18_6)
+                                                       p18_2, p18_5, p18_6, p3, p1_3, p1_4, 
+                                                       p1_5, p1_6, p1_7, p1_8,p1_9, p1_10, 
+                                                       p10_3, p10_3, p10_4, p10_7, p10_8, p12_2, 
+                                                       p13_1, p13_5, p11_1, p18_3, p9_1, p9_2, p9_6, 
+                                                       p14, p15, P16_o1, P16_o2, P16_o3, P16_o4, P16_o5, P16_o6)
 #renombrar 
 proc_datos_estudiantes <- proc_datos_estudiantes %>% rename(
                                                            merit_esfuerzo = p1_1,
@@ -194,7 +198,7 @@ frq(proc_datos_estudiantes$curso_estudiante) #no tiene NA
 proc_datos_estudiantes <- proc_datos_estudiantes %>%
   mutate(curso_estudiante = case_when(
     grepl("^(2|1|II|segundo|Segundo|sugundo|Media)", curso_estudiante, ignore.case = TRUE) ~ 'Media',
-    grepl("^(7|Basica|Septimo|Séptimo|septimo|séptimo|sexto)", curso_estudiante, ignore.case = TRUE) ~ 'Básica',
+    grepl("^(7|6|Basica|Septimo|Séptimo|septimo|séptimo|sexto)", curso_estudiante, ignore.case = TRUE) ~ 'Básica',
     TRUE ~ curso_estudiante  # mantener el valor original si no coincide con ninguna condición
   ))
 
