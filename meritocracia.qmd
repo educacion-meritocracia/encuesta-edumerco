@@ -1,7 +1,7 @@
 # Meritocracia
 
 ```{r, echo=FALSE, include=FALSE}
-pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled, ggplot2)
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled, ggplot2, summarytools, ggtext, ggpubr)
 
 load("input/data/proc/es_ola1.RData")
 
@@ -79,8 +79,21 @@ a\. Respecto a criterios de mérito individual
 -   *Esfuerzo*
 
 ```{r, esfuerzo-univariado, echo=FALSE}
+merit_esfuerzo = round(prop.table(table(categorias=proc_datos_estudiantes$merit_esfuerzo)),2)
+merit_esfuerzo = as.data.frame(merit_esfuerzo)
+merit_esfuerzo$categorias <- factor(merit_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
 
-
+plot_meritesfuerzo<-ggplot(merit_esfuerzo,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity",
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Purples")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5)
+plot_meritesfuerzo
 ```
 
 <br>
@@ -94,6 +107,31 @@ a\. Respecto a criterios de mérito individual
 <br>
 
 Cruce con género:
+
+```{r}
+plot1 <- proc_datos_estudiantes %>% dplyr::filter(genero=="Hombre") %>% 
+  dplyr::select(merit_talento, merit_esfuerzo, p1_10) %>%
+  sjPlot::plot_stackfrq()+
+  theme(legend.position = "bottom")+
+  labs(title="Hombre")
+
+plot2 <- proc_datos_estudiantes %>% filter(genero=="Mujer") %>% 
+  dplyr::select(merit_talento, merit_esfuerzo, p1_10) %>%
+  sjPlot::plot_stackfrq()+
+  theme(legend.position = "bottom")+
+  labs(title="Mujer")
+
+plot3 <- proc_datos_estudiantes %>% filter(genero=="Otro") %>% 
+  dplyr::select(merit_talento, merit_esfuerzo, p1_10) %>%
+  sjPlot::plot_stackfrq()+
+  theme(legend.position = "bottom")+
+  labs(title="Otro")
+```
+
+```{r merit-soc-experiment}
+merito_social<-ggarrange(plot1, plot2,plot3, common.legend = TRUE, nrow=3, legend = c("bottom", "right"))
+merito_social
+```
 
 ```{r, bivariado-ge, echo=FALSE}
 
