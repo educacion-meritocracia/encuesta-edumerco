@@ -12,7 +12,7 @@ options(scipen=999) # valores sin notación científica
 
 
 datos_estudiantes <- read_sav("input/data/original/300424_BDD_estudiantes.sav")
-frq(proc_datos_estudiantes$p1_5)
+frq(datos_estudiantes$p6)
 
 # 3. seleccionar variables ----------------------------------------------------
 
@@ -468,7 +468,6 @@ frq(proc_datos_estudiantes$school_ciudadania_op)#Buen sentido. Casos perdidos:
 
 ### b. recodificacion ----
 proc_datos_estudiantes$school_ciudadania_op <- recode(proc_datos_estudiantes$school_ciudadania_op, "c(88,99)=NA")
-
 
 # 5. base procesada -----------------------------------------------------------
 proc_datos_estudiantes <-as.data.frame(proc_datos_estudiantes)
