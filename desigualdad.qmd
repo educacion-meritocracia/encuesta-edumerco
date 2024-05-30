@@ -203,31 +203,3 @@ sjt.xtab(proc_datos_estudiantes$p9_2,
          encoding = "UTF-8")
 
 ```
-
-<br>
-
--   *p9_6*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p9_6,    
-         proc_datos_estudiantes$genero,   
-         show.col.prc = TRUE,             
-         show.summary = FALSE,           
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p9_6,       
-         proc_datos_estudiantes$curso_estudiante, 
-         show.col.prc = TRUE,             
-         show.summary = FALSE,          
-         encoding = "UTF-8")
-
-```

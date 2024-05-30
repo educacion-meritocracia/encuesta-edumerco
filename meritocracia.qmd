@@ -1,25 +1,9 @@
 # Meritocracia
 
-La meritocracia se ha operacionalizado para efectos de este estudio en la noción de creencias en la meritocracia.
-
-Este primer módulo consta de dos secciones, donde se diferencian dichas creencias en el espacio escolar y en la sociedad.
-
-## Meritocracia en la escuela
-
-Para medir la meritocracia en el espacio escolar se tienen en cuenta dos elementos: la asiganción de notas (o experencia con las notas) y las creencias en la meritocracia dentro de la escuela.
-
-### Justicia en las notas
-
-**Preguntas presentadas en la reunión anterior:**
-
--   *Percepción de merecimiento de la nota obtenida*
-
 ```{r, echo=FALSE, include=FALSE}
-pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled)
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled, ggplot2)
 
 load("input/data/proc/es_ola1.RData")
-
-
 
 
 ```
@@ -76,451 +60,218 @@ for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p
 
 ```
 
-Cruce con género:
+La meritocracia es una idea o un principio que hace alusión a la forma en que serán asignados los recursos dentro de la sociedad. Dicha asignación, se realiza de acuerdo a una compensación ligada al mérito individual. Este último es central para entender la meritocracia, el cual se encuentra compuesto por las nociones de talento y esfuerzo. De ese modo ambos funcionan como criterios de mérito individual. 
 
-```{r , echo=FALSE}
-# Crear la tabla cruzada
-sjt.xtab(proc_datos_estudiantes$notas_merit, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+Así, es posible hablar de un ideal meritocrático, el cual se observa simbólicamente dentro de la sociedad en términos de una ideología (es decir, un conjunto de ideas). Una de las formas en que se socializa esta ideología es a través de la educación. Por ello, este estudio busca observar la forma en que se expresa la meritocracia en la escuela. 
 
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$notas_merit, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *Percepción de merecimiento de la nota obtenida en razón del tiempo dedicado al estudio*
-
-Cruce con género:
-
-```{r , echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$notas_esfuerzo, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$notas_esfuerzo, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-
-```
-
-------------------------------------------------------------------------
-
-**Otras preguntas referentes a este módulo:**
-
-Estas preguntas refieren a la nota obtenida.
-
--   *p4*
-
--   *p6*
-
-### Creencias en la meritocracia
-
-**Preguntas presentadas en la reunión anterior:**
-
--   *Talento*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_talento, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br> Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_talento, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *Esfuerzo*
-
-Cruce con género
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_esfuerzo, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_esfuerzo, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-```
-
-<br>
-
--   *Mérito*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_merito, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_merito, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-
-```
-
-------------------------------------------------------------------------
-
-**Otra pregunta referentes a este módulo:**
-
--   *p3*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p3, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p3, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-
-```
+Con esa definición en mente, el presente módulo se estructurará en dos apartados: **meritocracia en la sociedad** y **meritocracia en la escuela**. Dentro de cada uno se observará operacionalmente la meritocracia a través de las *creencias de las/los estudiantes*. Asimismo, al interior de dichas creencias es posible distinguir dos tipos: *preferencias* respecto de lo que debería ocurrir en la sociedad o en la escuela y *percepciones* de lo que efectivamente ocurre al interior de esos dos espacios.
 
 ## Meritocracia en la sociedad
 
+Dentro del espacio más general a nivel de la sociedad, se presentan preguntas que aluden a creencias respecto a lo que sucede (percepciones) o debería suceder (preferencias) en el país.
+
 ### Creencias en la meritocracia
 
-**Preguntas presentadas en la reunión anterior:**
+#### Percepciones
+
+a\. Respecto a criterios de mérito individual
 
 -   *Esfuerzo*
 
-Cruce con género:
+```{r, esfuerzo-univariado, echo=FALSE}
 
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$merit_esfuerzo, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
 
-<br> Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$merit_esfuerzo, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
 ```
 
 <br>
 
 -   *Talento*
 
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$merit_talento, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+```{r talento-univariado, echo=FALSE}
 
 ```
 
-<br> Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$merit_talento, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-------------------------------------------------------------------------
-
-**Otras preguntas referentes a este módulo:**
-
--   *p1_3*
+<br>
 
 Cruce con género:
 
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_3, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+```{r, bivariado-ge, echo=FALSE}
 
+ggplot(data = proc_datos_estudiantes, 
+       mapping = aes(x = merit_esfuerzo, fill = genero)) + # especificamos datos y mapping 
+  geom_bar(position = "dodge2") + # agregamos geometria y especificamos posicion 
+  labs(title ="Percepción de esfuerzo en la sociedad, segun sexo 2023", 
+       x = "Percepción de esfuerzo", 
+       y = "Frecuencia",
+       caption = "Fuente: Elaboración propia en base a Encuesta Edumer.") +
+  # agregamos titulo, nombres a los ejes y fuente
+  scale_fill_brewer(palette = "Reds") +
+  geom_text(aes(label = ..count..), stat = "count", colour = "white", 
+    vjust = 1.5, position = position_dodge(.9))  # agregamos freq de cada barra por grupo
 ```
 
 <br>
 
 Cruce con curso:
 
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_3, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+```{r, bivariado-cu, echo=FALSE}
+ggplot(data = proc_datos_estudiantes, 
+       mapping = aes(x = merit_esfuerzo, fill = curso_estudiante)) + # especificamos datos y mapping 
+  geom_bar(position = "dodge2") + # agregamos geometria y especificamos posicion 
+  labs(title ="Percepción de esfuerzo en la sociedad, segun curso 2023", 
+       x = "Percepción de esfuerzo", 
+       y = "Frecuencia",
+       caption = "Fuente: Elaboración propia en base a Encuesta Edumer.") +
+  # agregamos titulo, nombres a los ejes y fuente
+  scale_fill_brewer(palette = "Reds") +
+  geom_text(aes(label = ..count..), stat = "count", colour = "white", 
+    vjust = 1.5, position = position_dodge(.9)) # agregamos freq de cada barra por grupo
 
 ```
 
 <br>
 
--   *p1_4*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_4,     
-         proc_datos_estudiantes$genero,   
-         show.col.prc = TRUE,              
-         show.summary = FALSE,             
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_4,       
-         proc_datos_estudiantes$curso_estudiante,   
-         show.col.prc = TRUE,                     
-         show.summary = FALSE,                   
-         encoding = "UTF-8")
-
-```
-
-<br>
-
--   *p1_5*
-
-*nota*: el fraseo correcto es **"Quienes más se esfuerzan deberían obtener mayores recompensas que quienes se esfuerzan menos"**
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_5,         
-         proc_datos_estudiantes$genero,      
-         show.col.prc = TRUE,          
-         show.summary = FALSE,                 
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-
-sjt.xtab(proc_datos_estudiantes$p1_5, proc_datos_estudiantes$curso_estudiante, 
-         show.col.prc = TRUE,             
-         show.summary = FALSE,                           
-         encoding = "UTF-8")
-
-```
-
-<br>
-
--   *p1_6*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_6,              
-         proc_datos_estudiantes$genero,           
-         show.col.prc = TRUE,             
-         show.summary = FALSE,            
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_6, 
-         proc_datos_estudiantes$curso_estudiante, 
-         show.col.prc = TRUE,                
-         show.summary = FALSE,    
-         encoding = "UTF-8")
-
-```
-
-<br>
-
--   *p1_7*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_7,    
-         proc_datos_estudiantes$genero,  
-         show.col.prc = TRUE,           
-         show.summary = FALSE,        
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_7,    
-         proc_datos_estudiantes$curso_estudiante, 
-         show.col.prc = TRUE,                   
-         show.summary = FALSE,             
-         encoding = "UTF-8")
-
-```
-
-<br>
-
--   *p1_8*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_8, 
-         proc_datos_estudiantes$genero, 
-         show.col.prc = TRUE,           
-         show.summary = FALSE,            
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_8,     
-         proc_datos_estudiantes$curso_estudiante,   
-         show.col.prc = TRUE,                    
-         show.summary = FALSE,                  
-         encoding = "UTF-8")
-
-
-```
-
-<br>
-
--   *p1_9*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_9,    
-         proc_datos_estudiantes$genero, 
-         show.col.prc = TRUE,         
-         show.summary = FALSE,        
-         encoding = "UTF-8")
-
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_9,     
-         proc_datos_estudiantes$curso_estudiante,   
-         show.col.prc = TRUE,                   
-         show.summary = FALSE,                  
-         encoding = "UTF-8")
-
-
-```
-
-<br>
+b\. Percepción de mérito en la sociedad
 
 -   *p1_10*
 
+```{r, univariado-merit, echo=FALSE}
+
+```
+
 Cruce con género:
 
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_10,  
-         proc_datos_estudiantes$genero,   
-         show.col.prc = TRUE,            
-         show.summary = FALSE,         
-         encoding = "UTF-8")
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+c\. Respecto a factores no meritocráticos
+
+Estos factores aluden a externalidades del mérito individual como la herencia, los contactos y la suerte. Por ello, se presentan preguntas referidas a la percepción respecto a los logros individuales de las personas que tienen padres ricos, buenos contactos y mejores oportunidades en la vida.
+
+-   *p1_3: Padres ricos*
+
+```{r, univariado-padres-ricos, echo=FALSE}
+
+```
+
+<br>
+
+-   *p1_4: buenos contactos*
+
+```{r, univariado-buenos-contactos, echo=FALSE}
+```
+
+<br>
+
+-   *p1_9: Oportunidades*
+
+```{r, univariado-oportunidades, echo=FALSE}
+```
+
+Cruce con género:
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+#### Preferencias
+
+a\. Respecto a criterios de mérito individual
+
+-   *p1_5: Esfuerzo*
+
+*nota*: el fraseo correcto es **"Quienes más se esfuerzan deberían obtener mayores recompensas que quienes se esfuerzan menos"**
+
+```{r, univariado-esfuerzo, echo=FALSE}
+```
+
+<br>
+
+-   *p1_6: Talento*
+
+```{r, univariado-talento, echo=FALSE}
+```
+
+<br>
+
+Cruce con género:
+
+```{r, talento-esfuerzo-ge, echo=FALSE}
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, talento-esfuerzo-cu, echo=FALSE}
+```
+
+<br>
+
+b\. Preferencia respecto a la recompensa en base al talento por sobre el esfuerzo
+
+-   *p9_6*
+
+```{r, univariado-recompensa, echo=FALSE}
+
+```
+
+<br>
+
+Cruce con género:
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+c\. Respecto a factores no meritocráticos
+
+Estos factores aluden a externalidades del mérito individual como la herencia, los contactos y la suerte. Por ello, se presentan preguntas referidas a la preferencia respecto a los logros individuales de las personas que tienen padres ricos, buenos contactos y mejores oportunidades en la vida.
+
+-   *p1_7 : Padres ricos*
+
+```{r, univariado, echo=FALSE}
+
+```
+
+<br>
+
+-   *p1_8: Buenos contactos*
+
+```{r, echo=FALSE}
+
+```
+
+<br>
+
+Cruce con género:
+
+```{r}
 
 ```
 
@@ -529,10 +280,151 @@ sjt.xtab(proc_datos_estudiantes$p1_10,
 Cruce con curso:
 
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p1_10,
-         proc_datos_estudiantes$curso_estudiante,     
-         show.col.prc = TRUE,                       
-         show.summary = FALSE,                  
-         encoding = "UTF-8")
+ 
+```
+
+## Meritocracia en la escuela
+
+En este módulo se considera otro apartado adicional a las creencias de las/los estudiantes, el que está referido a la experiencia de estas mismas/mismos en sus notas. La forma en que se estudia la meritocracia escolar a partir de la experiencia en la nota se evidencia en la idea de que el mérito de ellas/ellos sea justamente reconocido en la nota obtenida. Por esa razón, dicho apartado se denominará "justicia en las notas".
+
+De este modo, se presentan dos apartados: **creencias en la meritocracia** y **justicia en las notas**.
+
+### Creencias en la meritocracia
+
+#### Percepciones
+
+a\. Respecto a criterios de mérito individual
+
+-   *Talento*
+
+```{r, echo=FALSE}
+
+```
+
+<br>
+
+-   *Esfuerzo*
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+Cruce con género:
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+*b. Respecto al mérito en la escuela (a partir de la nota obtenida)*
+
+```{r, uni, echo=FALSE}
+
+```
+
+Cruce con género:
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+```
+
+<br>
+
+#### Preferencia
+
+a\. Respecto a criterios de mérito individual: *importancia talento o esfuerzo (p3)*
+
+```{r, echo=FALSE}
+
+```
+
+Cruce con género:
+
+```{r, echo=FALSE}
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+
+```
+
+### Justicia en las notas
+
+En este apartado se observa la percepción de las/los estudiantes respecto a si la nota obtenida recompensa de manera justa su mérito individual. Posteriormente, se presenta de manera comparativa la nota que efectivamente estos recibieron y la preferencia que ellas/ellos tenían de la nota que debieron haber obtenido.
+
+#### Percepciones
+
+*a. Respecto a la justicia de la nota obtenida*
+
+```{r, echo=FALSE}
+
+```
+
+<br>
+
+Cruce con género:
+
+```{r , echo=FALSE}
+
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+
+```
+
+<br>
+
+*b. Respecto a la justicia de la nota obtenida en razón del tiempo dedicado al estudio*
+
+```{r, echo=FALSE}
+
+```
+
+<br>
+
+Cruce con género:
+
+```{r , echo=FALSE}
+
+
+```
+
+<br>
+
+Cruce con curso:
+
+```{r, echo=FALSE}
+
+
+```
+
+#### Notas del estudiante
+
+Este apartado hace énfasis en la nota individual de la/el estudiante. De ese modo, se presenta comparativamente la *nota final que efectivamente obtuvo* y la *nota final que consideraba que debería haber obtenido*.
+
+```{r, hist-den, echo=FALSE}
 
 ```
