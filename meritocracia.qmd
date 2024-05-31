@@ -74,157 +74,237 @@ Dentro del espacio más general a nivel de la sociedad, se presentan preguntas q
 
 #### Percepciones
 
-a\. Respecto a criterios de mérito individual
+**a. Respecto a criterios de mérito individual**
 
--   *Esfuerzo*
+En Chile, las personas son recompensadas por:
 
-```{r, esfuerzo-univariado, echo=FALSE}
+```{r, criterios-merit-univariado, echo=FALSE}
 merit_esfuerzo = round(prop.table(table(categorias=proc_datos_estudiantes$merit_esfuerzo)),2)
 merit_esfuerzo = as.data.frame(merit_esfuerzo)
 merit_esfuerzo$categorias <- factor(merit_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
 plot_meritesfuerzo<-ggplot(merit_esfuerzo,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Reds")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Sus esfuerzos" )
+
+merit_talento = round(prop.table(table(categorias=proc_datos_estudiantes$merit_talento)),2)
+merit_talento = as.data.frame(merit_talento)
+merit_talento$categorias <- factor(merit_talento$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+
+plot_merittalento<-ggplot(merit_talento,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity",
            color="white")+
     geom_text(aes(label = scales::percent(Freq)),
               position=position_stack(vjust=0.5),color="black",size=4.5)+
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Purples")+
+  scale_fill_brewer(palette = "Reds")+
     theme_void()+
   theme(legend.title = element_blank())+
-  xlim(0.5,2.5)
-plot_meritesfuerzo
+  xlim(0.5,2.5)+
+  labs(title="Su inteligencia y habilidad")
+
+```
+
+```{r, echo=FALSE}
+merit_social<-ggarrange(plot_meritesfuerzo, plot_merittalento, common.legend = TRUE, nrow=1, legend = c( "bottom", "right"))
+merit_social
+```
+
+**b. Respecto al mérito en la sociedad chilena**
+
+```{r, merit-univariado, echo=FALSE}
+p1_10 = round(prop.table(table(categorias=proc_datos_estudiantes$p1_10)),2)  
+p1_10 = as.data.frame(p1_10) 
+p1_10$categorias <- factor(p1_10$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))  
+
+plot_merit<-ggplot(p1_10,aes(x=2,y=-Freq, fill=categorias))+   
+  geom_bar(stat = "identity",            
+           color="white")+     
+  geom_text(aes(label = scales::percent(Freq)),             
+            position=position_stack(vjust=0.5),color="black",size=4.5)+  
+  coord_polar(theta = "y")+   
+  scale_fill_brewer(palette = "Reds")+   
+  theme_void()+  
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5)+ 
+  labs(title="En Chile, todas las personas obtienen lo que merecen") 
+plot_merit
 ```
 
 <br>
 
--   *Talento*
+Respuestas en función del género del/la estudiante:
 
-```{r talento-univariado, echo=FALSE}
-
-```
-
-<br>
-
-Cruce con género:
-
-```{r}
+```{r, echo=FALSE}
 plot1 <- proc_datos_estudiantes %>% dplyr::filter(genero=="Hombre") %>% 
   dplyr::select(merit_talento, merit_esfuerzo, p1_10) %>%
-  sjPlot::plot_stackfrq()+
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
   theme(legend.position = "bottom")+
-  labs(title="Hombre")
+  labs(title="Hombre") 
 
 plot2 <- proc_datos_estudiantes %>% filter(genero=="Mujer") %>% 
   dplyr::select(merit_talento, merit_esfuerzo, p1_10) %>%
-  sjPlot::plot_stackfrq()+
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
   theme(legend.position = "bottom")+
   labs(title="Mujer")
 
 plot3 <- proc_datos_estudiantes %>% filter(genero=="Otro") %>% 
   dplyr::select(merit_talento, merit_esfuerzo, p1_10) %>%
-  sjPlot::plot_stackfrq()+
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
   theme(legend.position = "bottom")+
   labs(title="Otro")
 ```
 
-```{r merit-soc-experiment}
-merito_social<-ggarrange(plot1, plot2,plot3, common.legend = TRUE, nrow=3, legend = c("bottom", "right"))
-merito_social
-```
-
-```{r, bivariado-ge, echo=FALSE}
-
-ggplot(data = proc_datos_estudiantes, 
-       mapping = aes(x = merit_esfuerzo, fill = genero)) + # especificamos datos y mapping 
-  geom_bar(position = "dodge2") + # agregamos geometria y especificamos posicion 
-  labs(title ="Percepción de esfuerzo en la sociedad, segun sexo 2023", 
-       x = "Percepción de esfuerzo", 
-       y = "Frecuencia",
-       caption = "Fuente: Elaboración propia en base a Encuesta Edumer.") +
-  # agregamos titulo, nombres a los ejes y fuente
-  scale_fill_brewer(palette = "Reds") +
-  geom_text(aes(label = ..count..), stat = "count", colour = "white", 
-    vjust = 1.5, position = position_dodge(.9))  # agregamos freq de cada barra por grupo
+```{r, echo=FALSE}
+no_merito_social<-ggarrange(plot1, plot2 ,plot3, common.legend = TRUE, nrow=3, legend = c("bottom", "right"))
+no_merito_social
 ```
 
 <br>
 
-Cruce con curso:
-
-```{r, bivariado-cu, echo=FALSE}
-ggplot(data = proc_datos_estudiantes, 
-       mapping = aes(x = merit_esfuerzo, fill = curso_estudiante)) + # especificamos datos y mapping 
-  geom_bar(position = "dodge2") + # agregamos geometria y especificamos posicion 
-  labs(title ="Percepción de esfuerzo en la sociedad, segun curso 2023", 
-       x = "Percepción de esfuerzo", 
-       y = "Frecuencia",
-       caption = "Fuente: Elaboración propia en base a Encuesta Edumer.") +
-  # agregamos titulo, nombres a los ejes y fuente
-  scale_fill_brewer(palette = "Reds") +
-  geom_text(aes(label = ..count..), stat = "count", colour = "white", 
-    vjust = 1.5, position = position_dodge(.9)) # agregamos freq de cada barra por grupo
-
-```
-
-<br>
-
-b\. Percepción de mérito en la sociedad
-
--   *p1_10*
-
-```{r, univariado-merit, echo=FALSE}
-
-```
-
-Cruce con género:
+Respuestas en función del curso del/la estudiante:
 
 ```{r, echo=FALSE}
+plott1 <- proc_datos_estudiantes %>% dplyr::filter(curso_estudiante=="Básica") %>% 
+  dplyr::select(merit_talento, merit_esfuerzo, p1_10) %>%
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
+  theme(legend.position = "bottom")+
+  labs(title="Básica")
+
+plott2 <- proc_datos_estudiantes %>% filter(curso_estudiante=="Media") %>% 
+  dplyr::select(merit_talento, merit_esfuerzo, p1_10) %>%
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
+  theme(legend.position = "bottom")+
+  labs(title="Media")
 ```
-
-<br>
-
-Cruce con curso:
 
 ```{r, echo=FALSE}
+no_merito_social<-ggarrange(plott1, plott2, common.legend = TRUE, nrow=3, legend = c("bottom", "right"))
+no_merito_social
 ```
 
 <br>
 
-c\. Respecto a factores no meritocráticos
+**c. Respecto a factores no meritocráticos**
 
 Estos factores aluden a externalidades del mérito individual como la herencia, los contactos y la suerte. Por ello, se presentan preguntas referidas a la percepción respecto a los logros individuales de las personas que tienen padres ricos, buenos contactos y mejores oportunidades en la vida.
 
--   *p1_3: Padres ricos*
+En Chile, les va mejor en la vida a quienes tienen:
 
-```{r, univariado-padres-ricos, echo=FALSE}
+```{r, no-merit-univariado, echo=FALSE}
+p1_3 = round(prop.table(table(categorias=proc_datos_estudiantes$p1_3)),2)
+p1_3 = as.data.frame(p1_3)
+p1_3$categorias <- factor(p1_3$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+
+plot_padres_ricos<-ggplot(p1_3,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity",
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Reds")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Padres ricos")
+
+p1_4 = round(prop.table(table(categorias=proc_datos_estudiantes$p1_4)),2)
+p1_4 = as.data.frame(p1_4)
+p1_4$categorias <- factor(p1_4$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+
+plot_contactos<-ggplot(p1_4,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity",
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Reds")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Buenos contactos")
+
+p1_9 = round(prop.table(table(categorias=proc_datos_estudiantes$p1_9)),2)
+p1_9 = as.data.frame(p1_9)
+p1_9$categorias <- factor(p1_9$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
 
 ```
-
-<br>
-
--   *p1_4: buenos contactos*
-
-```{r, univariado-buenos-contactos, echo=FALSE}
-```
-
-<br>
-
--   *p1_9: Oportunidades*
-
-```{r, univariado-oportunidades, echo=FALSE}
-```
-
-Cruce con género:
 
 ```{r, echo=FALSE}
+no_merito_social<-ggarrange(plot_padres_ricos, plot_contactos, common.legend = TRUE, nrow=1, legend = c("bottom", "right"))
+no_merito_social
+```
+
+```{r, oportunidad-univariado, echo=FALSE}
+plot_oportunidad<-ggplot(p1_9,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity",
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Reds")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="En Chile, todas las personas tienen las mismas oportunidades para salir adelante")
+plot_oportunidad
+```
+
+Respuestas en función del género del/la estudiante:
+
+```{r, echo=FALSE}
+plot11 <- proc_datos_estudiantes %>% dplyr::filter(genero=="Hombre") %>% 
+  dplyr::select(p1_3, p1_4, p1_9) %>%
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
+  theme(legend.position = "bottom")+
+  labs(title="Hombre") 
+
+plot22 <- proc_datos_estudiantes %>% filter(genero=="Mujer") %>% 
+  dplyr::select(p1_3, p1_4, p1_9) %>%
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
+  theme(legend.position = "bottom")+
+  labs(title="Mujer")
+
+plot33 <- proc_datos_estudiantes %>% filter(genero=="Otro") %>% 
+  dplyr::select(p1_3, p1_4, p1_9) %>%
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
+  theme(legend.position = "bottom")+
+  labs(title="Otro")
+```
+
+```{r, echo=FALSE}
+pluto<-ggarrange(plot11, plot22, plot33, common.legend = TRUE, nrow=3, legend = c("bottom", "right"))
+pluto
 ```
 
 <br>
 
-Cruce con curso:
+Respuestas en función del curso del/la estudiante:
 
 ```{r, echo=FALSE}
+plott11 <- proc_datos_estudiantes %>% dplyr::filter(curso_estudiante=="Básica") %>% 
+  dplyr::select(p1_3, p1_4, p1_9) %>%
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 50)+
+  theme(legend.position = "bottom")+
+  labs(title="Básica") 
+
+plott22 <- proc_datos_estudiantes %>% filter(curso_estudiante=="Media") %>% 
+  dplyr::select(p1_3, p1_4, p1_9) %>%
+  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 50)+
+  theme(legend.position = "bottom")+
+  labs(title="Media")
+```
+
+```{r, echo=FALSE}
+plats<-ggarrange(plott11, plott22, common.legend = TRUE, nrow=3, legend = c("bottom", "right"))
+plats
 ```
 
 <br>
