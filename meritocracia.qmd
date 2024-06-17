@@ -1,14 +1,14 @@
 # Meritocracia
 
-```{r, echo=FALSE, include=FALSE}
-pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled, ggplot2, summarytools, ggtext, ggpubr)
+```{r, data,echo=FALSE, include=FALSE}
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled, ggplot2, summarytools, ggtext, ggpubr, hrbrthemes)
 
 load("input/data/proc/ola1.RData")
 
 
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, preparacion, echo=FALSE, eval=TRUE}
 #Base General con el cuestionario para estudiantes
 #Codificamos los valores 99-88 como missing para todas las variables
 proc_datos <- proc_datos %>% set_na(., na = c(99, 88))
@@ -78,7 +78,10 @@ Esta sección se dividirá en dos grandes creencias: percepciones y preferencias
 
 -   Respecto a criterios de mérito individual
 
-```{r, criterios-merit-univariado, echo=FALSE}
+```{r, dona-esfuerzo-ES, echo=FALSE}
+
+# grafico dona: esfuerzo y estudiantes 
+
 merit_esfuerzo_percep_ES = round(prop.table(table(categorias=proc_datos$merit_esfuerzo_percep_ES)),2)
 merit_esfuerzo_percep_ES = as.data.frame(merit_esfuerzo_percep_ES)
 merit_esfuerzo_percep_ES$categorias <- factor(merit_esfuerzo_percep_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
@@ -88,12 +91,184 @@ plot_meritesfuerzo_percep_ES<-ggplot(merit_esfuerzo_percep_ES,aes(x=2,y=-Freq, f
     geom_text(aes(label = scales::percent(Freq)),
               position=position_stack(vjust=0.5),color="black",size=4.5)+
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
+  scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank())+
   xlim(0.5,2.5) +
   labs(title="Estudiantes" )
 
+```
+
+```{r, dona-esfuerzo-talento-AP, echo=FALSE}
+
+# grafico dona: esfuerzo y apoderados 
+
+merit_esfuerzo_percep_AP = round(prop.table(table(categorias=proc_datos$merit_esfuerzo_percep_AP)),2) 
+merit_esfuerzo_percep_AP = as.data.frame(merit_esfuerzo_percep_AP)
+merit_esfuerzo_percep_AP$categorias <- factor(merit_esfuerzo_percep_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
+plot_meritesfuerzo_percep_AP<-ggplot(merit_esfuerzo_percep_AP,aes(x=2,y=-Freq, fill=categorias))+  
+  geom_bar(stat = "identity",  
+           color="white")+    
+  geom_text(aes(label = scales::percent(Freq)),  
+            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
+  scale_fill_brewer(palette = "Blues")+  
+  theme_void()+  
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +  
+  labs(title="Apoderados" ) 
+
+# grafico dona: talento y apoderados
+
+merit_talento_percep_AP = round(prop.table(table(categorias=proc_datos$merit_talento_percep_AP)),2)
+merit_talento_percep_AP = as.data.frame(merit_talento_percep_AP) 
+merit_talento_percep_AP$categorias <- factor(merit_talento_percep_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))  
+plot_merittalento_percep_AP<-ggplot(merit_talento_percep_AP,aes(x=2,y=-Freq, fill=categorias))+ 
+  geom_bar(stat = "identity", 
+           color="white")+  
+  geom_text(aes(label = scales::percent(Freq)), 
+            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
+  scale_fill_brewer(palette = "Blues")+
+  theme_void()+  
+  theme(legend.title = element_blank())+ 
+  xlim(0.5,2.5)+ 
+  labs(title="Apoderados") 
+```
+
+**Esfuerzo** en la sociedad chilena:
+
+```{r, dona-esfuerzo-curso, echo=FALSE}
+
+# gráfico: esfuerzo y curso
+
+# dona curso: Básica
+
+basica_esfuerzo <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
+  dplyr::select(merit_esfuerzo_percep_ES) #se filtran valores para esa categoría del curso
+  
+basica_esfuerzo = round(prop.table(table(categorias=basica_esfuerzo$merit_esfuerzo_percep_ES)),2) #se crean variables 'categoria' y 'Freq' del objeto
+
+basica_esfuerzo = as.data.frame(basica_esfuerzo) #convertimos el objeto en data.frame
+
+#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+
+plot_basica_esfuerzo<-ggplot(basica_esfuerzo,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de básica") #graficamos
+
+
+# dona curso: Media
+
+# categoría media
+media_esfuerzo <- proc_datos %>% filter(curso_estudiante=="Media") %>% 
+  dplyr::select(merit_esfuerzo_percep_ES) 
+
+media_esfuerzo = round(prop.table(table(categorias=media_esfuerzo$merit_esfuerzo_percep_ES)),2)  
+
+media_esfuerzo = as.data.frame(media_esfuerzo)
+
+plot_media_esfuerzo<-ggplot(media_esfuerzo,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de Media") 
+
+```
+
+```{r, plot-esfuerzo-percep, echo=FALSE}
+
+# grafico esfuerzo en la sociedad
+
+# Combinar los gráficos
+merit_social_esfuerzo_percep <- ggarrange(
+  plot_meritesfuerzo_percep_ES, 
+  plot_meritesfuerzo_percep_AP,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "none")
+
+esfuerzo_curso <- ggarrange(
+   plot_basica_esfuerzo, 
+   plot_media_esfuerzo,
+  common.legend = TRUE, 
+ ncol = 2, 
+  legend = "none")
+
+merit_social_esfuerzo_percep_final <- ggarrange(
+  merit_social_esfuerzo_percep,
+  esfuerzo_curso,
+  common.legend = TRUE, 
+  nrow = 2, 
+  legend = "bottom",
+  legend.grob = get_legend(plot_meritesfuerzo_percep_ES, "bottom"))
+
+# Agregar una etiqueta global centrada
+final_plot <- annotate_figure(
+  merit_social_esfuerzo_percep_final,
+  top = text_grob(
+    "Figura 1.1: En Chile, las personas son recompensadas por sus esfuerzos",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5))
+
+
+final_plot
+```
+
+En primer lugar, se observan claras diferencias entre adultos y estudiantes. Los apoderados estan en desacuerdo con la frase. Así, los estudiantes parecen estar más de acuerdo con que las personas en el país son recompensadas por sus esfuerzos (52%). Aún así, ninguno de los dos actores esta muy de acuerdo con este criterio de mérito individual.
+
+*Cruces con otras características sociodemográficas de estudiantes*
+
+```{r, plot-esfuerzo-sociodemo-percep, echo=FALSE, message=FALSE}
+
+# Transformar los datos en formato largo para facilitar el gráfico
+proc_datos_largo <- proc_datos %>%
+  tidyr::pivot_longer(cols = c(genero_ES, ne_madre, ne_padre, libros_hogar),
+               names_to = "variable",
+               values_to = "categoria")
+
+# Calcular las frecuencias
+frecuencias <- proc_datos_largo %>%
+  group_by(variable, categoria, merit_esfuerzo_percep_ES) %>%
+  summarise(Freq = n()) %>%
+  ungroup() %>% na.omit()
+
+# Crear la gráfica con ggplot2
+ggplot(frecuencias, aes(x = categoria, y = Freq, fill = factor(merit_esfuerzo_percep_ES))) +
+  geom_bar(stat = "identity", position = "fill") +
+  facet_wrap(~ variable, scales = "free_x") +
+  labs(
+    x = "Característica sociodemográfica del estudiante",
+    y = "Frecuencia",
+    fill = "Grado de acuerdo",
+    title = "En chile, las personas son recompensadas por sus esfuerzos:"
+  ) +
+  theme_blank() +
+  scale_fill_brewer(palette = "Blues", 
+                    labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
+                               "3" = "De acuerdo", "4" = "Muy de acuerdo")) 
+```
+
+<br>
+
+**Talento** (inteligencia y habilidad) en la sociedad chilena:
+
+```{r, dona-talento-ES, echo=FALSE}
+# grafico dona: talento y estudiantes 
 
 merit_talento_percep_ES = round(prop.table(table(categorias=proc_datos$merit_talento_percep_ES)),2)
 merit_talento_percep_ES = as.data.frame(merit_talento_percep_ES)
@@ -105,135 +280,144 @@ plot_merittalento_percep_ES<-ggplot(merit_talento_percep_ES,aes(x=2,y=-Freq, fil
     geom_text(aes(label = scales::percent(Freq)),
               position=position_stack(vjust=0.5),color="black",size=4.5)+
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
+  scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank())+
   xlim(0.5,2.5)+
   labs(title="Estudiantes")
-
 ```
 
-```{r, echo=FALSE}
-merit_esfuerzo_percep_AP = round(prop.table(table(categorias=proc_datos$merit_esfuerzo_percep_AP)),2) 
+```{r, dona-talento-curso, echo=FALSE}
 
-merit_esfuerzo_percep_AP = as.data.frame(merit_esfuerzo_percep_AP)
-merit_esfuerzo_percep_AP$categorias <- factor(merit_esfuerzo_percep_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
+# gráfico: talento y curso
 
-plot_meritesfuerzo_percep_AP<-ggplot(merit_esfuerzo_percep_AP,aes(x=2,y=-Freq, fill=categorias))+  
-  geom_bar(stat = "identity",  
-           color="white")+    
-  geom_text(aes(label = scales::percent(Freq)),  
-            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
-  scale_fill_brewer(palette = "Reds")+  
-  theme_void()+  
-  theme(legend.title = element_blank())+
-  xlim(0.5,2.5) +  
-  labs(title="Apoderados" ) 
+# dona curso: Básica
 
-merit_talento_percep_AP = round(prop.table(table(categorias=proc_datos$merit_talento_percep_AP)),2)
+basica_talento <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
+  dplyr::select(merit_talento_percep_ES) #se filtran valores para esa categoría del curso
+  
+basica_talento = round(prop.table(table(categorias=basica_talento$merit_talento_percep_ES)),2) #se crean variables 'categoria' y 'Freq' del objeto
 
-merit_talento_percep_AP = as.data.frame(merit_talento_percep_AP) 
+basica_talento = as.data.frame(basica_talento) #convertimos el objeto en data.frame
 
-merit_talento_percep_AP$categorias <- factor(merit_talento_percep_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))  
+#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
 
-plot_merittalento_percep_AP<-ggplot(merit_talento_percep_AP,aes(x=2,y=-Freq, fill=categorias))+ 
+plot_basica_talento<-ggplot(basica_talento,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
-           color="white")+  
-  geom_text(aes(label = scales::percent(Freq)), 
-            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
-  scale_fill_brewer(palette = "Reds")+
-  theme_void()+  
-  theme(legend.title = element_blank())+ 
-  xlim(0.5,2.5)+ 
-  labs(title="Apoderados") 
-```
-
-```{r, echo=FALSE}
-merit_esfuerzo_percep_PROF = round(prop.table(table(categorias=proc_datos$merit_esfuerzo_percep_PROF)),2)
-
-merit_esfuerzo_percep_PROF = as.data.frame(merit_esfuerzo_percep_PROF)
-
-merit_esfuerzo_percep_PROF$categorias <- factor(merit_esfuerzo_percep_PROF$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
-
-plot_meritesfuerzo_percep_PROF<-ggplot(merit_esfuerzo_percep_PROF,aes(x=2,y=-Freq, fill=categorias))+  
-  geom_bar(stat = "identity",  
-           color="white")+  
-  geom_text(aes(label = scales::percent(Freq)),
-            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+ 
-  theme_void()+  
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
   theme(legend.title = element_blank())+
-  xlim(0.5,2.5) + 
-  labs(title="Docentes" ) 
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de básica") #graficamos
 
-merit_talento_percep_PROF = round(prop.table(table(categorias=proc_datos$merit_talento_percep_PROF)),2) 
 
-merit_talento_percep_PROF = as.data.frame(merit_talento_percep_PROF)
+# dona curso: Media
 
-merit_talento_percep_PROF$categorias <- factor(merit_talento_percep_PROF$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
+# categoría media
+media_talento <- proc_datos %>% filter(curso_estudiante=="Media") %>% 
+  dplyr::select(merit_talento_percep_ES) 
 
-plot_merittalento_percep_PROF<-ggplot(merit_talento_percep_PROF,aes(x=2,y=-Freq, fill=categorias))+ 
-  geom_bar(stat = "identity",
-           color="white")+  
-  geom_text(aes(label = scales::percent(Freq)),
-            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+  
-  theme_void()+ 
-  theme(legend.title = element_blank())+ 
-  xlim(0.5,2.5)+  
-  labs(title="Docentes")
+media_talento = round(prop.table(table(categorias=media_talento$merit_talento_percep_ES)),2)  
 
+media_talento = as.data.frame(media_talento)
+
+plot_media_talento<-ggplot(media_talento,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de Media") 
 ```
 
-**Esfuerzo** en la sociedad chilena:
+```{r, plot-talento-percep, echo=FALSE}
 
-```{r, echo=FALSE}
-# Combinar los gráficos
-merit_social_esfuerzo_percep <- ggarrange(
-  plot_meritesfuerzo_percep_ES, 
-  plot_meritesfuerzo_percep_AP, 
-  plot_meritesfuerzo_percep_PROF,
-  common.legend = TRUE, 
-  ncol = 3, 
-  legend = "bottom"
-)
-
-# Agregar una etiqueta global centrada
-final_plot <- annotate_figure(
-  merit_social_esfuerzo_percep,
-  top = text_grob(
-    "Figura 1.1: En Chile, las personas son recompensadas por sus esfuerzos",
-    size = 12, 
-    face = "italic", 
-    color = "#8B7D7B",
-    hjust = 0.5
-  )
-)
-
-final_plot
-```
-
-En primer lugar, se observan claras diferencias entre adultos y estudiantes. Tanto profesores como apoderados estan en desacuerdo con la frase y, específicamente, los apoderados están más de acuerdo que los docentes. Así, los estudiantes parecen estar más de acuerdo con que las personas en el país son recompensadas por sus esfuerzos (52%). Aún así, ninguno de los tres actores esta muy de acuerdo con este criterio de mérito individual.
-
-**Talento** (inteligencia y habilidad) en la sociedad chilena:
-
-```{r, echo=FALSE}
+# grafico talento en la sociedad
 
 # Combinar los gráficos
 merit_social_talento_percep <- ggarrange(
   plot_merittalento_percep_ES, 
-  plot_merittalento_percep_AP, 
-  plot_merittalento_percep_PROF,
+  plot_merittalento_percep_AP,
   common.legend = TRUE, 
-  ncol = 3, 
+  ncol = 2, 
+  legend = "none")
+
+talento_curso <- ggarrange(
+   plot_basica_talento, 
+   plot_media_talento,
+  common.legend = TRUE, 
+ ncol = 2, 
+  legend = "none")
+
+merit_social_talento_percep_final <- ggarrange(
+  merit_social_talento_percep,
+  talento_curso,
+  common.legend = TRUE, 
+  nrow = 2, 
+  legend = "bottom",
+  legend.grob = get_legend(plot_merittalento_percep_ES, "bottom"))
+
+# Agregar una etiqueta global centrada
+final_plot1 <- annotate_figure(
+  merit_social_talento_percep_final,
+  top = text_grob(
+    "Figura 1.3: En Chile, las personas son recompensadas por su inteligencia y habilidad",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5))
+
+
+final_plot1
+
+```
+
+Si bien los tres actores están de acuerdo con la frase y, por ende, creen en el mérito en base al talento, los docentes están más de acuerdo con la afirmación. Acumulando el 89% de sus respuestas en las categorías "Muy de acuerdo" y "De acuerdo".
+
+*Cruces con otras características sociodemográficas de estudiantes*
+
+```{r, plot-talento-sociodemo-percep, echo=FALSE}
+
+#genero
+#ne madre
+#ne padre
+#libros
+
+# primer grafico: talento 
+plot_merit_talento_percep_ES_l1 <- proc_datos %>% dplyr::filter(libros_hogar=='Menos de 25 libros') %>% 
+  dplyr::select(merit_talento_percep_ES) %>%
+  sjPlot::plot_stackfrq(geom.colors = "Blues", wrap.labels = 20)+
+  theme(legend.position = "bottom")+
+  labs(title="Menos de 25 libros") 
+
+plot_merit_talento_percep_ES_l2 <- proc_datos %>% dplyr::filter(libros_hogar=='Más de 25 libros') %>% 
+  dplyr::select(merit_talento_percep_ES) %>%
+  sjPlot::plot_stackfrq(geom.colors = "Blues", wrap.labels = 20)+
+  theme(legend.position = "bottom")+
+  labs(title="Más de 25 libros") 
+
+# grafico talento y libros 
+merit_talento_percep_ES_libros <- ggarrange(
+   plot_merit_talento_percep_ES_l1,
+   plot_merit_talento_percep_ES_l2,
+  common.legend = TRUE, 
+  nrow = 2, 
   legend = "bottom"
 )
 
 # Agregar una etiqueta global centrada
-final_plot1 <- annotate_figure(
-  merit_social_talento_percep,
+plot_merit_talento_percep_ES_libros <- annotate_figure(
+ merit_talento_percep_ES_libros ,
   top = text_grob(
-    "Figura 1.2: En Chile, las personas son recompensadas por su inteligencia y habilidad",
+    "Figura 1.5: Talento y presencia de libros en el hogar",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -241,349 +425,206 @@ final_plot1 <- annotate_figure(
   )
 )
 
-final_plot1
+plot_merit_talento_percep_ES_libros
 ```
 
-Si bien los tres actores están de acuerdo con la frase y, por ende, creen en el mérito en base al talento, los docentes están más de acuerdo con la afirmación. Acumulando el 89% de sus respuestas en las categorías "Muy de acuerdo" y "De acuerdo".
+Estudiantes con más de 25 libros en el hogar se muestran más de acuerdo con el talento, con un porcentaje acumulado de 74.2%.
 
--   Respecto al **mérito** en la sociedad chilena:
+<br>
 
-```{r, merit-univariado, echo=FALSE}
+Respecto al **mérito** en la sociedad chilena:
+
+```{r, dona-merito-ES-AP-percep, echo=FALSE}
+
+# grafico dona: merito y estudiantes 
+
 social_merito_percep_ES = round(prop.table(table(categorias=proc_datos$social_merito_percep_ES)),2)  
 social_merito_percep_ES = as.data.frame(social_merito_percep_ES) 
 social_merito_percep_ES$categorias <- factor(social_merito_percep_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))  
-
 plot_socialmerit_percep_ES<-ggplot(social_merito_percep_ES,aes(x=2,y=-Freq, fill=categorias))+   
   geom_bar(stat = "identity",            
            color="white")+     
   geom_text(aes(label = scales::percent(Freq)),             
             position=position_stack(vjust=0.5),color="black",size=4.5)+  
   coord_polar(theta = "y")+   
-  scale_fill_brewer(palette = "Reds")+   
+  scale_fill_brewer(palette = "Blues")+   
   theme_void()+  
   theme(legend.title = element_blank())+
   xlim(0.5,2.5)+ 
   labs(title="Estudiantes") 
 
+# grafico dona: merito y apoderados
+
 social_merito_percep_AP = round(prop.table(table(categorias=proc_datos$social_merito_percep_AP)),2)  
 social_merito_percep_AP = as.data.frame(social_merito_percep_AP) 
 social_merito_percep_AP$categorias <- factor(social_merito_percep_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))  
-
 plot_socialmerit_percep_AP<-ggplot(social_merito_percep_AP,aes(x=2,y=-Freq, fill=categorias))+   
   geom_bar(stat = "identity",            
            color="white")+     
   geom_text(aes(label = scales::percent(Freq)),             
             position=position_stack(vjust=0.5),color="black",size=4.5)+  
   coord_polar(theta = "y")+   
-  scale_fill_brewer(palette = "Reds")+   
+  scale_fill_brewer(palette = "Blues")+   
   theme_void()+  
   theme(legend.title = element_blank())+
   xlim(0.5,2.5)+ 
   labs(title="Apoderados") 
 
-social_merito_percep_PROF = round(prop.table(table(categorias=proc_datos$social_merito_percep_PROF)),2)  
-social_merito_percep_PROF = as.data.frame(social_merito_percep_PROF) 
-social_merito_percep_PROF$categorias <- factor(social_merito_percep_PROF$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))  
-
-plot_socialmerit_percep_PROF<-ggplot(social_merito_percep_PROF,aes(x=2,y=-Freq, fill=categorias))+   
-  geom_bar(stat = "identity",            
-           color="white")+     
-  geom_text(aes(label = scales::percent(Freq)),             
-            position=position_stack(vjust=0.5),color="black",size=4.5)+  
-  coord_polar(theta = "y")+   
-  scale_fill_brewer(palette = "Reds")+   
-  theme_void()+  
-  theme(legend.title = element_blank())+
-  xlim(0.5,2.5)+ 
-  labs(title="Docentes") 
-
 ```
 
-```{r, echo=FALSE}
+```{r, dona-merito-curso, echo=FALSE}
+
+# gráfico: merito y curso
+
+# dona curso: Básica
+
+basica_merito <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
+  dplyr::select(social_merito_percep_ES) #se filtran valores para esa categoría del curso
+  
+basica_merito = round(prop.table(table(categorias=basica_merito$social_merito_percep_ES)),2) #se crean variables 'categoria' y 'Freq' del objeto
+
+basica_merito = as.data.frame(basica_merito) #convertimos el objeto en data.frame
+
+#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+
+plot_basica_merito<-ggplot(basica_merito,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de básica") #graficamos
+
+
+# dona curso: Media
+
+# categoría media
+media_merito <- proc_datos %>% filter(curso_estudiante=="Media") %>% 
+  dplyr::select(social_merito_percep_ES) 
+
+media_merito = round(prop.table(table(categorias=media_merito$social_merito_percep_ES)),2)  
+
+media_merito = as.data.frame(media_merito)
+
+plot_media_merito<-ggplot(media_merito,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de Media") 
+```
+
+```{r, plot-merito-percep, echo=FALSE}
+
+# grafico merito en la sociedad
 
 # Combinar los gráficos
 plot_socialmerit_percep <- ggarrange(
  plot_socialmerit_percep_ES, 
- plot_socialmerit_percep_AP, 
- plot_socialmerit_percep_PROF,
+ plot_socialmerit_percep_AP,
   common.legend = TRUE, 
-  ncol = 3, 
-  legend = "bottom"
-)
+  ncol = 2, 
+  legend = "none")
+
+merito_curso <- ggarrange(
+   plot_basica_merito, 
+   plot_media_merito,
+  common.legend = TRUE, 
+ ncol = 2, 
+  legend = "none")
+
+merit_social_percep_final <- ggarrange(
+  plot_socialmerit_percep,
+  merito_curso,
+  common.legend = TRUE, 
+  nrow = 2, 
+  legend = "bottom",
+  legend.grob = get_legend(plot_socialmerit_percep, "bottom"))
 
 # Agregar una etiqueta global centrada
 final_plot2 <- annotate_figure(
-  plot_socialmerit_percep,
+  merit_social_percep_final,
   top = text_grob(
-    "Figura 1.3: En Chile, todas las personas obtienen lo que merecen",
+    "Figura 1.5: En Chile, todas las personas obtienen lo que merecen",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
-    hjust = 0.5
-  )
-)
+    hjust = 0.5))
+
 
 final_plot2
-
 ```
 
-Los docentes se muestran en desacuerdo en su totalidad con la idea de que las personas son recompensadas por sus méritos en la sociedad chilena. Si bien estudiantes y apoderados también se muestran en su mayoría en desacuerdo, los estudiantes presentan un 20% de acuerdo con la afirmación.
+Si bien estudiantes y apoderados también se muestran en su mayoría en desacuerdo, los estudiantes presentan un 20% de acuerdo con la afirmación.
 
-En vista de las diferencias entre estudiantes, apoderados y docentes, se presentará la forma en que se distribyen estas creencias de acuerdo a sus **caracteristicas sociodemográficas más relevantes**.
-
-En concordancia con la preodminante creencia en la meritocracia de las/los estudiantes, a continuación se observa cómo se expresan dichas creencias conforme al **curso** en que se encuentran:
-
-```{r, echo=FALSE}
-#plot1 <- proc_datos %>% dplyr::filter(genero_ES=="Hombre") %>% 
- # dplyr::select(merit_talento_percep_ES, merit_esfuerzo_percep_ES, social_merito_percep_ES) %>%
-  #sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  #theme(legend.position = "bottom")+
-  #labs(title="Hombre") 
-
-#plot2 <- proc_datos %>% filter(genero_ES=="Mujer") %>% 
- # dplyr::select(merit_talento_percep_ES, merit_esfuerzo_percep_ES, social_merito_percep_ES) %>%
-#  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
- # theme(legend.position = "bottom")+
-  #labs(title="Mujer")
-
-#plot3 <- proc_datos %>% filter(genero_ES=="Otro") %>% 
- # dplyr::select(merit_talento_percep_ES, merit_esfuerzo_percep_ES, social_merito_percep_ES) %>%
-#  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
- # theme(legend.position = "bottom")+
-  #labs(title="Otro")
-
-## Los porcentajes son similares en las tres categorías
-```
-
-```{r, echo=FALSE}
-
-# Combinar los gráficos
-# merito_social_percep_ge_ES<- ggarrange(
- #  plot1, 
-  # plot2,
-  # plot3,
-  #common.legend = TRUE, 
-  #nrow = 3, 
-  #legend = "bottom"
-#)
-
-# Agregar una etiqueta global centrada
-#k <- annotate_figure(
- #merito_social_percep_ge_ES ,
-  #top = text_grob(
-   # "Figura : Respuestas en función del género del estudiante",
-    #size = 12, 
-    #face = "italic", 
-    #color = "#8B7D7B",
-    #hjust = 0.5
-  #)
-
-
-#k
-```
-
-```{r, echo=FALSE}
-plott1 <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
-  dplyr::select(merit_talento_percep_ES, merit_esfuerzo_percep_ES, social_merito_percep_ES) %>%
-  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  theme(legend.position = "bottom")+
-  labs(title="Básica")
-
-plott2 <- proc_datos %>% filter(curso_estudiante=="Media") %>% 
-  dplyr::select(merit_talento_percep_ES, merit_esfuerzo_percep_ES, social_merito_percep_ES) %>%
-  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  theme(legend.position = "bottom")+
-  labs(title="Media")
-```
-
-```{r, echo=FALSE}
-
-# Combinar los gráficos
-merito_social_percep_cu_ES <- ggarrange(
-   plott1, 
-   plott2,
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom"
-)
-
-# Agregar una etiqueta global centrada
-m <- annotate_figure(
- merito_social_percep_cu_ES ,
-  top = text_grob(
-    "Figura 1.4: Respuestas en función del curso del estudiante",
-    size = 12, 
-    face = "italic", 
-    color = "#8B7D7B",
-    hjust = 0.5
-  )
-)
-
-m
-```
+*Cruces con características sociodemográficas de estudiantes*
 
 Estudiantes de educación básica estan más de acuerdo con ambos criterios individuales de meritocracia en la sociedad que los estudiantes de educación media.
 
-Además, a propósito del predominante desacuerdo de las/los docentes frente a los criterios de mérito individual en la sociedad, se muestra cómo se dsitribuyen estas creencias en función de su **género**:
-
-```{r, echo=FALSE}
-gra1 <- proc_datos %>% dplyr::filter(genero_PROF=="Hombre") %>% 
-  dplyr::select(merit_talento_percep_PROF, merit_esfuerzo_percep_PROF, social_merito_percep_PROF) %>%
-  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  theme(legend.position = "bottom")+
-  labs(title="Hombre") 
-
-gra2 <- proc_datos %>% filter(genero_PROF=="Mujer") %>% 
-  dplyr::select(merit_talento_percep_PROF, merit_esfuerzo_percep_PROF, social_merito_percep_PROF) %>%
-  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  theme(legend.position = "bottom")+
-  labs(title="Mujer")
-
-gra3 <- proc_datos %>% filter(genero_PROF=="Otro") %>% 
-  dplyr::select(merit_talento_percep_PROF, merit_esfuerzo_percep_PROF, social_merito_percep_PROF) %>%
-  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  theme(legend.position = "bottom")+
-  labs(title="Otro")
-
-
-
-```
-
-```{r, echo=FALSE}
-# Combinar los gráficos
-G <- ggarrange(
-   gra1, gra2, gra3,
-  common.legend = TRUE, 
-  nrow = 3, 
-  legend = "bottom"
-)
-
-# Agregar una etiqueta global centrada
-g <- annotate_figure(
- G ,
-  top = text_grob(
-    "Figura 1.5: Respuestas en función del género del docente",
-    size = 12, 
-    face = "italic", 
-    color = "#8B7D7B",
-    hjust = 0.5
-  )
-)
-
-g
-```
-
-Mujeres y otras identidades sexogenéricas están en desacuerdo con la frase sobre el mérito social y con ambos criterios de mérito individual. Contrariamente, los docentes hombres están de acuerdo en un 50.4% con la afirmación sobre el talento en la sociedad.
-
-En cuanto a la distribución por **género** de los apoderados, se observa lo siguiente:
-
-```{r, echo=FALSE}
-gr1 <- proc_datos %>% dplyr::filter(genero_AP=="Hombre") %>% 
-  dplyr::select(merit_talento_percep_AP, merit_esfuerzo_percep_AP, social_merito_percep_AP) %>%
-  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  theme(legend.position = "bottom")+
-  labs(title="Hombre") 
-
-gr2 <- proc_datos %>% filter(genero_AP=="Mujer") %>% 
-  dplyr::select(merit_talento_percep_AP, merit_esfuerzo_percep_AP, social_merito_percep_AP) %>%
-  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  theme(legend.position = "bottom")+
-  labs(title="Mujer")
-
-```
-
-```{r, echo=FALSE}
-# Combinar los gráficos
-P <- ggarrange(
-   gr1, gr2,
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom"
-)
-
-# Agregar una etiqueta global centrada
-p <- annotate_figure(
- P ,
-  top = text_grob(
-    "Figura 1.6: Respuestas en función del género del apoderado",
-    size = 12, 
-    face = "italic", 
-    color = "#8B7D7B",
-    hjust = 0.5
-  )
-)
-
-p
-```
-
-Las apoderadas están más de acuerdo con el mérito en base al talento en la sociedad y los apoderados con el mérito en base al esfuerzo.
+<br>
 
 -   Respecto a factores no meritocráticos
 
 Estos factores aluden a externalidades del mérito individual como la herencia, los contactos y la suerte. Por ello, se presentan preguntas referidas a la percepción respecto a los logros individuales de las personas que tienen padres ricos, buenos contactos y mejores oportunidades en la vida.
 
-**Padres ricos**
+**Padres ricos** y logro indiviudal en la sociedad chilena:
 
-```{r, no-merit-univariado, echo=FALSE}
+```{r, dona-padres-ricos-ES-AP-percep, echo=FALSE}
+
+# grafico dona: padres ricos y estudiantes 
+
 padres_ricos_percep_ES = round(prop.table(table(categorias=proc_datos$padres_ricos_percep_ES)),2)
 padres_ricos_percep_ES = as.data.frame(padres_ricos_percep_ES)
 padres_ricos_percep_ES$categorias <- factor(padres_ricos_percep_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
 plot_padres_ricos_percep_ES<-ggplot(padres_ricos_percep_ES,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity",
            color="white")+
     geom_text(aes(label = scales::percent(Freq)),
               position=position_stack(vjust=0.5),color="black",size=4.5)+
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
+  scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank())+
   xlim(0.5,2.5) +
   labs(title="Estudiantes")
 
+# grafico dona: padres ricos y apoderados 
+
 padres_ricos_percep_AP = round(prop.table(table(categorias=proc_datos$padres_ricos_percep_AP)),2)
 padres_ricos_percep_AP = as.data.frame(padres_ricos_percep_AP)
 padres_ricos_percep_AP$categorias <- factor(padres_ricos_percep_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
 plot_padres_ricos_percep_AP<-ggplot(padres_ricos_percep_AP,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity",
            color="white")+
     geom_text(aes(label = scales::percent(Freq)),
               position=position_stack(vjust=0.5),color="black",size=4.5)+
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
+  scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank())+
   xlim(0.5,2.5) +
   labs(title="Apoderados")
-
-padres_ricos_percep_PROF = round(prop.table(table(categorias=proc_datos$padres_ricos_percep_PROF)),2)
-padres_ricos_percep_PROF = as.data.frame(padres_ricos_percep_PROF)
-padres_ricos_percep_PROF$categorias <- factor(padres_ricos_percep_PROF$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
-plot_padres_ricos_percep_PROF<-ggplot(padres_ricos_percep_PROF,aes(x=2,y=-Freq, fill=categorias))+
-  geom_bar(stat = "identity",
-           color="white")+
-    geom_text(aes(label = scales::percent(Freq)),
-              position=position_stack(vjust=0.5),color="black",size=4.5)+
-  coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
-    theme_void()+
-  theme(legend.title = element_blank())+
-  xlim(0.5,2.5) +
-  labs(title="Docentes")
-
 ```
 
-```{r, echo=FALSE}
+```{r, plot-padres-ricos-percep, echo=FALSE}
+
+# grafico padres ricos 
 
 # Combinar los gráficos
 no_merito_social_padres_ricos_percep <- ggarrange(
 plot_padres_ricos_percep_ES, 
 plot_padres_ricos_percep_AP,
-plot_padres_ricos_percep_PROF,
   common.legend = TRUE, 
-  ncol = 3, 
+  ncol = 2, 
   legend = "bottom"
 )
 
@@ -591,7 +632,7 @@ plot_padres_ricos_percep_PROF,
 final_plot7 <- annotate_figure(
   no_merito_social_padres_ricos_percep,
   top = text_grob(
-    "Figura 1.7: En Chile, quienes tienen padres ricos les va mejor en la vida",
+    "Figura 1.10: En Chile, quienes tienen padres ricos les va mejor en la vida",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -602,69 +643,57 @@ final_plot7 <- annotate_figure(
 final_plot7
 ```
 
-Descripción...
+*Cruces con características sociodemográficas de estudiantes*
 
-**Buenos contactos**
+**Buenos contactos** y logro individual en la sociedad chilena:
 
-```{r, echo=FALSE}
+```{r, dona-buenos-contactos-ES-AP-percep,echo=FALSE}
+
+# grafico dona: buenos contactos y estudiantes 
+
 buenos_contactos_percep_ES = round(prop.table(table(categorias=proc_datos$buenos_contactos_percep_ES)),2)
 buenos_contactos_percep_ES = as.data.frame(buenos_contactos_percep_ES)
 buenos_contactos_percep_ES$categorias <- factor(buenos_contactos_percep_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
 plot_contactos_percep_ES<-ggplot(buenos_contactos_percep_ES,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity",
            color="white")+
     geom_text(aes(label = scales::percent(Freq)),
               position=position_stack(vjust=0.5),color="black",size=4.5)+
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
+  scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank())+
   xlim(0.5,2.5) +
   labs(title="Estudiantes")
 
+# grafico dona: buenos contactos y apoderados
+
 buenos_contactos_percep_AP = round(prop.table(table(categorias=proc_datos$buenos_contactos_percep_AP)),2)
 buenos_contactos_percep_AP = as.data.frame(buenos_contactos_percep_AP)
 buenos_contactos_percep_AP$categorias <- factor(buenos_contactos_percep_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
 plot_contactos_percep_AP<-ggplot(buenos_contactos_percep_AP,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity",
            color="white")+
     geom_text(aes(label = scales::percent(Freq)),
               position=position_stack(vjust=0.5),color="black",size=4.5)+
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
+  scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank())+
   xlim(0.5,2.5) +
   labs(title="Apoderados")
-
-buenos_contactos_percep_PROF = round(prop.table(table(categorias=proc_datos$buenos_contactos_percep_PROF)),2)
-buenos_contactos_percep_PROF = as.data.frame(buenos_contactos_percep_PROF)
-buenos_contactos_percep_PROF$categorias <- factor(buenos_contactos_percep_PROF$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
-plot_contactos_percep_PROF<-ggplot(buenos_contactos_percep_PROF,aes(x=2,y=-Freq, fill=categorias))+
-  geom_bar(stat = "identity",
-           color="white")+
-    geom_text(aes(label = scales::percent(Freq)),
-              position=position_stack(vjust=0.5),color="black",size=4.5)+
-  coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
-    theme_void()+
-  theme(legend.title = element_blank())+
-  xlim(0.5,2.5) +
-  labs(title="Docentes")
 ```
 
-```{r, echo=FALSE}
+```{r, plot-buenos-contactos-percep, echo=FALSE}
+
+# grafico buenos contactos 
 
 # Combinar los gráficos
 no_merito_social_buenos_contactos_percep <- ggarrange(
   plot_contactos_percep_ES, 
-  plot_contactos_percep_AP, 
-  plot_contactos_percep_PROF,
+  plot_contactos_percep_AP,
   common.legend = TRUE, 
-  ncol = 3, 
+  ncol = 2, 
   legend = "bottom"
 )
 
@@ -685,67 +714,57 @@ final_plot8
 
 Descripción....
 
-**Oportunidades**
+*Cruce con características sociodemográficas*
 
-```{r, echo=FALSE}
+**Oportunidades** y logro individual en la sociedad chilena:
+
+```{r, dona-oportunidades-ES-AP, echo=FALSE}
+
+# grafico dona: oportunidades y estudiantes
+
 oportunidades_percep_ES = round(prop.table(table(categorias=proc_datos$oportunidades_percep_ES)),2)
 oportunidades_percep_ES = as.data.frame(oportunidades_percep_ES)
 oportunidades_percep_ES$categorias <- factor(oportunidades_percep_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
 plot_oportunidad_percep_ES<-ggplot(oportunidades_percep_ES,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity",
            color="white")+
     geom_text(aes(label = scales::percent(Freq)),
               position=position_stack(vjust=0.5),color="black",size=4.5)+
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
+  scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank())+
   xlim(0.5,2.5) +
   labs(title="Estudiantes")
 
+# grafico dona: oportunidades y apoderados 
+
 oportunidades_percep_AP = round(prop.table(table(categorias=proc_datos$oportunidades_percep_AP)),2)
 oportunidades_percep_AP = as.data.frame(oportunidades_percep_AP)
 oportunidades_percep_AP$categorias <- factor(oportunidades_percep_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
 plot_oportunidad_percep_AP<-ggplot(oportunidades_percep_AP,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity",
            color="white")+
     geom_text(aes(label = scales::percent(Freq)),
               position=position_stack(vjust=0.5),color="black",size=4.5)+
   coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
+  scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank())+
   xlim(0.5,2.5) +
   labs(title="Apoderados")
-
-oportunidades_percep_PROF = round(prop.table(table(categorias=proc_datos$oportunidades_percep_PROF)),2)
-oportunidades_percep_PROF = as.data.frame(oportunidades_percep_PROF)
-oportunidades_percep_PROF$categorias <- factor(oportunidades_percep_PROF$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
-
-plot_oportunidad_percep_PROF<-ggplot(oportunidades_percep_PROF,aes(x=2,y=-Freq, fill=categorias))+
-  geom_bar(stat = "identity",
-           color="white")+
-    geom_text(aes(label = scales::percent(Freq)),
-              position=position_stack(vjust=0.5),color="black",size=4.5)+
-  coord_polar(theta = "y")+
-  scale_fill_brewer(palette = "Reds")+
-    theme_void()+
-  theme(legend.title = element_blank())+
-  xlim(0.5,2.5) +
-  labs(title="Docentes")
 ```
 
-```{r, echo=FALSE}
+```{r, plot-oportunidades, echo=FALSE}
+
+# grafico oportunidades 
 
 # Combinar los gráficos
 no_merito_social_oportunidades_percep <- ggarrange(
  plot_oportunidad_percep_ES, 
- plot_oportunidad_percep_AP, 
- plot_oportunidad_percep_PROF,
+ plot_oportunidad_percep_AP,
   common.legend = TRUE, 
-  ncol = 3, 
+  ncol = 2, 
   legend = "bottom"
 )
 
@@ -766,146 +785,357 @@ final_plot9
 
 Descripción.....
 
-Respuestas en función del género del/la estudiante:
-
-```{r, echo=FALSE}
-#plot11 <- proc_datos %>% dplyr::filter(genero_ES=="Hombre") %>% 
- # dplyr::select(padres_ricos_percep_ES, buenos_contactos_percep_ES, oportunidades_percep_ES) %>%
-  #sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  #theme(legend.position = "bottom")+
-  #labs(title="Hombre") 
-
-#plot22 <- proc_datos %>% filter(genero=="Mujer") %>% 
- # dplyr::select(padres_ricos_percep_ES, buenos_contactos_percep_ES, oportunidades_percep_ES) %>%
-  #sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  #theme(legend.position = "bottom")+
-  #labs(title="Mujer")
-
-#plot33 <- proc_datos %>% filter(genero=="Otro") %>% 
- # dplyr::select(padres_ricos_percep_ES, buenos_contactos_percep_ES, oportunidades_percep_ES) %>%
-  #sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 55)+
-  #theme(legend.position = "bottom")+
-  #labs(title="Otro")
-```
-
-```{r, echo=FALSE}
-#pluto<-ggarrange(plot11, plot22, plot33, common.legend = TRUE, nrow=3, legend = c("bottom", "right"), hjust = 0.5)
-#pluto
-```
-
-Respuestas en función del curso del/la estudiante:
-
-```{r, echo=FALSE}
-#plott11 <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
- # dplyr::select(padres_ricos_percep_ES, buenos_contactos_percep_ES, oportunidades_percep_ES) %>%
-#  sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 50)+
- # theme(legend.position = "bottom")+
-#  labs(title="Básica") 
-
-#plott22 <- proc_datos %>% filter(curso_estudiante=="Media") %>% 
- # dplyr::select(padres_ricos_percep_ES, buenos_contactos_percep_ES, oportunidades_percep_ES) %>%
-  #sjPlot::plot_stackfrq(geom.colors = "Reds", wrap.labels = 50)+
-  #theme(legend.position = "bottom")+
-  #labs(title="Media")
-```
-
-```{r, echo=FALSE}
-#plats<-ggarrange(plott11, plott22, common.legend = TRUE, nrow=2, legend = c("bottom", "right"), hjust = 0.5)
-#plats
-```
-
-<br>
+*Cruces con características sociodemográficas de estudiantes*
 
 #### Preferencias
 
-a\. Respecto a criterios de mérito individual
+-   Respecto a criterios de mérito individual
 
--   *p1_5: Esfuerzo*
+```{r, dona-esfuerzo-talento-ES-pref, echo=FALSE}
 
-*nota*: el fraseo correcto es **"Quienes más se esfuerzan deberían obtener mayores recompensas que quienes se esfuerzan menos"**
+# grafico dona: esfuerzo y estudiantes 
 
-```{r, univariado-esfuerzo, echo=FALSE}
+merit_esfuerzo_pref_ES = round(prop.table(table(categorias=proc_datos$merit_esfuerzo_pref_ES)),2)
+merit_esfuerzo_pref_ES = as.data.frame(merit_esfuerzo_pref_ES)
+merit_esfuerzo_pref_ES$categorias <- factor(merit_esfuerzo_pref_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_meritesfuerzo_pref_ES<-ggplot(merit_esfuerzo_pref_ES,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes" )
+
+# grafico dona: talento y estudiantes
+
+merit_talento_pref_ES = round(prop.table(table(categorias=proc_datos$merit_talento_pref_ES)),2)
+merit_talento_pref_ES = as.data.frame(merit_talento_pref_ES)
+merit_talento_pref_ES$categorias <- factor(merit_talento_pref_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_merittalento_pref_ES<-ggplot(merit_talento_pref_ES,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity",
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5)+
+  labs(title="Estudiantes")
+
 ```
 
-<br>
+```{r, dona-esfuerzo-talento-AP-pref, echo=FALSE}
 
--   *p1_6: Talento*
+# grafico dona: esfuerzo y apoderados
 
-```{r, univariado-talento, echo=FALSE}
+merit_esfuerzo_pref_AP = round(prop.table(table(categorias=proc_datos$merit_esfuerzo_pref_AP)),2) 
+merit_esfuerzo_pref_AP = as.data.frame(merit_esfuerzo_pref_AP)
+merit_esfuerzo_pref_AP$categorias <- factor(merit_esfuerzo_pref_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
+plot_meritesfuerzo_pref_AP<-ggplot(merit_esfuerzo_pref_AP,aes(x=2,y=-Freq, fill=categorias))+  
+  geom_bar(stat = "identity",  
+           color="white")+    
+  geom_text(aes(label = scales::percent(Freq)),  
+            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
+  scale_fill_brewer(palette = "Blues")+  
+  theme_void()+  
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +  
+  labs(title="Apoderados" ) 
+
+# grafico dona: talento y apoderados
+
+merit_talento_pref_AP = round(prop.table(table(categorias=proc_datos$merit_talento_pref_AP)),2)
+merit_talento_pref_AP = as.data.frame(merit_talento_pref_AP) 
+merit_talento_pref_AP$categorias <- factor(merit_talento_pref_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))  
+plot_merittalento_pref_AP<-ggplot(merit_talento_pref_AP,aes(x=2,y=-Freq, fill=categorias))+ 
+  geom_bar(stat = "identity", 
+           color="white")+  
+  geom_text(aes(label = scales::percent(Freq)), 
+            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
+  scale_fill_brewer(palette = "Blues")+
+  theme_void()+  
+  theme(legend.title = element_blank())+ 
+  xlim(0.5,2.5)+ 
+  labs(title="Apoderados") 
 ```
 
-<br>
+**Esfuerzo** en la sociedad chilena:
 
-Cruce con género:
+```{r, plot-esfuerzo-pref, echo=FALSE}
 
-```{r, talento-esfuerzo-ge, echo=FALSE}
+# grafico esfuerzo 
+
+# Combinar los gráficos
+merit_social_esfuerzo_pref <- ggarrange(
+  plot_meritesfuerzo_pref_ES, 
+  plot_meritesfuerzo_pref_AP,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+)
+
+# Agregar una etiqueta global centrada
+final_plot_pref_E <- annotate_figure(
+  merit_social_esfuerzo_pref,
+  top = text_grob(
+    "Figura 1.: Quienes más se esfuerzan deberían obtener mayores recompensas que quienes se esfuerzan menos",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+final_plot_pref_E
 ```
 
-<br>
+**Talento** en la sociedad chilena:
 
-Cruce con curso:
+```{r, plot-talento-pref, echo=FALSE}
 
-```{r, talento-esfuerzo-cu, echo=FALSE}
+# grafico talento 
+
+# Combinar los gráficos
+merit_social_talento_pref <- ggarrange(
+  plot_merittalento_pref_ES, 
+  plot_merittalento_pref_AP,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+)
+
+# Agregar una etiqueta global centrada
+final_plot1_pref_t <- annotate_figure(
+  merit_social_talento_pref,
+  top = text_grob(
+    "Figura 1.: Quienes poseen más talento deberían obtener mayores recompensas que quienes poseen menos talento",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+final_plot1_pref_t
 ```
 
-<br>
+-   Preferencia respecto a la recompensa en base al talento por sobre el esfuerzo
 
-b\. Preferencia respecto a la recompensa en base al talento por sobre el esfuerzo
+```{r, dona-merito-ES-pref, echo=FALSE}
 
--   *p9_6*
+# grafico dona: merito y estudiantes
 
-```{r, univariado-recompensa, echo=FALSE}
+social_merit_pref_ES = round(prop.table(table(categorias=proc_datos$social_merit_pref_ES)),2)
+social_merit_pref_ES = as.data.frame(social_merit_pref_ES)
+social_merit_pref_ES$categorias <- factor(social_merit_pref_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_merit_pref_ES<-ggplot(social_merit_pref_ES,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5), color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes")
+```
+
+```{r,dona-merito-AP-pref, echo=FALSE}
+
+# grafico dona: merito y apoderados
+
+social_merit_pref_AP = round(prop.table(table(categorias=proc_datos$social_merit_pref_AP)),2) 
+social_merit_pref_AP = as.data.frame(social_merit_pref_AP)
+social_merit_pref_AP$categorias <- factor(social_merit_pref_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
+plot_merit_pref_AP<-ggplot(social_merit_pref_AP,aes(x=2,y=-Freq, fill=categorias))+  
+  geom_bar(stat = "identity",  
+           color="white")+    
+  geom_text(aes(label = scales::percent(Freq)),  
+            position=position_stack(vjust=0.5),color="black",size=4.5)+   coord_polar(theta = "y")+ 
+  scale_fill_brewer(palette = "Blues")+  
+  theme_void()+  
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +  
+  labs(title="Apoderados") 
 
 ```
 
-<br>
+```{r, plot-merito-social-pref, echo=FALSE}
 
-Cruce con género:
+# grafico merito social 
 
-```{r, echo=FALSE}
+
+# Combinar los gráficos
+merit_social_pref <- ggarrange(
+  plot_merit_pref_ES, 
+  plot_merit_pref_AP,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+)
+
+# Agregar una etiqueta global centrada
+final_plot_pref <- annotate_figure(
+  merit_social_pref,
+  top = text_grob(
+    "Figura 1.: Está bien que las personas más inteligentes y/o talentosas ganen más dinero, aun cuando requieran esforzarse menos para ello",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+final_plot_pref
 ```
 
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-```
-
-<br>
-
-c\. Respecto a factores no meritocráticos
+-   Respecto a factores no meritocráticos
 
 Estos factores aluden a externalidades del mérito individual como la herencia, los contactos y la suerte. Por ello, se presentan preguntas referidas a la preferencia respecto a los logros individuales de las personas que tienen padres ricos, buenos contactos y mejores oportunidades en la vida.
 
--   *p1_7 : Padres ricos*
+**Padres ricos**
 
-```{r, univariado, echo=FALSE}
+```{r, dona-padres-ricos-ES-pref, echo=FALSE}
 
+# grafico dona: padres ricos y estudiantes
+
+padres_ricos_pref_ES = round(prop.table(table(categorias=proc_datos$padres_ricos_pref_ES)),2)
+padres_ricos_pref_ES = as.data.frame(padres_ricos_pref_ES)
+padres_ricos_pref_ES$categorias <- factor(padres_ricos_pref_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_padres_ricos_pref_ES<-ggplot(padres_ricos_pref_ES,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes" )
 ```
 
-<br>
+```{r, dona-padres-ricos-AP-pref, echo=FALSE}
 
--   *p1_8: Buenos contactos*
+# grafico dona: padres ricos y apoderados 
 
-```{r, echo=FALSE}
-
+padres_ricos_pref_AP = round(prop.table(table(categorias=proc_datos$padres_ricos_pref_AP)),2)
+padres_ricos_pref_AP = as.data.frame(padres_ricos_pref_AP)
+padres_ricos_pref_AP$categorias <- factor(padres_ricos_pref_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_padres_ricos_pref_AP<-ggplot(padres_ricos_pref_AP,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+          color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+            position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+ xlim(0.5,2.5) +
+  labs(title="Apoderados" )
 ```
 
-<br>
+```{r, plot-padres-ricos-pref, echo=FALSE}
 
-Cruce con género:
+# graficos padres ricos 
 
-```{r}
+ #Combinar los gráficos
+padres_ricos_pref <- ggarrange(
+  plot_padres_ricos_pref_ES, 
+  plot_padres_ricos_pref_AP,
+ common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+)
 
+# Agregar una etiqueta global centrada
+final_plot_pref_pr <- annotate_figure(
+  padres_ricos_pref,
+  top = text_grob(
+    "Figura 1.:Está bien que quienes tienen padres ricos les vaya bien en la vida",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+final_plot_pref_pr
 ```
 
-<br>
+**Buenos contactos**
 
-Cruce con curso:
+```{r, dona-buenos-contactos-ES-pref, echo=FALSE}
 
-```{r, echo=FALSE}
- 
+# grafico dona: buenos contactos y estudiantes 
+
+buenos_contactos_pref_ES = round(prop.table(table(categorias=proc_datos$buenos_contactos_pref_ES)),2)
+buenos_contactos_pref_ES = as.data.frame(buenos_contactos_pref_ES)
+buenos_contactos_pref_ES$categorias <- factor(buenos_contactos_pref_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_buenos_contactos_pref_ES<-ggplot(buenos_contactos_pref_ES,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes" )
+```
+
+```{r, dona-buenos-contactos-AP-pref, echo=FALSE}
+
+# grafico dona: buenos contactos y apoderados 
+
+buenos_contactos_pref_AP = round(prop.table(table(categorias=proc_datos$buenos_contactos_pref_AP)),2)
+buenos_contactos_pref_AP = as.data.frame(buenos_contactos_pref_AP)
+buenos_contactos_pref_AP$categorias <- factor(buenos_contactos_pref_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_buenos_contactos_pref_AP<-ggplot(buenos_contactos_pref_AP,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+             position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Apoderados" )
+```
+
+```{r, plot-buenos-contactos-pref, echo=FALSE}
+
+# grafico buenos contactos 
+
+# Combinar los gráficos
+buenos_contactos_pref <- ggarrange(
+  plot_buenos_contactos_pref_ES, 
+  plot_buenos_contactos_pref_AP,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+) 
+
+# Agregar una etiqueta global centrada
+final_plot_pref_bc <- annotate_figure(
+  buenos_contactos_pref,
+  top = text_grob(
+    "Figura 1.: Está bien que quienes tienen buenos contactos les vaya bien en la vida",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  ))
+
+final_plot_pref_bc
 ```
 
 ## Meritocracia en la escuela
@@ -918,76 +1148,236 @@ De este modo, se presentan dos apartados: **creencias en la meritocracia** y **j
 
 #### Percepciones
 
-a\. Respecto a criterios de mérito individual
+-   Respecto a criterios de mérito individual
 
--   *Talento*
+```{r, dona-school-merito-ES-percep, echo=FALSE}
 
-```{r, echo=FALSE}
+# grafico dona: esfuerzo en la escuela y estudiante 
+
+school_esfuerzo_ES = round(prop.table(table(categorias=proc_datos$school_esfuerzo_ES)),2)
+school_esfuerzo_ES = as.data.frame(school_esfuerzo_ES)
+school_esfuerzo_ES$categorias <- factor(school_esfuerzo_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_school_esfuerzo_ES<-ggplot(school_esfuerzo_ES,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes" )
+
+# grafico dona: talento en la escuela y estudiante 
+
+school_talento_ES = round(prop.table(table(categorias=proc_datos$school_talento_ES)),2)
+school_talento_ES = as.data.frame(school_talento_ES)
+school_talento_ES$categorias <- factor(school_talento_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+
+plot_school_talento_ES<-ggplot(school_talento_ES,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity",
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5)+
+  labs(title="Estudiantes")
+
+# grafico dona: merito en la escuela y estudiante 
+
+school_merito_ES = round(prop.table(table(categorias=proc_datos$school_merito_ES)),2)
+school_merito_ES = as.data.frame(school_merito_ES)
+school_merito_ES$categorias <- factor(school_merito_ES$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+
+plot_school_merito_ES<-ggplot(school_merito_ES,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity",
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5)+
+  labs(title="Estudiantes")
 
 ```
 
-<br>
+```{r, dona-school-merito-AP-percep,echo=FALSE}
 
--   *Esfuerzo*
+# grafico dona: esfuerzo en la escuela apoderado
 
-```{r, echo=FALSE}
+school_esfuerzo_AP = round(prop.table(table(categorias=proc_datos$school_esfuerzo_AP)),2)
+school_esfuerzo_AP = as.data.frame(school_esfuerzo_AP)
+school_esfuerzo_AP$categorias <- factor(school_esfuerzo_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_school_esfuerzo_AP<-ggplot(school_esfuerzo_AP,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Apoderados" )
+
+# grafico dona: talento en la escuela apoderado 
+
+school_talento_AP = round(prop.table(table(categorias=proc_datos$school_talento_AP)),2)
+school_talento_AP = as.data.frame(school_talento_AP)
+school_talento_AP$categorias <- factor(school_talento_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_school_talento_AP<-ggplot(school_talento_AP,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Apoderados" )
+
+# grafico dona: merito en la escuela y apoderado 
+
+school_merito_AP = round(prop.table(table(categorias=proc_datos$school_merito_AP)),2)
+school_merito_AP = as.data.frame(school_merito_AP)
+school_merito_AP$categorias <- factor(school_merito_AP$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_school_merito_AP<-ggplot(school_merito_AP,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Apoderados" )
 ```
 
-<br>
+**Esfuerzo** en la escuela:
 
-Cruce con género:
+```{r, plot-school-esfuerzo, echo=FALSE}
 
-```{r, echo=FALSE}
+#grafico esfuerzo en la escuela 
+
+# Combinar los gráficos
+plot_school_esfuerzo <- ggarrange(
+  plot_school_esfuerzo_ES, 
+  plot_school_esfuerzo_AP,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+)
+
+# Agregar una etiqueta global centrada
+final_plot_school_esfuerzo <- annotate_figure(
+  plot_school_esfuerzo,
+  top = text_grob(
+    "Figura 1.: En esta escuela, quienes se esfuerzan obtienen buenas notas",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+final_plot_school_esfuerzo
 ```
 
-<br>
+**Talento** en la escuela:
 
-Cruce con curso:
+```{r, plot-school-talento, echo=FALSE}
 
-```{r, echo=FALSE}
+# grafico talento en la escuela  
+
+# Combinar los gráficos
+plot_school_talento <- ggarrange(
+  plot_school_talento_ES, 
+  plot_school_talento_AP,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+)
+
+# Agregar una etiqueta global centrada
+final_plot_school_talento <- annotate_figure(
+  plot_school_talento,
+  top = text_grob(
+    "Figura 1.: En esta escuela, quienes son inteligentes obtienen buenas notas",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+final_plot_school_talento
 ```
 
-<br>
+-   *Respecto al mérito en la escuela*
 
-*b. Respecto al mérito en la escuela (a partir de la nota obtenida)*
+```{r, plot-school-merito, echo=FALSE}
 
-```{r, uni, echo=FALSE}
+# grafico merito en la escuela
 
+# Combinar los gráficos
+plot_school_merito<- ggarrange(
+  plot_school_merito_ES, 
+  plot_school_merito_AP,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+)
+
+# Agregar una etiqueta global centrada
+final_plot_school_merito <- annotate_figure(
+  plot_school_merito,
+  top = text_grob(
+    "Figura 1.: En esta escuela, los/as estudiantes obtienen las notas que merecen",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+final_plot_school_merito
 ```
-
-Cruce con género:
-
-```{r, echo=FALSE}
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-```
-
-<br>
 
 #### Preferencia
 
-a\. Respecto a criterios de mérito individual: *importancia talento o esfuerzo (p3) GRAFICO DE CURVA*
+-   Respecto a criterios de mérito individual:
 
-```{r, echo=FALSE}
-```
+```{r, plot-curva-school-pref, echo=FALSE, warning=FALSE}
 
-Cruce con género:
+# gráfico de curva preferencia en la escuela  
 
-```{r, echo=FALSE}
+school_merit_pref <- ggplot(data = proc_datos, 
+       mapping = aes(x = school_merit_pref)) + 
+  geom_density(color = "#68838B", fill =  "White", alpha = 0.8)  + 
+  labs(x = "Esfuerzo                                Ambos                            Talento", 
+       y = "Frecuencia" ) +
+  scale_y_percent() +
+  theme_classic() 
 
-```
+# generamos el graifco con el titulo del mismo formato que los graficos anteriores 
 
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-
+p <- annotate_figure(school_merit_pref,
+                                   top = text_grob(
+    "Figura 1.: Preferencia repsecto al criterio individual de merito más importante para obtener buenas notas",
+    size = 10, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  ))
+p
 ```
 
 ### Justicia en las notas
@@ -998,56 +1388,72 @@ En este apartado se observa la percepción de las/los estudiantes respecto a si 
 
 *a. Respecto a la justicia de la nota obtenida*
 
-```{r, echo=FALSE}
+```{r, dona-notas-merito, echo=FALSE, warning=FALSE}
+# grafico dona: nota y merecimiento
 
+notas_merit = round(prop.table(table(categorias=proc_datos$notas_merit)),2)
+notas_merit = as.data.frame(notas_merit)
+notas_merit$categorias <- factor(notas_merit$categorias, levels = c(1, 2, 3), labels = c("Menos de lo que merezco", "2.	Lo que merezco", "Más de lo que merezco"))
+plot_notas_merit<-ggplot(notas_merit,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Mérito" )
+
+# grafico dona: nota y esfuerzo 
+
+notas_esfuerzo = round(prop.table(table(categorias=proc_datos$notas_esfuerzo)),2)
+notas_esfuerzo = as.data.frame(notas_esfuerzo)
+notas_esfuerzo$categorias <- factor(notas_esfuerzo$categorias, levels = c(1, 2, 3), labels = c("Menos de lo que merezco", "2.	Lo que merezco", "Más de lo que merezco"))
+plot_notas_esfuerzo<-ggplot(notas_esfuerzo,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Esfuerzo" )
 ```
 
-<br>
+```{r , plot-notas-merito, echo=FALSE, warning=FALSE}
+# Combinar los gráficos
+plot_notas_merit<- ggarrange(
+  plot_notas_merit, 
+  plot_notas_esfuerzo,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+)
 
-Cruce con género:
+# Agregar una etiqueta global centrada
+final_plot_notas_merit <- annotate_figure(
+  plot_notas_merit,
+  top = text_grob(
+    "Figura 1.: Merecimiento de la nota de acuerdo a criterios de mérito individual",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
 
-```{r , echo=FALSE}
-
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-
-```
-
-<br>
-
-*b. Respecto a la justicia de la nota obtenida en razón del tiempo dedicado al estudio*
-
-```{r, echo=FALSE}
-
-```
-
-<br>
-
-Cruce con género:
-
-```{r , echo=FALSE}
-
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-
-
+final_plot_notas_merit # generamos el grafico
 ```
 
 #### Notas del estudiante
 
 Este apartado hace énfasis en la nota individual de la/el estudiante. De ese modo, se presenta comparativamente la *nota final que efectivamente obtuvo* y la *nota final que consideraba que debería haber obtenido*.
 
-```{r, echo=FALSE}
+```{r, plot-curva-notas, echo=FALSE}
+
+# grafico de curva entre nota obtenida y preferencia de la nota 
 ```
