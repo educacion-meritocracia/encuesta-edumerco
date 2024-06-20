@@ -4,7 +4,6 @@
 # 1. cargar librerias ---------------------------------------------------------
 install.packages("pacman")
 pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer)
-
 library(haven)
 
 # 2. cargar bbdd --------------------------------------------------------------
@@ -13,87 +12,100 @@ options(scipen=999) # valores sin notación científica
 
 
 datos <- read_sav("input/data/original/310524_BDD_edumer.sav")
-frq(datos$p18_Apoderado)
+frq(datos$p12_1)
+frq(datos$d3_nueva_Apoderado)
 names(datos)
 
 # 3. seleccionar variables ----------------------------------------------------
 
-proc_datos <- datos %>% select(aleatorio, p1_1, p1_2, 
-                                                       p2_1, p2_2, p2_3, p9_3, 
-                                                       p9_4, p9_5, d3_def, p26, p27, 
-                                                       p30, p20, check_atencion, 
-                                                       tratamiento, control, d2,
-                                                       p5, p7, p17_1, p17_2, p19, p10_1, p10_2,
-                                                       p10_5, p10_6, p11_2, p11_3, p12_1,
-                                                       p12_3, p13_2, p13_4, p13_6, p18_1,
-                                                       p18_2, p18_5, p18_6, p3, p1_3, p1_4, 
-                                                       p1_5, p1_6, p1_7, p1_8,p1_9, p1_10, 
-                                                       p10_3, p10_3, p10_4, p10_7, p10_8, p12_2, 
-                                                       p13_1, p13_5, p11_1, p18_3, p9_1, p9_2, p9_6, 
-                                                       p14, p15, P16_o1, P16_o2, P16_o3, P16_o4, P16_o5, P16_o6,
-                                                       p1_1_Apoderado, p1_1_docente, p1_2_docente,p1_2_Apoderado, 
-                                                       p1_3_Apoderado, p1_3_docente, p1_4_Apoderado, p1_4_docente,
-                                                       p1_9_Apoderado, p1_9_docente, p1_10_Apoderado, p1_10_docente,
-                                                       p15_Apoderado, p13_Apoderado, p11_Apoderado, p13_docente, p18_Apoderado,
-                               p1_5_Apoderado, p1_6_Apoderado, p1_7_Apoderado, p1_8_Apoderado, p5_6_Apoderado, 
-                               p1_5_docente, p1_6_docente, p1_7_docente, p1_8_docente, p4_6_docente, p4, p6, d6_Apoderado)
+proc_datos <- datos %>% select(aleatorio, p1_1, p1_2, p2_1, p2_2, p2_3, p9_3,
+                               p9_4, p9_5, d3_def, p26, p27, p30, p20, 
+                               check_atencion, tratamiento, control, d2,p5, p7,
+                               p17_1, p17_2, p19, p10_1, p10_2, p10_5, p10_6,
+                               p11_2, p11_3, p12_1, p12_3, p13_2, p13_4, p13_6,
+                               p18_1,p18_2, p18_5, p18_6, p3, p1_3, p1_4, p1_5, 
+                               p1_6, p1_7, p1_8,p1_9, p1_10, p10_3, p10_3, p10_4, 
+                               p10_7, p10_8, p12_2,p13_1, p13_5, p11_1, p18_3, 
+                               p9_1, p9_2, p9_6, p14, p15, P16_o1, P16_o2, P16_o3, 
+                               P16_o4, P16_o5, P16_o6, p1_1_Apoderado, p1_1_docente, 
+                               p1_2_docente,p1_2_Apoderado, p1_3_Apoderado, 
+                               p1_3_docente, p1_4_Apoderado, p1_4_docente,
+                               p1_9_Apoderado, p1_9_docente, p1_10_Apoderado, 
+                               p1_10_docente, p15_Apoderado, p13_Apoderado, 
+                               p11_Apoderado, p13_docente, p18_Apoderado,
+                               p1_5_Apoderado, p1_6_Apoderado, p1_7_Apoderado,
+                               p1_8_Apoderado, p5_6_Apoderado, p1_5_docente, 
+                               p1_6_docente, p1_7_docente, p1_8_docente, 
+                               p4_6_docente, p4, p6, d6_Apoderado, p2_1_Apoderado,
+                               p2_2_Apoderado, p2_3_Apoderado, p3_Apoderado,
+                               p2_1_docente, p2_2_docente, p2_3_docente, p3_0_docente,
+                               SbjNum_docente)
 #renombrar 
 proc_datos <- proc_datos %>% rename(merit_esfuerzo_percep_ES = p1_1,
-                                                           merit_talento_percep_ES = p1_2,
-                                                           social_merito_percep_ES = p1_10,
-                                                           oportunidades_percep_ES = p1_9,
-                                                           buenos_contactos_percep_ES = p1_4,
-                                                           padres_ricos_percep_ES = p1_3,
-                                                           merit_esfuerzo_percep_PROF = p1_1_docente,
-                                                           merit_talento_percep_PROF = p1_2_docente,
-                                                           social_merito_percep_PROF = p1_10_docente,
-                                                           oportunidades_percep_PROF = p1_9_docente,
-                                                           buenos_contactos_percep_PROF = p1_4_docente,
-                                                           padres_ricos_percep_PROF = p1_3_docente,
-                                                           merit_esfuerzo_percep_AP = p1_1_Apoderado,
-                                                           merit_talento_percep_AP = p1_2_Apoderado,
-                                                           social_merito_percep_AP = p1_10_Apoderado,
-                                                           oportunidades_percep_AP = p1_9_Apoderado,
-                                                           buenos_contactos_percep_AP = p1_4_Apoderado,
-                                                           padres_ricos_percep_AP = p1_3_Apoderado,
-                                                           school_esfuerzo = p2_1,
-                                                           school_talento = p2_2,
-                                                           school_merito = p2_3,
-                                                           just_educ = p9_3,
-                                                           just_salud = p9_4,
-                                                           just_pensiones = p9_5,
-                                                           curso_estudiante = d3_def,
-                                                           ne_madre = p26,
-                                                           ne_padre = p27, 
-                                                           libros_hogar = p30,
-                                                           genero_ES = p20,
-                                                           genero_AP = p11_Apoderado,
-                                                           genero_PROF = p13_docente,
-                                                           iden_pol_AP = p13_Apoderado,
-                                                           religion_AP = p18_Apoderado,
-                                                           check_tratamiento = tratamiento,
-                                                           check_control = control,
-                                                           school_dependencia = d2,
-                                                           notas_merit = p5,
-                                                           notas_esfuerzo = p7,
-                                                           pp_futura_pol = p17_1,
-                                                           pp_presente_pol = p17_2, 
-                                                           school_ciudadania = p19,
-                                                           ciudadania_voto_es = p10_1,
-                                                           ciudadania_pp = p10_2,
-                                                           ciudadania_ley = p10_5, 
-                                                           ciudadania_op= p10_6, 
-                                                           pp_futura_voto = p11_2,
-                                                           pp_futura_candidatos = p11_3, 
-                                                           pp_presente_marcha = p12_1,
-                                                           pp_presente_toma = p12_3, 
-                                                           pp_presente_rrss = p13_2,
-                                                           pp_presente_compartir = p13_4, 
-                                                           pp_presente_like= p13_6,
-                                                           school_ciudadania_es = p18_1,
-                                                           school_ciudadania_op = p18_2,
-                                                           school_ciudadania_dif = p18_5, 
-                                                           school_ciudadania_class = p18_6,
+                                    merit_talento_percep_ES = p1_2,
+                                    social_merito_percep_ES = p1_10,
+                                    oportunidades_percep_ES = p1_9,
+                                    buenos_contactos_percep_ES = p1_4,
+                                    padres_ricos_percep_ES = p1_3,
+                                    merit_esfuerzo_percep_PROF = p1_1_docente,
+                                    merit_talento_percep_PROF = p1_2_docente,
+                                    social_merito_percep_PROF = p1_10_docente,
+                                    oportunidades_percep_PROF = p1_9_docente,
+                                    buenos_contactos_percep_PROF = p1_4_docente,
+                                    padres_ricos_percep_PROF = p1_3_docente,
+                                    merit_esfuerzo_percep_AP = p1_1_Apoderado,
+                                    merit_talento_percep_AP = p1_2_Apoderado,
+                                    social_merito_percep_AP = p1_10_Apoderado,
+                                    oportunidades_percep_AP = p1_9_Apoderado,
+                                    buenos_contactos_percep_AP = p1_4_Apoderado,
+                                    padres_ricos_percep_AP = p1_3_Apoderado,
+                                    school_esfuerzo_ES = p2_1,
+                                    school_talento_ES = p2_2,
+                                    school_merito_ES = p2_3,
+                                    school_esfuerzo_AP = p2_1_Apoderado,
+                                    school_talento_AP =p2_2_Apoderado,
+                                    school_merito_AP = p2_3_Apoderado,
+                                    school_esfuerzo_PROF = p2_1_docente ,
+                                    school_talento_PROF = p2_2_docente,
+                                    school_merito_PROF = p2_3_docente,
+                                    school_pref_ES =p3,
+                                    school_pref_AP = p3_Apoderado,
+                                    school_pref_PROF = p3_0_docente,
+                                    just_educ = p9_3,
+                                    just_salud = p9_4,
+                                    just_pensiones = p9_5,
+                                    curso_estudiante = d3_def,
+                                    ne_madre = p26,
+                                    ne_padre = p27,
+                                    libros_hogar = p30,
+                                    genero_ES = p20,
+                                    genero_AP = p11_Apoderado,
+                                    genero_PROF = p13_docente,
+                                    iden_pol_AP = p13_Apoderado,
+                                    religion_AP = p18_Apoderado,
+                                    check_tratamiento = tratamiento,
+                                    check_control = control,
+                                    school_dependencia = d2,
+                                    notas_merit = p5,
+                                    notas_esfuerzo = p7,
+                                    pp_futura_pol = p17_1,
+                                    pp_presente_pol = p17_2,
+                                    school_ciudadania = p19,
+                                    ciudadania_voto_es = p10_1,
+                                    ciudadania_pp = p10_2,
+                                    ciudadania_ley = p10_5,
+                                    ciudadania_op= p10_6, 
+                                    pp_futura_voto = p11_2,
+                                    pp_futura_candidatos = p11_3,
+                                    pp_presente_marcha = p12_1,
+                                    pp_presente_toma = p12_3,
+                                    pp_presente_rrss = p13_2,
+                                    pp_presente_compartir = p13_4,
+                                    pp_presente_like= p13_6,
+                                    school_ciudadania_es = p18_1,
+                                    school_ciudadania_op = p18_2,
+                                    school_ciudadania_dif = p18_5,
+                                    school_ciudadania_class = p18_6,
                                     merit_esfuerzo_pref_ES = p1_5,
                                     merit_talento_pref_ES = p1_6,
                                     social_merit_pref_ES = p9_6,
@@ -112,11 +124,10 @@ proc_datos <- proc_datos %>% rename(merit_esfuerzo_percep_ES = p1_1,
                                     social_merit_pref_PROF = p4_6_docente, 
                                     padres_ricos_pref_PROF = p1_7_docente,
                                     buenos_contactos_pref_PROF = p1_8_docente,
-                                    apoderado = d6_Apoderado,
-                                    merit_esfuerzo_pref_ES)                                                            
+                                    apoderado = d6_Apoderado)                                                            
 
 # Comprobar
-names(proc_datos)
+frq(proc_datos$school_merit_pref)
 
 # 4. procesamiento de variables -----------------------------------------------
 
@@ -391,36 +402,252 @@ get_label(proc_datos$padres_ricos_percep_AP)
 
 # PREFERENCIA MERITO SOCIAL ----------------------------------------------------
 
-## 
+## merit_esfuerzo_pref_ES ----
+
+### a. descriptivo basico -----
+frq(proc_datos$merit_esfuerzo_pref_ES) # 88 = 7 casos; 99 = 1 caso
+
+### b. recodificación ----
+proc_datos$merit_esfuerzo_pref_ES <- recode(proc_datos$merit_esfuerzo_pref_ES, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$merit_esfuerzo_pref_ES <- set_label(x = proc_datos$merit_esfuerzo_pref_ES,label = 
+                                                 "Quienes más se esfuerzan deberían obtener mayores recompensas que quienes se esfuerzan menos")
+
+get_label(proc_datos$merit_esfuerzo_pref_ES)
+
+## merit_talento_pref_ES ----
+
+### a. descriptivo basico -----
+frq(proc_datos$merit_talento_pref_ES) # 88 = 5 casos; 99 = 8 caso
+
+### b. recodificación ----
+proc_datos$merit_talento_pref_ES <- recode(proc_datos$merit_talento_pref_ES, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$merit_talento_pref_ES <- set_label(x = proc_datos$merit_talento_pref_ES,label = 
+                                                 "Quienes poseen más talento deberían obtener mayores recompensas que quienes poseen menos talento")
+
+get_label(proc_datos$merit_esfuerzo_pref_ES)
+
+## social_merit_pref_ES ---- 
+
+### a. descriptivo basico -----
+frq(proc_datos$social_merit_pref_ES) # 88 = 5 casos; 99 = 1 caso
+
+### b. recodificación ----
+proc_datos$social_merit_pref_ES <- recode(proc_datos$social_merit_pref_ES, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$social_merit_pref_ES <- set_label(x = proc_datos$social_merit_pref_ES,label = 
+                                                "Está bien que las personas más inteligentes y/o talentosas ganen más dinero, aun cuando requieran esforzarse menos para ello ")
+
+get_label(proc_datos$social_merit_pref_ES)
+
+## merit_esfuerzo_pref_AP ----
+
+### a. descriptivo basico -----
+frq(proc_datos$merit_esfuerzo_pref_AP) # 88 = 7 casos; 99 = 1 caso
+
+### b. recodificación ----
+proc_datos$merit_esfuerzo_pref_AP <- recode(proc_datos$merit_esfuerzo_pref_AP, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$merit_esfuerzo_pref_AP <- set_label(x = proc_datos$merit_esfuerzo_pref_AP,label = 
+                                                 "Quienes más se esfuerzan deberían obtener mayores recompensas que quienes se esfuerzan menos")
+
+get_label(proc_datos$merit_esfuerzo_pref_AP)
+
+## merit_talento_pref_AP ----
+
+### a. descriptivo basico -----
+frq(proc_datos$merit_talento_pref_AP) # 88 = 5 casos; 99 = 8 caso
+
+### b. recodificación ----
+proc_datos$proc_datos$merit_talento_pref_AP <- recode(proc_datos$proc_datos$merit_talento_pref_AP, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$proc_datos$merit_talento_pref_AP <- set_label(x = proc_datos$proc_datos$merit_talento_pref_AP,label = 
+                                                "Quienes poseen más talento deberían obtener mayores recompensas que quienes poseen menos talento")
+
+get_label(proc_datos$proc_datos$merit_talento_pref_AP)
+
+## social_merit_pref_AP ---- 
+
+### a. descriptivo basico -----
+frq(proc_datos$social_merit_pref_AP) # 88 = 5 casos; 99 = 1 caso
+
+### b. recodificación ----
+proc_datos$social_merit_pref_AP <- recode(proc_datos$social_merit_pref_AP, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$social_merit_pref_AP <- set_label(x = proc_datos$social_merit_pref_AP,label = 
+                                               "Está bien que las personas más inteligentes y/o talentosas ganen más dinero, aun cuando requieran esforzarse menos para ello ")
+
+get_label(proc_datos$social_merit_pref_AP)
+
+
+#PREFERENCIA FACTORES NO MERITOCRÁTICOS ----------------------------------------
+
+## padres_ricos_pref_ES ----
+
+### a. descriptivo basico -----
+frq(proc_datos$padres_ricos_pref_ES) # 88 = 5 casos; 99 = 3 caso
+
+### b. recodificación ----
+proc_datos$padres_ricos_pref_ES <- recode(proc_datos$padres_ricos_pref_ES, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$padres_ricos_pref_ES <- set_label(x = proc_datos$padres_ricos_pref_ES,label = 
+                                               "Está bien que quienes tienen padres ricos les vaya bien en la vida")
+
+get_label(proc_datos$padres_ricos_pref_ES)
+
+
+## buenos_contactos_pref_ES ----
+
+### a. descriptivo basico -----
+frq(proc_datos$buenos_contactos_pref_ES) # 88 = 2 casos; 99 = 5 caso
+
+### b. recodificación ----
+proc_datos$buenos_contactos_pref_ES <- recode(proc_datos$buenos_contactos_pref_ES, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$buenos_contactos_pref_ES <- set_label(x = proc_datos$buenos_contactos_pref_ES,label = 
+                                               "Está bien que quienes tienen buenos contactos les vaya bien en la vida")
+
+get_label(proc_datos$buenos_contactos_pref_ES)
+
+## padres_ricos_pref_AP ----
+
+### a. descriptivo basico -----
+frq(proc_datos$padres_ricos_pref_AP) # 88 = 5 casos; 99 = 3 caso
+
+### b. recodificación ----
+proc_datos$padres_ricos_pref_AP <- recode(proc_datos$padres_ricos_pref_AP, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$padres_ricos_pref_AP <- set_label(x = proc_datos$padres_ricos_pref_AP,label = 
+                                               "Está bien que quienes tienen padres ricos les vaya bien en la vida")
+
+get_label(proc_datos$padres_ricos_pref_AP)
+
+
+## buenos_contactos_pref_AP ----
+
+### a. descriptivo basico -----
+frq(proc_datos$buenos_contactos_pref_AP) # 88 = 2 casos; 99 = 5 caso
+
+### b. recodificación ----
+proc_datos$buenos_contactos_pref_AP <- recode(proc_datos$buenos_contactos_pref_AP, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$buenos_contactos_pref_AP <- set_label(x = proc_datos$buenos_contactos_pref_AP,label = 
+                                                   "Está bien que quienes tienen buenos contactos les vaya bien en la vida")
+
+get_label(proc_datos$buenos_contactos_pref_AP)
 
 # ESCUELA ----------------------------------------------------------------------
 
-## school_esfuerzo ----
+## school_esfuerzo_ES ----
 
 ### a. descriptivo basico ----
-frq(proc_datos$school_esfuerzo) #buen sentido. Etiquetada. Casos perdidos: 
+frq(proc_datos$school_esfuerzo_ES) #buen sentido. Etiquetada. Casos perdidos: 
   #88 no sabe 0 casos, 99 preferiria no responder 2 casos
 
 ### b. recodificacion ----
-proc_datos$school_esfuerzo <- recode(proc_datos$school_esfuerzo, "c(88,99)=NA")
+proc_datos$school_esfuerzo_ES <- recode(proc_datos$school_esfuerzo_ES, "c(88,99)=NA")
 
-## school_talento ----
+### c. otros ajustes ----
+proc_datos$school_esfuerzo_ES <- set_label(x = proc_datos$school_esfuerzo_ES,label = 
+                                                   "En esta escuela, quienes se esfuerzan obtienen buenas notas")
+
+get_label(proc_datos$school_esfuerzo_ES)
+
+## school_talento_ES ----
 
 ### a. descriptivo basico ----
-frq(proc_datos$school_talento) #buen sentido. Etiquetada. Casos perdidos: 
+frq(proc_datos$school_talento_ES) #buen sentido. Etiquetada. Casos perdidos: 
   #88 no sabe 0 casos, 99 preferiria no responder 1 caso. 
 
 ### b. recodificacion ----
-proc_datos$school_talento <- recode(proc_datos$school_talento, "c(88,99)=NA")
+proc_datos$school_talento_ES <- recode(proc_datos$school_talento_ES, "c(88,99)=NA")
 
-## school_merito ----
+### c. otros ajustes ----
+proc_datos$school_talento_ES <- set_label(x = proc_datos$school_talento_ES,label = 
+                                             "En esta escuela, quienes son inteligentes obtienen buenas notas")
+
+get_label(proc_datos$school_talento_ES)
+
+## school_merito_ES ----
 
 ### a. descriptivo basico ----
-frq(proc_datos$school_merito) #buen sentido. Etiquetada. Casos perdidos: 
+frq(proc_datos$school_merito_ES) #buen sentido. Etiquetada. Casos perdidos: 
   #88 no sabe 3 casos, 99 preferiria no responder 3 casos.
 
 ### b. recodificacion ----
-proc_datos$school_merito <- recode(proc_datos$school_merito, "c(88,99)=NA")
+proc_datos$school_merito_ES <- recode(proc_datos$school_merito_ES, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$school_merito_ES <- set_label(x = proc_datos$school_merito_ES,label = 
+                                            "En esta escuela, los/as estudiantes obtienen las notas que merecen")
+
+get_label(proc_datos$school_merito_ES)
+
+
+## school_esfuerzo_AP ----
+
+### a. descriptivo basico ----
+frq(proc_datos$school_esfuerzo_AP) #buen sentido. Etiquetada. Casos perdidos: 
+#88 no sabe 0 casos, 99 preferiria no responder 2 casos
+
+### b. recodificacion ----
+proc_datos$school_esfuerzo_AP <- recode(proc_datos$school_esfuerzo_AP, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$school_esfuerzo_AP <- set_label(x = proc_datos$school_esfuerzo_AP,label = 
+                                             "En esta escuela, quienes se esfuerzan obtienen buenas notas")
+
+get_label(proc_datos$school_esfuerzo_AP)
+
+## school_talento_AP ----
+
+### a. descriptivo basico ----
+frq(proc_datos$school_talento_AP) #buen sentido. Etiquetada. Casos perdidos: 
+#88 no sabe 0 casos, 99 preferiria no responder 1 caso. 
+
+### b. recodificacion ----
+proc_datos$school_talento_AP <- recode(proc_datos$school_talento_AP, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$school_talento_AP <- set_label(x = proc_datos$school_talento_AP,label = 
+                                            "En esta escuela, quienes son inteligentes obtienen buenas notas")
+
+get_label(proc_datos$school_talento_AP)
+
+## school_merito_AP----
+
+### a. descriptivo basico ----
+frq(proc_datos$school_merito_AP) #buen sentido. Etiquetada. Casos perdidos: 
+#88 no sabe 3 casos, 99 preferiria no responder 3 casos.
+
+### b. recodificacion ----
+proc_datos$school_merito_AP <- recode(proc_datos$school_merito_AP, "c(88,99)=NA")
+
+### c. otros ajustes ----
+proc_datos$school_merito_AP <- set_label(x = proc_datos$school_merito_AP,label = 
+                                           "En esta escuela, los/as estudiantes obtienen las notas que merecen")
+
+get_label(proc_datos$school_merito_AP)
+
+## school_merit_pref ----
+
+### a. descriptivo basico 
+frq(proc_datos$school_merit_pref)
+
+### 
+
+
 
 # DESIGUALDAD ------------------------------------------------------------------
 
@@ -479,11 +706,12 @@ proc_datos <- proc_datos %>%
 ### a. descriptivo basico ----
 frq(proc_datos$genero_ES) #muestra con una mayoria de muejeres 48.52% y 
   #categoria otro: 4.52%. No tiene casos perdidos
+proc_datos$genero_ES <- recode(proc_datos$genero_ES, "3=NA")
 
 ### b. recodificacion ----
 proc_datos$genero_ES <- factor(proc_datos$genero_ES, 
-                                           levels=c(1,2,3),
-                                           labels=c("Hombre","Mujer","Otro"))
+                                           levels=c(1,2),
+                                           labels=c("Hombre","Mujer"))
 ## genero_AP ----
 ### a. descriptivo basico ----
 frq(proc_datos$genero_AP)
@@ -500,6 +728,49 @@ frq(proc_datos$genero_PROF)
 proc_datos$genero_PROF <- factor(proc_datos$genero_PROF, 
                                levels=c(1,2,3),
                                labels=c("Hombre","Mujer","Otro"))
+
+## libros_hogar ----
+### a, descriptivo basico
+frq(proc_datos$libros_hogar)
+
+### b. recodificación ----
+proc_datos$libros_hogar <- recode(proc_datos$libros_hogar, "c(88,99)=NA; 1=1;2=1; 3=2; 4=2;5=2;6=2")
+
+proc_datos$libros_hogar <- factor(proc_datos$libros_hogar, 
+                                 levels=c(1,2),
+                                 labels=c("Menos de 25 libros","Más de 25 libros"))
+
+### c. otros ajustes ---- 
+
+
+## ne_madre ----
+
+### a, descriptivo basico
+frq(proc_datos$ne_madre)
+
+### b. recodificación ----
+proc_datos$ne_madre <- recode(proc_datos$ne_madre, "c(88,99)=NA; 1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
+
+proc_datos$ne_madre <- factor(proc_datos$ne_madre, 
+                                  levels=c(1,2),
+                                  labels=c("Enseñanza media o menos","Estudios superiores"))
+
+## ne_padre ----
+
+### a, descriptivo basico
+frq(proc_datos$ne_padre)
+
+### b. recodificación ----
+
+proc_datos$ne_padre <- recode(proc_datos$ne_padre, "c(88,99)=NA; 1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
+
+proc_datos$ne_padre <- factor(proc_datos$ne_padre, 
+                              levels=c(1,2),
+                              labels=c("Enseñanza media o menos","Estudios superiores"))
+
+# 1 Básica incompleta, 2 Básica completa, 3 Media completa, 
+# 4 Instituto Profesional/Técnico completa, 5 Universidad pregrado completa, 6 Posgrado
+
 
 
 # EXPERIMIENTO -----------------------------------------------------------------
@@ -624,11 +895,11 @@ proc_datos$school_ciudadania <- recode(proc_datos$school_ciudadania, "c(88,99)=N
 ## ciudadania_voto ----
 
 ### a. descriptivo basico ----
-frq(proc_datos$ciudadania_voto) #Buen sentido. Casos perdidos: 
+frq(proc_datos$ciudadania_voto_es) #Buen sentido. Casos perdidos: 
 #88 (no sabe) 1 caso; 99 (preferiria no responder) 0 casos
 
 ### b. recodificacion ----
-proc_datos$ciudadania_voto <- recode(proc_datos$ciudadania_voto, "c(88,99)=NA")
+proc_datos$ciudadania_voto_es <- recode(proc_datos$ciudadania_voto_es, "c(88,99)=NA")
 
 
 ## ciudadania_ley ----

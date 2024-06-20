@@ -1,9 +1,9 @@
 # Ciudadanía
 
 ```{r, echo=FALSE, include=FALSE}
-pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled)
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled, ggplot2, ggtext, ggpubr)
 
-load("input/data/proc/es_ola1.RData")
+load("input/data/proc/ola1.RData")
 
 
 
@@ -13,49 +13,49 @@ load("input/data/proc/es_ola1.RData")
 ```{r, echo=FALSE, eval=TRUE}
 #Base General con el cuestionario para estudiantes
 #Codificamos los valores 99-88 como missing para todas las variables
-proc_datos_estudiantes <- proc_datos_estudiantes %>% set_na(., na = c(99, 88))
+proc_datos <- proc_datos %>% set_na(., na = c(99, 88))
 
-for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p1_"), starts_with("p2_"), starts_with("p8_"), starts_with("p9_"), starts_with("p17_")))) {
-  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
-    x = proc_datos_estudiantes[[i]],
+for (i in names(dplyr::select(proc_datos, tidyselect::starts_with("p1_"), starts_with("p2_"), starts_with("p8_"), starts_with("p9_"), starts_with("p17_")))) {
+  proc_datos[[i]] <- sjlabelled::set_labels(
+    x = proc_datos[[i]],
     labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")
   )
 }
 
 
-for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p10_")))) {
-  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
-    x = proc_datos_estudiantes[[i]],
+for (i in names(dplyr::select(proc_datos, tidyselect::starts_with("p10_")))) {
+  proc_datos[[i]] <- sjlabelled::set_labels(
+    x = proc_datos[[i]],
     labels = c("Nada importante", "Algo importante", "Importante", "Muy importante")
   )
 }
 
 
-for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p11_")))) {
-  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
-    x = proc_datos_estudiantes[[i]],
+for (i in names(dplyr::select(proc_datos, tidyselect::starts_with("p11_")))) {
+  proc_datos[[i]] <- sjlabelled::set_labels(
+    x = proc_datos[[i]],
     labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")
   )
 }
 
-for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p12_")))) {
-  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
-    x = proc_datos_estudiantes[[i]],
+for (i in names(dplyr::select(proc_datos, tidyselect::starts_with("p12_")))) {
+  proc_datos[[i]] <- sjlabelled::set_labels(
+    x = proc_datos[[i]],
     labels = c("Si", "No")
   )
 }
 
-for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p13_")))) {
-  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
-    x = proc_datos_estudiantes[[i]],
+for (i in names(dplyr::select(proc_datos, tidyselect::starts_with("p13_")))) {
+  proc_datos[[i]] <- sjlabelled::set_labels(
+    x = proc_datos[[i]],
     labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días")
   )
 }
 
 
-for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p18_")))) {
-  proc_datos_estudiantes[[i]] <- sjlabelled::set_labels(
-    x = proc_datos_estudiantes[[i]],
+for (i in names(dplyr::select(proc_datos, tidyselect::starts_with("p18_")))) {
+  proc_datos[[i]] <- sjlabelled::set_labels(
+    x = proc_datos[[i]],
     labels = c("Nunca", "Casi nunca", "Casi siempre", "Siempre")
   )
 }
@@ -66,822 +66,573 @@ for (i in names(dplyr::select(proc_datos_estudiantes, tidyselect::starts_with("p
 
 ### Percepción respecto a la importancia que le entrega la escuela
 
-Cruce con género:
-
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
+school_ciudadania = round(prop.table(table(categorias=proc_datos$school_ciudadania)),2)
+school_ciudadania = as.data.frame(school_ciudadania)
+school_ciudadania$categorias <- factor(school_ciudadania$categorias, levels = c(1, 2, 3, 4), labels = c("Ninguna importancia", "Algo de importancia", "Mediana importancia", "Mucha importancia"))
+plot_school_ciudadania_ES<-ggplot(school_ciudadania,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="¿Cuánta importancia dirías tú que se le da a la Formación Ciudadana?")
 
-<br> Cruce con curso:
+plot_school_ciudadania_ES
 
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
 ```
 
 ### En el espacio de clases
 
-**Preguntas presentadas en la reunión anterior:**
-
 -   *school_ciudadania_es*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania_es, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br> Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania_es, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
 -   *school_ciudadania_op*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania_op, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br> Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania_op, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
 -   *school_ciudadania_dif*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania_dif, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br> Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania_dif, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
 -   *school_ciudadania_class*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania_class, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")                       
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$school_ciudadania_class, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-------------------------------------------------------------------------
-
-**Otra pregunta referente a este módulo:**
-
 -   *p18_3*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p18_3, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p18_3, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
 
 ## Participación política
 
 ### Participación politica actual (o en el presente escolar)
 
-**Preguntas presentadas en la reunión anterior:**
-
--   *pp_presente_pol*
-
-Cruce con género:
+-   *Autoeficacia política*
 
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_pol, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
 
+pp_presente_pol = round(prop.table(table(categorias=proc_datos$pp_presente_pol)),2)
+pp_presente_pol = as.data.frame(pp_presente_pol)
+pp_presente_pol$categorias <- factor(pp_presente_pol$categorias, levels = c(1, 2, 3, 4), labels = c("Ninguna importancia", "Algo de importancia", "Mediana importancia", "Mucha importancia"))
+plot_pp_presente_pol_ES<-ggplot(pp_presente_pol,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Comprendo bien las problemáticas políticas de nuestro país")
+
+plot_pp_presente_pol_ES
+
+```
+
+Participación política **civil** o **prosocial**:
+
+```{r, echo=FALSE}
+pp_presente_marcha = round(prop.table(table(categorias=proc_datos$pp_presente_marcha)),2)
+pp_presente_marcha = as.data.frame(pp_presente_marcha)
+pp_presente_marcha$categorias <- factor(pp_presente_marcha$categorias, levels = c(1, 2), labels = c("Sí", "No"))
+plot_presente_marcha_ES<-ggplot(pp_presente_marcha,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Marcha pacífica")
+
+pp_presente_toma = round(prop.table(table(categorias=proc_datos$pp_presente_toma)),2)
+pp_presente_toma = as.data.frame(pp_presente_toma)
+pp_presente_toma$categorias <- factor(pp_presente_toma$categorias, levels = c(1, 2), labels = c("Sí", "No"))
+plot_presente_toma_ES<-ggplot(pp_presente_toma,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Toma")
+
+pp_presente_rrss = round(prop.table(table(categorias=proc_datos$pp_presente_rrss)),2)
+pp_presente_rrss = as.data.frame(pp_presente_rrss)
+pp_presente_rrss$categorias <- factor(pp_presente_rrss$categorias, levels = c(1, 2, 3, 4,5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+plot_presente_rrss_ES<-ggplot(pp_presente_rrss,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Informarse en Redes Sociales")
+
+pp_presente_like = round(prop.table(table(categorias=proc_datos$pp_presente_like)),2)
+pp_presente_like = as.data.frame(pp_presente_like)
+pp_presente_like$categorias <- factor(pp_presente_like$categorias, levels = c(1, 2, 3, 4,5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+plot_presente_like_ES<-ggplot(pp_presente_like,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Dar me gusta a contenido")
+
+pp_presente_compartir = round(prop.table(table(categorias=proc_datos$pp_presente_compartir)),2)
+pp_presente_compartir = as.data.frame(pp_presente_compartir)
+pp_presente_compartir$categorias <- factor(pp_presente_compartir$categorias, levels = c(1, 2, 3, 4,5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+plot_presente_compartir_ES<-ggplot(pp_presente_compartir,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Compartir contenido")
+
+p12_2 = round(prop.table(table(categorias=proc_datos$p12_2)),2)
+p12_2 = as.data.frame(p12_2)
+p12_2$categorias <- factor(p12_2$categorias, levels = c(1, 2), labels = c("Sí", "No"))
+plot_p12_2_ES<-ggplot(p12_2,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Marcha violenta")
+
+p13_1 = round(prop.table(table(categorias=proc_datos$p13_1)),2)
+p13_1 = as.data.frame(p13_1)
+p13_1$categorias <- factor(p13_1$categorias, levels = c(1, 2, 3, 4,5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+plot_p13_1_ES<-ggplot(p13_1,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Ver un Sitio Web")
+
+p13_5 = round(prop.table(table(categorias=proc_datos$p13_5)),2)
+p13_5 = as.data.frame(p13_5)
+p13_5$categorias <- factor(p13_5$categorias, levels = c(1, 2, 3, 4,5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+plot_p13_5_ES<-ggplot(p13_5,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Comentar una publicación")
+
+```
+
+```{r, echo=FALSE}
+# Combinar los gráficos
+pp_civil_ES <- ggarrange(
+   plot_p12_2_ES, 
+   plot_presente_toma_ES, 
+   plot_presente_marcha_ES,
+   
+  common.legend = TRUE, 
+  ncol = 3, 
+  legend = "bottom"
+)
+
+# Agregar una etiqueta global centrada
+o <- annotate_figure(
+ pp_civil_ES ,
+  top = text_grob(
+    "Figura 2.2: Participación civil actual",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+o
 ```
 
 <br>
 
-Cruce con curso:
-
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_pol, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+# Combinar los gráficos
+pp_civil_rs_ES <- ggarrange(
+   plot_p13_5_ES,
+   plot_presente_compartir_ES,
+   plot_presente_like_ES,
+   
+   
+  common.legend = TRUE, 
+  ncol = 3, 
+  legend = "bottom"
+)
 
+# Agregar una etiqueta global centrada
+O <- annotate_figure(
+ pp_civil_rs_ES ,
+  top = text_grob(
+    "Figura 2.3: Participación civil actual en RR.SS.",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+O
 ```
 
 <br>
 
--   *pp_presente_marcha*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_marcha, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_marcha, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *pp_presente_toma*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_toma, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_toma, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *pp_presente_rrss*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_rrss, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_marcha, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *pp_presente_compartir*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_compartir, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_compartir, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *pp_presente_like*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_like, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_presente_like, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-------------------------------------------------------------------------
-
-**Otras preguntas referentes a este módulo:**
-
--   *p12_2*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p12_2,      
-         proc_datos_estudiantes$genero,     
-         show.col.prc = TRUE,               
-         show.summary = FALSE,             
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p12_2,           
-         proc_datos_estudiantes$curso_estudiante, 
-         show.col.prc = TRUE,                      
-         show.summary = FALSE,                     
-         encoding = "UTF-8")
-
-```
-
-<br>
-
--   *p13_1*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p13_1,    
-         proc_datos_estudiantes$genero,    
-         show.col.prc = TRUE,              
-         show.summary = FALSE,            
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p13_1,    
-         proc_datos_estudiantes$curso_estudiante,    
-         show.col.prc = TRUE,                        
-         show.summary = FALSE,                       
-         encoding = "UTF-8")
-
-```
-
-<br>
-
--   *p13_5*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p13_5,             
-         proc_datos_estudiantes$genero,            
-         show.col.prc = TRUE,                      
-         show.summary = FALSE,                   
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p13_5,         
-         proc_datos_estudiantes$curso_estudiante, 
-         show.col.prc = TRUE,                     
-         show.summary = FALSE,                     
-         encoding = "UTF-8")
-
+```{r, echo =FALSE}
+# Combinar los gráficos
+pp_civil_web_ES <- ggarrange(
+   plot_p13_1_ES, 
+   plot_presente_rrss_ES,
+   
+   
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "bottom"
+)
+
+# Agregar una etiqueta global centrada
+i <- annotate_figure(
+ pp_civil_web_ES ,
+  top = text_grob(
+    "Figura 2.4: Participación civil actual en Internet",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+i
 ```
 
 ### Participación política futura (en mayoría de edad)
 
-**Preguntas presentadas en la reunión anterior:**
-
--   *pp_futura_voto*
-
-Cruce con género:
+Participación **cívica** o **formal**:
 
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_futura_voto, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
 
+pp_futura_voto = round(prop.table(table(categorias=proc_datos$pp_futura_voto)),2)
+pp_futura_voto = as.data.frame(pp_futura_voto)
+pp_futura_voto$categorias <- factor(pp_futura_voto$categorias, levels = c(1, 2, 3, 4), labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto"))
+plot_pp_futura_voto_ES<-ggplot(pp_futura_voto,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Votar en elecciones presidenciales")
+
+
+pp_futura_candidatos = round(prop.table(table(categorias=proc_datos$pp_futura_candidatos)),2)
+pp_futura_candidatos = as.data.frame(pp_futura_candidatos)
+pp_futura_candidatos$categorias <- factor(pp_futura_candidatos$categorias, levels = c(1, 2, 3, 4), labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto"))
+plot_pp_futura_candidatos_ES<-ggplot(pp_futura_candidatos,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Informarme de los candidatos")
+
+
+p11_1 = round(prop.table(table(categorias=proc_datos$p11_1)),2)
+p11_1 = as.data.frame(p11_1)
+p11_1$categorias <- factor(p11_1$categorias, levels = c(1, 2, 3, 4), labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto"))
+plot_p11_1_ES<-ggplot(p11_1,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Votar en elecciones municipales")
 ```
 
-<br>
-
-Cruce con curso:
-
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_futura_voto, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+# Combinar los gráficos
+pp_civica_fut_ES <- ggarrange(
+   plot_pp_futura_voto_ES,
+plot_p11_1_ES, 
+common.legend = TRUE,
+  ncol = 2,
+legend = "none")
 
-```
+pp_civica_fut_ES_final <- ggarrange(pp_civica_fut_ES,plot_pp_futura_candidatos_ES,
+                                  common.legend = TRUE, 
+  nrow = 2, 
+  legend = "bottom")
 
-<br>
+# Agregar una etiqueta global centrada
+y <- annotate_figure(
+ pp_civica_fut_ES_final ,
+  top = text_grob(
+    "Figura 2.5: Participación cívica futura",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
 
--   *pp_futura_candidatos*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_futura_candidatos, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$pp_futura_candidatos, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-------------------------------------------------------------------------
-
-**Otra pregunta referente a este módulo:**
-
--   *p11_1*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p11_1,   
-         proc_datos_estudiantes$genero,     
-         show.col.prc = TRUE,               
-         show.summary = FALSE,            
-         encoding = "UTF-8")
-
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p11_1,       
-         proc_datos_estudiantes$curso_estudiante,   
-         show.col.prc = TRUE,                     
-         show.summary = FALSE,                     
-         encoding = "UTF-8")
-
+y
 ```
 
 ## Buena ciudadanía
 
-**Preguntas presentadas en la reunión anterior:**
-
--   *ciudadania_voto*
-
-Cruce con género:
+Asepctos de **participación civil**
 
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$ciudadania_voto, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+ciudadania_op = round(prop.table(table(categorias=proc_datos$ciudadania_op)),2)
+ciudadania_op = as.data.frame(ciudadania_op)
+ciudadania_op$categorias <- factor(ciudadania_op$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+plot_ciudadania_op_ES<-ggplot(ciudadania_op,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Respetar el derecho a opinión")
+
+p10_3 = round(prop.table(table(categorias=proc_datos$p10_3)),2)
+p10_3 = as.data.frame(p10_3)
+p10_3$categorias <- factor(p10_3$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+plot_p10_3_ES<-ggplot(p10_3,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Respetar el derecho a opinión")
+
+
+p10_4 = round(prop.table(table(categorias=proc_datos$p10_4)),2)
+p10_4 = as.data.frame(p10_4)
+p10_4$categorias <- factor(p10_4$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+plot_p10_4_ES<-ggplot(p10_4,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Participar en protestas pacíficas")
+
+
+
+p10_7 = round(prop.table(table(categorias=proc_datos$p10_7)),2)
+p10_7 = as.data.frame(p10_7)
+p10_7$categorias <- factor(p10_7$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+plot_p10_7_ES<-ggplot(p10_7,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Apoyar personas")
+
+
+
+p10_8 = round(prop.table(table(categorias=proc_datos$p10_8)),2)
+p10_8 = as.data.frame(p10_8)
+p10_8$categorias <- factor(p10_8$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+plot_p10_8_ES<-ggplot(p10_8,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Pagar impuestos")
 ```
-
-<br>
-
-Cruce con curso:
 
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$ciudadania_voto, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+# Combinar los gráficos
+pp_civica_fut_ES <- ggarrange(
+   plot_pp_futura_voto_ES,
+plot_p11_1_ES, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "none")
+
+pp_civica_fut_ES_final <- ggarrange(pp_civica_fut_ES, plot_pp_futura_candidatos_ES,
+                                    common.legend = TRUE, 
+  nrow = 2, 
+  legend = "bottom")
+
+# Agregar una etiqueta global centrada
+Y <- annotate_figure(
+ pp_civica_fut_ES_final ,
+  top = text_grob(
+    "Figura 2.6: Aspectos de particiapción civil para una buena ciudadanía",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+Y
 ```
 
-<br>
-
--   *ciudadania_pp*
-
-Cruce con género:
+Asepctos de **participación cívica**:
 
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$ciudadania_pp, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+
+# graifco dona: voto
+
+ciudadania_voto = round(prop.table(table(categorias=proc_datos$ciudadania_voto)),2)
+ciudadania_voto = as.data.frame(ciudadania_voto)
+ciudadania_voto$categorias <- factor(ciudadania_voto$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+plot_ciudadania_voto_ES<-ggplot(ciudadania_voto,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Votar")
+
+
+
+ciudadania_pp = round(prop.table(table(categorias=proc_datos$ciudadania_pp)),2)
+ciudadania_pp = as.data.frame(ciudadania_pp)
+ciudadania_pp$categorias <- factor(ciudadania_pp$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+plot_ciudadania_pp_ES<-ggplot(ciudadania_pp,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Unirse a un partido político")
+
+
+
+ciudadania_ley = round(prop.table(table(categorias=proc_datos$ciudadania_ley)),2)
+ciudadania_ley = as.data.frame(ciudadania_ley)
+ciudadania_ley$categorias <- factor(ciudadania_ley$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+plot_ciudadania_ley_ES<-ggplot(ciudadania_ley,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) +
+  labs(title="Obdecer la ley")
 ```
-
-<br>
-
-Cruce con curso:
 
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$ciudadania_voto, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
+
 ```
-
-<br>
-
--   *ciudadania_ley*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$ciudadania_ley, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$ciudadania_ley, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *ciudadania_op*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$ciudadania_op, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$ciudadania_op, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-------------------------------------------------------------------------
-
-**Otras preguntas referentes a este módulo:**
-
--   *p10_3*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p10_3, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p10_3, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *p10_4*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p10_4, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p10_4, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *p10_7*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p10_7, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p10_7, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
--   *p10_8*
-
-Cruce con género:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p10_8, 
-                          proc_datos_estudiantes$genero, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p10_8, 
-                          proc_datos_estudiantes$curso_estudiante, 
-                          show.col.prc = TRUE,
-                          show.summary = FALSE,
-                          encoding = "UTF-8")
-```
-
-------------------------------------------------------------------------
 
 ## Extra: Relación con el adulto en el hogar
 
 -   *p14*
 
-Cruce con género:
-
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p14,          
-         proc_datos_estudiantes$genero,     
-         show.col.prc = TRUE,             
-         show.summary = FALSE,          
-         encoding = "UTF-8")
+
 
 
 ```
-
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p14,        
-         proc_datos_estudiantes$curso_estudiante,  
-         show.col.prc = TRUE,                     
-         show.summary = FALSE,                   
-         encoding = "UTF-8")
-
-```
-
-<br>
 
 -   *p15*
 
-Cruce con género:
-
 ```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p15,       
-         proc_datos_estudiantes$genero,    
-         show.col.prc = TRUE,            
-         show.summary = FALSE,        
-         encoding = "UTF-8")
 
 
 ```
 
-<br>
-
-Cruce con curso:
-
-```{r, echo=FALSE}
-sjt.xtab(proc_datos_estudiantes$p15,     
-         proc_datos_estudiantes$curso_estudiante,  
-         show.col.prc = TRUE,                      
-         show.summary = FALSE,                     
-         encoding = "UTF-8")
-```
-
-------------------------------------------------------------------------
-
--   **p16**
-
-1.  *Categoría "Colegio":*
+-   Tema: *Categoría "Política"*
 
 ```{r, echo=FALSE}
 
-table(proc_datos_estudiantes$P16_o1)
+# grafico dona: conversación sobre política 
 
-```
+P16_o3 = round(prop.table(table(categorias=proc_datos$P16_o3)),2)
+P16_o3 = as.data.frame(P16_o3)
+P16_o3$categorias <- factor(P16_o3$categorias, levels = c(0,1), labels = c("No", "Sí"))
+plot_P16_o3_ES<-ggplot(P16_o3,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank())+
+  xlim(0.5,2.5) 
+  
+final_plot_P16_o3_ES <- annotate_figure(plot_P16_o3_ES,
+  top = text_grob( "Figura 2.8: Conversar sobre política con el adulto en el hogar",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5))
 
-<br>
-
-2.  *Categoría "Deportes":*
-
-```{r, echo=FALSE}
-
-table(proc_datos_estudiantes$P16_o2)
-
-```
-
-<br>
-
-3.  *Categoría "Política":*
-
-```{r, echo=FALSE}
-
-table(proc_datos_estudiantes$P16_o3)
-
-
-```
-
-<br>
-
-4.  *Categoría "Películas o series":*
-
-```{r, echo=FALSE}
-
-table(proc_datos_estudiantes$P16_o4)
-
-```
-
-<br>
-
-5.  *Categoría "Juegos":*
-
-```{r, echo=FALSE}
-
-table(proc_datos_estudiantes$P16_o5)
-
-```
-
-<br>
-
-6.  *Categoría "Otro, ¿Cuál?":*
-
-```{r, echo=FALSE}
-
-table(proc_datos_estudiantes$P16_o6)
-
+final_plot_P16_o3_ES
 ```
