@@ -2,8 +2,10 @@
       #referidas al experimento, merito, meritocracia en la escuela y justificacion de la desigualdad 
 
 # 1. cargar librerias ---------------------------------------------------------
+
 #install.packages("pacman")
 pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer, haven)
+
 
 # 2. cargar bbdd --------------------------------------------------------------
 rm(list=ls())       # borrar todos los objetos en el espacio de trabajo
@@ -788,7 +790,6 @@ proc_datos$ne_padre <- factor(proc_datos$ne_padre,
 
 # 1 Básica incompleta, 2 Básica completa, 3 Media completa, 
 # 4 Instituto Profesional/Técnico completa, 5 Universidad pregrado completa, 6 Posgrado
-
 
 
 # EXPERIMIENTO -----------------------------------------------------------------
