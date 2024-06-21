@@ -2,9 +2,8 @@
       #referidas al experimento, merito, meritocracia en la escuela y justificacion de la desigualdad 
 
 # 1. cargar librerias ---------------------------------------------------------
-install.packages("pacman")
-pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer)
-library(haven)
+#install.packages("pacman")
+pacman::p_load(dplyr, sjmisc, car, sjlabelled, stargazer, haven)
 
 # 2. cargar bbdd --------------------------------------------------------------
 rm(list=ls())       # borrar todos los objetos en el espacio de trabajo
@@ -464,13 +463,13 @@ get_label(proc_datos$merit_esfuerzo_pref_AP)
 frq(proc_datos$merit_talento_pref_AP) # 88 = 5 casos; 99 = 8 caso
 
 ### b. recodificación ----
-proc_datos$proc_datos$merit_talento_pref_AP <- recode(proc_datos$proc_datos$merit_talento_pref_AP, "c(88,99)=NA")
+proc_datos$merit_talento_pref_AP <- recode(proc_datos$merit_talento_pref_AP, "c(88,99)=NA")
 
 ### c. otros ajustes ----
-proc_datos$proc_datos$merit_talento_pref_AP <- set_label(x = proc_datos$proc_datos$merit_talento_pref_AP,label = 
+proc_datos$merit_talento_pref_AP <- set_label(x = proc_datos$merit_talento_pref_AP,label = 
                                                 "Quienes poseen más talento deberían obtener mayores recompensas que quienes poseen menos talento")
 
-get_label(proc_datos$proc_datos$merit_talento_pref_AP)
+get_label(proc_datos$merit_talento_pref_AP)
 
 ## social_merit_pref_AP ---- 
 
@@ -482,7 +481,7 @@ proc_datos$social_merit_pref_AP <- recode(proc_datos$social_merit_pref_AP, "c(88
 
 ### c. otros ajustes ----
 proc_datos$social_merit_pref_AP <- set_label(x = proc_datos$social_merit_pref_AP,label = 
-                                               "Está bien que las personas más inteligentes y/o talentosas ganen más dinero, aun cuando requieran esforzarse menos para ello ")
+                                               "Está bien que las personas más inteligentes y/o talentosas ganen más dinero, aun cuando requieran esforzarse menos para ello")
 
 get_label(proc_datos$social_merit_pref_AP)
 
@@ -742,6 +741,25 @@ proc_datos$libros_hogar <- factor(proc_datos$libros_hogar,
 
 ### c. otros ajustes ---- 
 
+## ne más alto padres
+proc_datos$ne_madre <- recode(proc_datos$ne_madre, "c(88,99)=NA")
+proc_datos$ne_padre <- recode(proc_datos$ne_padre, "c(88,99)=NA")
+
+proc_datos <- proc_datos %>%
+  mutate(educ_max = case_when(
+    !is.na(ne_madre) & is.na(ne_padre) ~ ne_madre,
+    is.na(ne_madre) & !is.na(ne_padre) ~ ne_padre,
+    !is.na(ne_madre) & !is.na(ne_padre) ~ pmax(ne_madre, ne_padre, na.rm = TRUE),
+    TRUE ~ NA_real_
+  ))
+
+frq(proc_datos$educ_max)
+
+proc_datos$educ_max <- recode(proc_datos$educ_max, "1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
+
+proc_datos$educ_max <- factor(proc_datos$educ_max, 
+                              levels=c(1,2),
+                              labels=c("Enseñanza media o menos","Estudios superiores"))
 
 ## ne_madre ----
 
@@ -749,7 +767,7 @@ proc_datos$libros_hogar <- factor(proc_datos$libros_hogar,
 frq(proc_datos$ne_madre)
 
 ### b. recodificación ----
-proc_datos$ne_madre <- recode(proc_datos$ne_madre, "c(88,99)=NA; 1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
+proc_datos$ne_madre <- recode(proc_datos$ne_madre, "1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
 
 proc_datos$ne_madre <- factor(proc_datos$ne_madre, 
                                   levels=c(1,2),
@@ -762,7 +780,7 @@ frq(proc_datos$ne_padre)
 
 ### b. recodificación ----
 
-proc_datos$ne_padre <- recode(proc_datos$ne_padre, "c(88,99)=NA; 1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
+proc_datos$ne_padre <- recode(proc_datos$ne_padre, "1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
 
 proc_datos$ne_padre <- factor(proc_datos$ne_padre, 
                               levels=c(1,2),
