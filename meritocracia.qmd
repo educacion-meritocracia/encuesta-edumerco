@@ -234,7 +234,7 @@ final_plot <- annotate_figure(
 final_plot
 ```
 
-En primer lugar, se observan claras diferencias entre apoderados y estudiantes. Los apoderados estan en desacuerdo con la frase. Así, los estudiantes parecen estar más de acuerdo con que las personas en el país son recompensadas por sus esfuerzos (52%). Además, si se diferencia a los estudiantes por curso, es posible observar que los estdiantes de educación básica (80%) están más de acuerdo que los estudiantes de educación media (55%).
+En primer lugar, se observan diferencias entre apoderados y estudiantes. Los apoderados estan en desacuerdo con la frase. Así, los estudiantes parecen estar más de acuerdo con que las personas en el país son recompensadas por sus esfuerzos (52%). Además, si se diferencia a los estudiantes por curso, es posible observar que los estudiantes de educación básica (80%) están más de acuerdo que los estudiantes de educación media (55%).
 
 *Cruces con otras características sociodemográficas de estudiantes*
 
@@ -304,7 +304,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(merit_esfue
 
 ```
 
-<br>
+Estudiantes con padres que alcanzaron la enseñanza media o menos están de acuerdo en un 54% con la idea de que las personas son recompensadas por sus esfuerzos en la sociedad. Diferenciando por género, mujeres (53%) y hombres (54%) poseen porcentajes similares de acuerdo, a pesar de ello se observa que estudiantes mujeres están mayormente en desacuerdo con la frase (30%) y estudiantes hombres consideran estar muy de acuerdo con la frase en un 18%. Estudiantes que poseen menos de 25 libros en su hogar estan más de acuerdo con que las personas son recompensadas por sus esfuerzos en la sociedad (55%). Sin embargo, estudiantes con más de 25 libros consideran estar muy de acuerdo en un 17% con la frase en comparación con los primeros que lo están en un 14%.
 
 **Talento** (inteligencia y habilidad) en la sociedad chilena:
 
@@ -424,7 +424,7 @@ final_plot1
 
 ```
 
-Estudiantes se muestran más de acuerdo con la afirmación (71%). En cambio, los apoderados si bien tienen un gran porcentaje de acuerdo con el talento, este es un 50%. Por otro lado, estudiantes de enseñanza báscia se muestran más de acuerdo con la idea de que el talento es recompensado en la sociedad con un 76%.
+Estudiantes se muestran en su mayoría de acuerdo con la afirmación (57%). En cambio, los apoderados si bien tienen un gran porcentaje de acuerdo con el talento, este es un 50%. Por otro lado, estudiantes de enseñanza báscia se muestran más de acuerdo con la idea de que el talento es recompensado en la sociedad con un 76%, considernado que se encuentran un 20% muy de acuerdo y un 56% de acuerdo con la afirmación.
 
 *Cruces con otras características sociodemográficas de estudiantes*
 
@@ -475,6 +475,8 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(merit_talen
 
 
 ```
+
+Estudiantes que tienen padres con estudios superiores se muestran en desacuerdo con la frase en un 23% a diferencia de quienes poseen padres con enseñanza media o menos, quienes estan en desacuerdo en un 17%. En su mayoría, estos últimos se muestran de acuerdo en un 58% con que las personas son recompensadas por su inteligencia y habilidad en la sociedad. Diferenciando por género, estudiantes hombres se muestran más de acuerdo con la frase. Así, estos contestaron estar de acuerdo en un 60% y muy de acuerdo en un 19%. Estudiantes con más de 25 libros en su hogar se muestran de acuerdo en un 60% con la frase. A pesar de eso, estudiantes con menos de 25 libros en su hogar se muestran muy de acuerdo en un 17%.
 
 Respecto al **mérito** en la sociedad chilena:
 
@@ -612,7 +614,7 @@ final_plot2 <- annotate_figure(
 final_plot2
 ```
 
-Si bien estudiantes y apoderados también se muestran en su mayoría en desacuerdo, los estudiantes presentan un 20% de acuerdo con la afirmación.
+Si bien estudiantes y apoderados también se muestran en su mayoría en desacuerdo con que todas las personas obtienen lo que merecen en la sociedad, los estudiantes presentan un 20% de acuerdo con la afirmación. Respecto al curso de estos, específicamente estudiantes de básica contestaron estar de acuerdo en un 24% y muy de acuerdo en un 13%.
 
 *Cruces con características sociodemográficas de estudiantes*
 
@@ -663,7 +665,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(social_meri
 
 ```
 
-<br>
+Estudiantes con padres que tienen estudios superiores estan en desacuerdo en un 50% y muy en desacuerdo en un 26% con que todas las personas obtienen lo que merecen en la sociedad. Diferenciando por género, mujeres están en desacuerdo en un 52% con la frase. Estudiantes con más de 25 libros en su hogar estan muy en desacuerdo en un 26% y en desacuerdo en un 48%.
 
 -   Respecto a factores no meritocráticos
 
@@ -2728,27 +2730,111 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(school_meri
 
 # gráfico de curva preferencia en la escuela  
 
-
 #grafico 
 
-school_merit_pref <- ggplot(data = proc_datos, 
-       mapping = aes(x = school_merit_pref)) + 
-  geom_density(color = "#4682b4", fill =  "White", alpha = 0.8, size = 0.7)  + 
+school_merit_pref <- proc_datos %>% ggplot(aes(x=school_merit_pref)) + 
+  geom_bar( fill = "#87CEFA")+ 
   labs(x = "Preferencia de mérito en la escuela", 
-       y = "Frecuencia" )  +
-scale_y_percent() +
+       y = "Frecuencia" )   +
   scale_x_continuous(breaks = c(0, 5, 10), labels = c("Esfuerzo", "Ambos", "Talento")) +
   theme_classic() +
   ggtitle("Figura 1.29: Preferencia respecto al criterio individual de mérito más importante\npara obtener buenas notas") +
   theme(plot.title = element_text(size = 12,
     face = "italic", 
     color = "#8B7D7B", hjust = 0.5),
-        plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20)) +
+  geom_text(aes(label = ..count..), stat = "count", colour = "black", 
+    vjust = -0.7, position = position_dodge(.9), size =3) 
 
-school_merit_pref
+
+school_merit_pref 
 ```
 
 Los estudiantes consideran que ambos criterios individuales son importantes para obtener buenas notas en la escuela con un 49%. Particularmente, se observa que un 10% cree que el talento es relevante y el 2% considera que el esfuerzo es importante para la obtención de buenas calficaciones.
+
+```{r, echo=FALSE, warning=FALSE}
+
+#cruce por el curso del estudiante 
+
+curso <- proc_datos %>% ggplot(aes(x=school_merit_pref, fill = curso_estudiante)) + 
+  geom_bar()+ 
+  labs(x = "Preferencia de mérito en la escuela", 
+       y = "Frecuencia" )   +
+  scale_x_continuous(breaks = c(0, 5, 10), labels = c("Esfuerzo", "Ambos", "Talento")) +
+  theme_classic() + 
+  ggtitle("Figura 1.31: Preferencia de acuerdo al curso")  + 
+  labs(fill = NULL) +
+  scale_fill_brewer(palette = "Blues") +
+  theme(plot.title = element_text(size = 12,
+    face = "italic", 
+    color = "#8B7D7B", hjust = 0.5),
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20)) 
+curso
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+#cruce por el género del estudiante 
+
+gen <- proc_datos %>% ggplot(aes(x=school_merit_pref, fill = genero_ES)) + 
+  geom_bar()+ 
+  labs(x = "Preferencia de mérito en la escuela", 
+       y = "Frecuencia" )   +
+  scale_x_continuous(breaks = c(0, 5, 10), labels = c("Esfuerzo", "Ambos", "Talento")) +
+  theme_classic() +
+  ggtitle("Figura 1.30: Preferencia de acuerdo al género del estudiante")  + 
+  labs(fill = NULL) + 
+  scale_fill_discrete(labels = c('Hombre', 'Mujer')) +
+  scale_fill_brewer(palette = "Blues") +
+  theme(plot.title = element_text(size = 12,
+    face = "italic", 
+    color = "#8B7D7B", hjust = 0.5),
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
+
+gen
+
+```
+
+```{r, echo=FALSE, warning=FALSE}
+
+# cruce con nivel educacional máximo alcanzado por los padres
+
+nepa <- proc_datos %>% ggplot(aes(x=school_merit_pref, fill = educ_max)) + 
+  geom_bar()+ 
+  labs(x = "Preferencia de mérito en la escuela", 
+       y = "Frecuencia" )   +
+  scale_x_continuous(breaks = c(0, 5, 10), labels = c("Esfuerzo", "Ambos", "Talento")) +
+  theme_classic() +
+   labs(fill = NULL) + 
+  ggtitle("Figura 1.32: Preferencia de acuerdo al nivel educacional del hogar")  + 
+  scale_fill_brewer(palette = "Blues") +
+  theme(plot.title = element_text(size = 12,
+    face = "italic", 
+    color = "#8B7D7B", hjust = 0.5),
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
+
+nepa
+```
+
+```{r, echo=FALSE, warning=FALSE}
+# cruce con cantidad de libros en el hogar
+
+libros <- proc_datos %>% ggplot(aes(x=school_merit_pref, fill = libros_hogar)) + 
+  geom_bar()+ 
+  labs(x = "Preferencia de mérito en la escuela", 
+       y = "Frecuencia" )   +
+  scale_x_continuous(breaks = c(0, 5, 10), labels = c("Esfuerzo", "Ambos", "Talento")) +
+  theme_classic() +
+   labs(fill = NULL) + 
+  ggtitle("Figura 1.33: Preferencia de acuerdo a la cantidad de libros en el hogar") + 
+  scale_fill_brewer(palette = "Blues") +
+  theme(plot.title = element_text(size = 12,
+    face = "italic", 
+    color = "#8B7D7B", hjust = 0.5),
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
+
+libros
+```
 
 ### Justicia en las notas
 
@@ -2773,15 +2859,15 @@ plot_notas_merit<-ggplot(notas_merit,aes(x=2,y=-Freq, fill=categorias))+
   scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank(),
-    plot.title = element_text(size=10, face="bold", hjust=0.5))+
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
   xlim(0.5,2.5) +
-  labs(title="¿Te parece que este promedio\nfue más o menos de lo\nque merecías?" )
+  labs(title= "Estudiantes")
 
 # grafico dona: nota y esfuerzo 
 
 notas_esfuerzo = round(prop.table(table(categorias=proc_datos$notas_esfuerzo)),2)
 notas_esfuerzo = as.data.frame(notas_esfuerzo)
-notas_esfuerzo$categorias <- factor(notas_esfuerzo$categorias, levels = c(1, 2, 3), labels = c("Menos de lo que merezco", "2.	Lo que merezco", "Más de lo que merezco"))
+notas_esfuerzo$categorias <- factor(notas_esfuerzo$categorias, levels = c(1, 2, 3), labels = c("Menos de lo que merezco", "Lo que merezco", "Más de lo que merezco"))
 plot_notas_esfuerzo<-ggplot(notas_esfuerzo,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -2791,26 +2877,225 @@ plot_notas_esfuerzo<-ggplot(notas_esfuerzo,aes(x=2,y=-Freq, fill=categorias))+
   scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank(),
-    plot.title = element_text(size=10, face="bold", hjust=0.5))+
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
   xlim(0.5,2.5) +
-  labs(title="Tomando en cuenta el tiempo\nque le dedicas a tus estudios,\nlas notas que me saco son…" )
+  labs(title= "Estudiantes")
+```
+
+```{r, echo=FALSE}
+
+# dona curso: Básica
+
+basica_notas_merit <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
+  dplyr::select(notas_merit) #se filtran valores para esa categoría del curso
+  
+basica_notas_merit = round(prop.table(table(categorias=basica_notas_merit$notas_merit)),2) #se crean variables 'categoria' y 'Freq' del objeto
+
+basica_notas_merit = as.data.frame(basica_notas_merit) #convertimos el objeto en data.frame
+
+#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+
+plot_basica_notas_merit<-ggplot(basica_notas_merit,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de básica") #graficamos
+
+
+# dona curso: Media
+
+# categoría media
+media_notas_merit <- proc_datos %>% filter(curso_estudiante=="Media") %>% 
+  dplyr::select(notas_merit) 
+
+media_notas_merit = round(prop.table(table(categorias=media_notas_merit$notas_merit)),2)  
+
+media_notas_merit = as.data.frame(media_notas_merit)
+
+plot_media_notas_merit<-ggplot(media_notas_merit,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de media")
+```
+
+```{r, echo=FALSE}
+
+#combinar con curso 
+
+curso_notas_merit <- ggarrange(
+  plot_basica_notas_merit,
+  plot_media_notas_merit,
+  common.legend = TRUE, 
+  ncol = 2, 
+  legend = "none"
+  
+)
+
+
+notas_merit_final <- ggarrange(
+  plot_notas_merit,
+  curso_notas_merit,
+  common.legend = TRUE, 
+  nrow = 2, 
+  legend = "bottom",
+  legend.grob = get_legend(plot_notas_merit, "bottom"))
+
+# Agregar una etiqueta global centrada
+plot_notas_merit_final <- annotate_figure(
+  notas_merit_final,
+  top = text_grob(
+    "Figura 1.34: ¿Te parece que este promedio fue más o menos de lo que merecías?",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5))
+
+
+plot_notas_merit_final
+```
+
+Los estudiantes
+
+```{r, echo=FALSE}
+
+frecuencias <- proc_datos_largo %>%
+  group_by(variable, categoria, notas_merit) %>%
+  summarise(Freq = n(), .groups = 'drop') %>%
+  left_join(frecuencias_originales, by = c("variable", "categoria")) %>%
+  mutate(Porcentaje = Freq / Freq_Original) %>%
+  ungroup() %>% 
+  na.omit()
+# nombre facet_wrap
+variable_names <- list("educ_max" = "Nivel educacional de los padres",
+                       "genero_ES" = "Género",
+                       "libros_hogar" = "Cantidad de libros en el hogar")
+variable_labeller <- function(variable, value){return(variable_names[value])}
+
+# Ajustar las etiquetas largas
+frecuencias$categoria <- str_wrap(frecuencias$categoria, width = 10)
+
+# Crear la gráfica
+ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(notas_merit))) +
+  geom_bar(stat = "identity", position = "fill", color = "white") +
+  facet_wrap(~ variable, scales = "free_x", labeller = as_labeller(variable_labeller)) +
+  geom_text(aes(label = scales::percent(Porcentaje, accuracy = 1)), 
+            position = position_stack(vjust = 0.5), color = "black", size = 4.5) +
+  labs(
+    x = NULL, # Elimina el título del eje x
+    y = NULL, # Elimina el título del eje y
+    fill = "Grado de acuerdo",
+    title = "Figura 1.35: ¿Te parece que este promedio fue más o menos de lo que merecías?"
+  ) +
+  theme_blank() +
+  theme(
+    axis.text.y = element_blank(),  # Ocultar etiquetas del eje y
+    axis.ticks.y = element_blank(), # Ocultar marcas del eje y
+    axis.title.x = element_blank(), # Ocultar título del eje x
+    axis.title.y = element_blank(), # Ocultar título del eje y
+    strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
+    axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
+    legend.position = "bottom",# Colocar la leyenda en la parte inferior
+     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+  ) +
+  scale_fill_brewer(palette = "Blues", 
+                    labels = c("1" = "Menos de lo que merzco", "2" = "Lo que merzco", 
+                               "3" = "Más de lo que merzco"),
+                    name = NULL)
+```
+
+```{r, echo=FALSE}
+# gráfico: merito y curso 
+
+# dona curso: Básica
+
+basica_notas_esfuerzo <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
+  dplyr::select(notas_esfuerzo) #se filtran valores para esa categoría del curso
+  
+basica_notas_esfuerzo = round(prop.table(table(categorias=basica_notas_esfuerzo$notas_esfuerzo)),2) #se crean variables 'categoria' y 'Freq' del objeto
+
+basica_notas_esfuerzo = as.data.frame(basica_notas_esfuerzo) #convertimos el objeto en data.frame
+
+#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+
+plot_basica_notas_esfuerzo<-ggplot(basica_notas_esfuerzo,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de básica") #graficamos
+
+
+# dona curso: Media
+
+# categoría media
+media_notas_esfuerzo <- proc_datos %>% filter(curso_estudiante=="Media") %>% 
+  dplyr::select(notas_esfuerzo) 
+
+media_notas_esfuerzo = round(prop.table(table(categorias=media_notas_esfuerzo$notas_esfuerzo)),2)  
+
+media_notas_esfuerzo = as.data.frame(media_notas_esfuerzo)
+
+plot_media_notas_esfuerzo<-ggplot(media_notas_esfuerzo,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5) +
+  labs(title="Estudiantes de media")
 ```
 
 ```{r , plot-notas-merito, echo=FALSE, warning=FALSE}
 # Combinar los gráficos
-plot_notas_merit<- ggarrange(
-  plot_notas_merit, 
-  plot_notas_esfuerzo,
+
+curso_notas_esfuerzo <- ggarrange(
+  plot_basica_notas_esfuerzo,
+  plot_media_notas_esfuerzo,
   common.legend = TRUE, 
   ncol = 2, 
-  legend = "bottom"
+  legend = "none"
+  
 )
 
+
+plot_notas_esfuerzo_final<- ggarrange(
+  plot_notas_esfuerzo, 
+  curso_notas_esfuerzo,
+  common.legend = TRUE, 
+  nrow = 2, 
+  legend = "bottom",
+  legend.grob = get_legend(plot_notas_esfuerzo, "bottom"))
+
 # Agregar una etiqueta global centrada
-final_plot_notas_merit <- annotate_figure(
-  plot_notas_merit,
+final_plot_notas_es <- annotate_figure(
+  plot_notas_esfuerzo_final,
   top = text_grob(
-    "Figura 1.30: Merecimiento de la nota de acuerdo a criterios de mérito individual",
+    "Figura 1.36: Tomando en cuenta el tiempo que le dedicas a tus estudios,\nlas notas que me saco son…",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -2818,69 +3103,177 @@ final_plot_notas_merit <- annotate_figure(
   )
 )
 
-final_plot_notas_merit # generamos el grafico
+final_plot_notas_es # generamos el grafico
 ```
 
 Los estudiantes consideran en un 78% que el promedio obtenido el año pasado es el que merecían, por ende, sus méritos son recompensados en su nota obtenida. Además, contestaron en un 71% que dichas notas son las que estos merecían de acuerdo al tiempo que le dedican a sus estudios, en ese sentido, su esfuerzo se ve recompensado en esa nota.
 
+```{r, echo = FALSE}
+
+frecuencias <- proc_datos_largo %>%
+  group_by(variable, categoria, notas_esfuerzo) %>%
+  summarise(Freq = n(), .groups = 'drop') %>%
+  left_join(frecuencias_originales, by = c("variable", "categoria")) %>%
+  mutate(Porcentaje = Freq / Freq_Original) %>%
+  ungroup() %>% 
+  na.omit()
+# nombre facet_wrap
+variable_names <- list("educ_max" = "Nivel educacional de los padres",
+                       "genero_ES" = "Género",
+                       "libros_hogar" = "Cantidad de libros en el hogar")
+variable_labeller <- function(variable, value){return(variable_names[value])}
+
+# Ajustar las etiquetas largas
+frecuencias$categoria <- str_wrap(frecuencias$categoria, width = 10)
+
+# Crear la gráfica
+ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(notas_esfuerzo))) +
+  geom_bar(stat = "identity", position = "fill", color = "white") +
+  facet_wrap(~ variable, scales = "free_x", labeller = as_labeller(variable_labeller)) +
+  geom_text(aes(label = scales::percent(Porcentaje, accuracy = 1)), 
+            position = position_stack(vjust = 0.5), color = "black", size = 4.5) +
+  labs(
+    x = NULL, # Elimina el título del eje x
+    y = NULL, # Elimina el título del eje y
+    fill = "Grado de acuerdo",
+    title = "Figura 1.37: Tomando en cuenta el tiempo que le dedicas a tus estudios,\nlas notas que me saco son…"
+  ) +
+  theme_blank() +
+  theme(
+    axis.text.y = element_blank(),  # Ocultar etiquetas del eje y
+    axis.ticks.y = element_blank(), # Ocultar marcas del eje y
+    axis.title.x = element_blank(), # Ocultar título del eje x
+    axis.title.y = element_blank(), # Ocultar título del eje y
+    strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
+    axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
+    legend.position = "bottom",# Colocar la leyenda en la parte inferior
+     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+  ) +
+  scale_fill_brewer(palette = "Blues", 
+                    labels = c("1" = "Menos de lo que merzco", "2" = "Lo que merzco", 
+                               "3" = "Más de lo que merzco"),
+                    name = NULL)
+
+```
+
+```{r, echo=FALSE}
+#cruce con colegios 
+```
+
 #### Notas del estudiante
 
-Este apartado hace énfasis en la nota individual de la/el estudiante. De ese modo, se presenta comparativamente la *nota final que efectivamente obtuvo* y la *nota final que consideraba que debería haber obtenido*.
+Este apartado hace énfasis en la nota individual de la/el estudiante. De ese modo, se presenta comparativamente la *nota final que efectivamente obtuvo* y la *nota final que consideraba que debería haber obtenido*. Además, se realizan cruces para evidenciar como se distribuye la percepción de merecimiento descrita en el apartado anterior a partir de la nota obtenida del estudiante.
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-
-library(cowplot)
-
 #grafico 
 
-nota_ob <- ggplot(data = proc_datos, 
-       mapping = aes(x = nota_obtenida)) + 
-  geom_density(color = "#4682b4", fill =  "White", alpha = 0.8, linewidth = 0.7)  + 
+menos_nota <-proc_datos %>% filter(notas_merit==1) %>% 
+  ggplot() + 
+  geom_density(aes(x=nota_obtenida), color = "#4682b4", alpha = 0.8, linewidth = 0.7)  +
+  geom_density(aes(x=nota_pref), color = "#BA55D3", alpha = 0.8, linewidth = 0.7)+
   labs(x = "Nota", 
        y = "Frecuencia" )  +
-scale_y_percent() +
+  scale_y_percent() +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_x_continuous(breaks = 1:7) +
   expand_limits(x = c(1, 7))+
   theme_classic() +
-  ggtitle("¿Cuál fue tu promedio de notas\nel año pasado?") +
+  ggtitle("Mis promedio fue\n menos de lo que merezco") +
   theme(plot.title = element_text(size = 9,
     face = "bold", 
     color = "black", hjust = 0.5),
         plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
+```
 
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 #grafico 
-proc_datos_clean <- proc_datos[complete.cases(proc_datos$nota_pref), ]
 
-nota_pref <- ggplot(data = proc_datos_clean, 
-       mapping = aes(x = nota_pref)) +
-  geom_density(color = "#BA55D3", fill =  "White", alpha = 0.8, linewidth = 0.7)  + 
+mas_nota <- proc_datos %>% filter(notas_merit==3) %>% 
+  ggplot() + 
+  geom_density(aes(x=nota_obtenida), color = "#4682b4", alpha = 0.8, linewidth = 0.7)  +
+  geom_density(aes(x=nota_pref), color = "#BA55D3", alpha = 0.8, linewidth = 0.7)+
   labs(x = "Nota", 
        y = "Frecuencia" )  +
-scale_y_percent() +
+  scale_y_percent() +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_x_continuous(breaks = 1:7) +
   expand_limits(x = c(1, 7))+
   theme_classic() +
-  ggtitle("En caso que tu promedio no es lo que merecías\n¿Qué promedio piensas que merecías?") +
+  ggtitle("Mi promedio fue\n más de lo que merezco") +
   theme(plot.title = element_text(size = 9,
     face = "bold", 
     color = "black", hjust = 0.5),
-        plot.margin = margin(t = 20, r = 20, b = 20, l = 20)) 
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Leyenda personalizada
+legend_plot <- ggplot(data.frame(x = c("Promedio obtenido", "Promedio que cree merecer"), 
+                                 y = c(1, 1))) +
+  geom_point(aes(x = x, y = y, color = x), size = 5) +
+  scale_color_manual(values = c("#4682b4", "#BA55D3")) +
+  guides(color = guide_legend(title = NULL)) +
+  theme_void() +
+  theme(legend.position = "bottom")
+
+legend <- cowplot::get_legend(legend_plot)
+
+# Combinar los gráficos y la leyenda
+combined_plot <- cowplot::plot_grid(menos_nota, mas_nota, nrow = 1, labels = NULL)
+
+# Añadir el título y la leyenda al gráfico combinado
+final_plot <- cowplot::plot_grid(
+  cowplot::plot_grid(NULL, annotate_figure(
+    combined_plot,
+    top = text_grob(
+      "Figura 1.38: Contraste entre la nota obtenida y la nota preferida\npor el estudiante",
+      size = 12, 
+      face = "italic", 
+      color = "#8B7D7B",
+      hjust = 0.5
+    ),
+    bottom = NULL
+  ), NULL, ncol = 1, rel_heights = c(0.1, 1, 0.1)),
+  legend, ncol = 1, rel_heights = c(1, 0.1)
+)
+
+final_plot
+```
+
+En primera instancia, se puede observar que los estudiantes que se sienten subrecompensados con su nota tienden a preferir en mayor medida notas superiores a 5,0. Además, se observa un contraste entre una gran cantidad de estudiantes que preferían una nota 7,0 o cercana a la nota máxima, y quienes obtuvieron efectivamente esa nota. Para los estudiantes que se sintieron sobrerecompensados, se observa un contraste entre la nota obtenida y la nota que creen merecer en torno a las notas cercanas al 4,0 y 5,0. Así, estos estudiantes obtuvieron en mayor medida notas entre 6,0 y menor a 7,0, creyendo merecer notas entre el 4.0 y el 6,0.
+
+```{r, echo=FALSE}
+#estudiante recompensado segun nota obtenida 
+
+```
+
+```{r, echo=FALSE}
+#recompensa 
+
+#nota:
+#5.00 -> 52
+#5.90 -> 62
+#6.00 -> 129
+#6.10 -> 52
+#6.30 -> 54
+#6.40 -> 60 
+#6.50 -> 78 
 
 
+```
 
-# Combinar los gráficos usando plot_grid
-combined_plot <- cowplot::plot_grid(nota_ob, nota_pref)
+```{r, echo=FALSE}
+#tabla_cruzada <- sjt.xtab(datos$p4, 
+                         # datos$d2, 
+                          #show.col.prc = TRUE,
+                          #show.summary = FALSE)
+#tabla_cruzada
 
+#tabla_cruzada1 <- sjt.xtab(datos$p5, 
+                          #datos$d2, 
+                          #show.col.prc = TRUE,
+                          #show.summary = FALSE)
+#tabla_cruzada1
 
-combined_plot <- annotate_figure(
-  combined_plot,
-  top = text_grob(
-    "Figura 1.31: Contraste entre la nota obtenida y la nota preferida\npor el estudiante",
-    size = 12, 
-    face = "italic", 
-    color = "#8B7D7B",
-    hjust = 0.5))
-combined_plot
 ```
