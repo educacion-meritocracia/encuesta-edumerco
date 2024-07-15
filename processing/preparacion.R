@@ -769,11 +769,11 @@ proc_datos$educ_max <- factor(proc_datos$educ_max,
 frq(proc_datos$ne_madre)
 
 ### b. recodificación ----
-proc_datos$ne_madre <- recode(proc_datos$ne_madre, "1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
+#proc_datos$ne_madre <- recode(proc_datos$ne_madre, "1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
 
-proc_datos$ne_madre <- factor(proc_datos$ne_madre, 
-                                  levels=c(1,2),
-                                  labels=c("Enseñanza media o menos","Estudios superiores"))
+#proc_datos$ne_madre <- factor(proc_datos$ne_madre, 
+ #                                 levels=c(1,2),
+  #                                labels=c("Enseñanza media o menos","Estudios superiores"))
 
 ## ne_padre ----
 
@@ -782,11 +782,11 @@ frq(proc_datos$ne_padre)
 
 ### b. recodificación ----
 
-proc_datos$ne_padre <- recode(proc_datos$ne_padre, "1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
+#proc_datos$ne_padre <- recode(proc_datos$ne_padre, "1=1; 2=1; 3=1; 4=2; 5=2; 6=2")
 
-proc_datos$ne_padre <- factor(proc_datos$ne_padre, 
-                              levels=c(1,2),
-                              labels=c("Enseñanza media o menos","Estudios superiores"))
+#proc_datos$ne_padre <- factor(proc_datos$ne_padre, 
+ #                             levels=c(1,2),
+  #                            labels=c("Enseñanza media o menos","Estudios superiores"))
 
 # 1 Básica incompleta, 2 Básica completa, 3 Media completa, 
 # 4 Instituto Profesional/Técnico completa, 5 Universidad pregrado completa, 6 Posgrado
@@ -845,18 +845,22 @@ frq(proc_datos$school_dependencia) #particular subvencionado 2, 3, 4, 7, 8, 10, 
 #11  Liceo Santa Teresa de Los Andes -> particular subvencionado 
 #12 tambien particular subvencionado
 
+
+
+
 ### b. recodificacion ----
 proc_datos <- proc_datos %>%
-  mutate(school_dependencia = case_when(
+  mutate(dependencia = case_when(
     school_dependencia %in% c(2, 3, 4, 7, 8, 10, 11) ~ 1,
     school_dependencia == 5 ~ 2,
     school_dependencia == 6 ~ 3,
     TRUE ~ NA_integer_
   ))
 
-proc_datos$school_dependencia <- factor(proc_datos$school_dependencia, 
+proc_datos$dependencia <- factor(proc_datos$dependencia, 
                                                levels=c(1,2,3),
                                                labels=c("Colegio Particular Subvencionado", "Colegio Municipal","Colegio Privado"))
+
 
 # NOTAS ------------------------------------------------------------------------
 
