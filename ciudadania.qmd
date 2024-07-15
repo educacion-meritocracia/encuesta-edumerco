@@ -1,7 +1,7 @@
 # Ciudadanía
 
-```{r, echo=FALSE, include=FALSE}
-pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled, ggplot2, ggtext, ggpubr)
+```{r, data, echo=FALSE, include=FALSE}
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled, ggplot2, summarytools, ggtext, ggpubr, hrbrthemes, tidyr, stringr)
 
 load("input/data/proc/ola1.RData")
 
@@ -10,7 +10,7 @@ load("input/data/proc/ola1.RData")
 
 ```
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, preparacion, echo=FALSE, eval=TRUE}
 #Base General con el cuestionario para estudiantes
 #Codificamos los valores 99-88 como missing para todas las variables
 proc_datos <- proc_datos %>% set_na(., na = c(99, 88))
@@ -78,7 +78,7 @@ En este primer apartado se presentan dos secciones: percepción de importancia d
 
 Esta sección presenta una pregunta inicial referida al involucramiento de la escuela con la Formación Ciudadana. En ese sentido, la pregunta alude a la importancia que los estudiantes consideran que le entrega el establecimiento a la educación cívica en el espacio escolar.
 
-```{r, echo=FALSE}
+```{r, dona-importancia-ciudadania, echo=FALSE}
 school_ciudadania = round(prop.table(table(categorias=proc_datos$school_ciudadania)),2)
 school_ciudadania = as.data.frame(school_ciudadania)
 school_ciudadania$categorias <- factor(school_ciudadania$categorias, levels = c(1, 2, 3, 4), labels = c("Ninguna importancia", "Algo de importancia", "Mediana importancia", "Mucha importancia"))
@@ -97,7 +97,7 @@ plot_school_ciudadania_ES<-ggplot(school_ciudadania,aes(x=2,y=-Freq, fill=catego
 
 ```
 
-```{r, echo=FALSE}
+```{r, dona-importancia-ciudadania-curso, echo=FALSE}
 # dona curso: Básica
 
 basica_school_ciudadania <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -107,7 +107,7 @@ basica_school_ciudadania = round(prop.table(table(categorias=basica_school_ciuda
 
 basica_school_ciudadania = as.data.frame(basica_school_ciudadania) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_school_ciudadania$categorias <- factor(basica_school_ciudadania$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
 
 plot_basica_school_ciudadania<-ggplot(basica_school_ciudadania,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -133,6 +133,8 @@ media_school_ciudadania = round(prop.table(table(categorias=media_school_ciudada
 
 media_school_ciudadania = as.data.frame(media_school_ciudadania)
 
+media_school_ciudadania$categorias <- factor(media_school_ciudadania$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
+
 plot_media_school_ciudadania<-ggplot(media_school_ciudadania,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -148,34 +150,11 @@ plot_media_school_ciudadania<-ggplot(media_school_ciudadania,aes(x=2,y=-Freq, fi
 
 ```
 
-```{r, echo=FALSE}
-# grafico esfuerzo en la sociedad
-
-# Combinar los gráficos
-school_ciudadania_percep <- ggarrange(
-  plot_school_ciudadania_ES,
-  common.legend = TRUE, 
-  ncol = 1, 
-  legend = "none")
-
-school_ciudadania_curso <- ggarrange(
-   plot_basica_school_ciudadania, 
-   plot_media_school_ciudadania,
-  common.legend = TRUE, 
- ncol = 2, 
-  legend = "none")
-
-merit_social_esfuerzo_percep_final <- ggarrange(
-  school_ciudadania_percep,
-  school_ciudadania_curso,
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_school_ciudadania_ES, "bottom"))
+```{r, plot-importancia-ciudadania, echo=FALSE}
 
 # Agregar una etiqueta global centrada
-final_plot21 <- annotate_figure(
-  merit_social_esfuerzo_percep_final,
+plot_school_ciudadania_percep <- annotate_figure(
+  plot_school_ciudadania_ES,
   top = text_grob(
     "Figura 2.1: ¿Cuánta importancia dirías tú que se le da a la Formación Ciudadana?",
     size = 12, 
@@ -184,16 +163,40 @@ final_plot21 <- annotate_figure(
     hjust = 0.5))
 
 
-final_plot21
+plot_school_ciudadania_percep
 ```
 
 En general, los estudiantes consideran que se le da una mediana importancia a la Formación Ciudadana en la escuela. Particularmente ,los estudiantes de enseñanza báscia consideran que se le da más importnacia, contestando en un 29% que la escuela le entrega mucha importancia, encompración con los estudiantes de media (20%).
+
+```{r, plot-importancia-ciudadania-curso, echo=FALSE}
+
+school_ciudadania_curso <- ggarrange(
+   plot_basica_school_ciudadania, 
+   plot_media_school_ciudadania,
+  common.legend = TRUE, 
+ ncol = 2, 
+  legend = "bottom")
+
+
+# Agregar una etiqueta global centrada
+plot_school_ciudadania_curso <- annotate_figure(
+  school_ciudadania_curso,
+  top = text_grob(
+    "Figura 2.2: ¿Cuánta importancia dirías tú que se le da a la Formación Ciudadana?",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5))
+
+
+plot_school_ciudadania_curso
+```
 
 ### En el espacio de clases
 
 Las preguntas de esta sección se enfocan en la dinámica de interacción entre docente y estudiantes en el aula. Específicamente, estas son referidas al momento en que se discute un tema político y social durante la clase, aludiendo así al rol del docente en el proceso formativo.
 
-```{r, echo=FALSE}
+```{r, donas-clases, echo=FALSE}
 school_ciudadania_es = round(prop.table(table(categorias=proc_datos$school_ciudadania_es)),2)
 school_ciudadania_es = as.data.frame(school_ciudadania_es)
 school_ciudadania_es$categorias <- factor(school_ciudadania_es$categorias, levels = c(1, 2, 3, 4), labels = c("Nunca", "Casi nunca", "Casi siempre", "Siempre"))
@@ -277,7 +280,7 @@ plot_p18_3<-ggplot(p18_3,aes(x=2,y=-Freq, fill=categorias))+
   labs(title= "Los estudiantes plantean\nhechos políticos de actualidad para\nser discutidos en clases")
 ```
 
-```{r, echo=FALSE}
+```{r, plot-clases-ES, echo=FALSE}
 # Combinar los gráficos
 plot_clases1 <- ggarrange(
    plot_school_ciudadania_es,
@@ -290,7 +293,7 @@ legend = "bottom")
 plot_class_es <- annotate_figure(
  plot_clases1 ,
   top = text_grob(
-    "Figura 2.2: Durante una discusión de temas políticos y sociales\ndurante clases",
+    "Figura 2.3: Durante una discusión de temas políticos y sociales\ndurante clases",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -306,28 +309,19 @@ plot_class_es
 
 Dentro de la dinámica en que los estudiantes plantean hechos políticos de actualidad para discutir en la clase predomina la categoría casi nunca con un 36% y nunca con un 25%. A pesar de ello, se tiene un espacio de interacción entre docente y estudiantes, en donde los estudiantes casi siempre (42%) pueden manifestar abiertamente su desacuerdo con sus profesores(as).
 
-```{r, echo=FALSE}
+```{r, plot-clases-PROF, echo=FALSE}
 plot_clases2 <- ggarrange(
    plot_school_ciudadania_op,
 plot_school_ciudadania_dif,
 common.legend = TRUE,
   ncol = 2, 
-legend = "none")
-
-plot_clases2final <- ggarrange(
-plot_school_ciudadania_class,
-plot_clases2,
-common.legend = TRUE,
-  nrow = 2, 
-legend = "bottom",
- legend.grob = get_legend(plot_school_ciudadania_op, "bottom"))
-
+legend = "bottom")
 
 # Agregar una etiqueta global centrada
-plot_class_prof <- annotate_figure(
- plot_clases2final ,
+plot_clases2 <- annotate_figure(
+ plot_clases2 ,
   top = text_grob(
-    "Figura 2.3: Durante una discusión de temas políticos y sociales\ndurante clases",
+    "Figura 2.4: Durante una discusión de temas políticos y sociales\ndurante clases",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -335,10 +329,27 @@ plot_class_prof <- annotate_figure(
   )
 )
 
-plot_class_prof
+plot_clases2
 ```
 
 Los(as) profesores(as) estimulan siempre (42%) la expresión de las propias opiniones de los estudiantes y casi siempre (42%) la conversación de estos mismos con gente que opina disntinto. Además, los estudiantes reconocen que sus profesores(as) exponen los temas desde distintos enfoques en su explicación durante la clase, de ese modo contestaron en un 30% que siempre se realizaba dicha acción y en un 48% que se cumplía casi siempre.
+
+```{r, plot-clases-PROF-enfoque, echo=FALSE}
+
+# Agregar una etiqueta global centrada
+plot_school_ciudadania_class <- annotate_figure(
+ plot_school_ciudadania_class ,
+  top = text_grob(
+    "Figura 2.5: Durante una discusión de temas políticos y sociales\ndurante clases",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_school_ciudadania_class
+```
 
 ## Participación política
 
@@ -350,7 +361,7 @@ En esta sección se evidencian preguntas referentes a la participación polític
 
 **Eficacia política**:
 
-```{r, echo=FALSE}
+```{r, dona-eficacia-pre, echo=FALSE}
 
 pp_presente_pol = round(prop.table(table(categorias=proc_datos$pp_presente_pol)),2)
 pp_presente_pol = as.data.frame(pp_presente_pol)
@@ -371,7 +382,7 @@ plot_pp_presente_pol_ES<-ggplot(pp_presente_pol,aes(x=2,y=-Freq, fill=categorias
 
 ```
 
-```{r, echo=FALSE}
+```{r, dona-eficacia-pre-curso, echo=FALSE}
 
 # dona curso: Básica
 
@@ -382,7 +393,7 @@ basica_pp_presente_pol = round(prop.table(table(categorias=basica_pp_presente_po
 
 basica_pp_presente_pol = as.data.frame(basica_pp_presente_pol) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_pp_presente_pol$categorias <- factor(basica_pp_presente_pol$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
 
 plot_basica_pp_presente_pol<-ggplot(basica_pp_presente_pol,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -408,6 +419,8 @@ media_pp_presente_pol = round(prop.table(table(categorias=media_pp_presente_pol$
 
 media_pp_presente_pol = as.data.frame(media_pp_presente_pol)
 
+media_pp_presente_pol$categorias <- factor(media_pp_presente_pol$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+
 plot_media_pp_presente_pol<-ggplot(media_pp_presente_pol,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -422,29 +435,13 @@ plot_media_pp_presente_pol<-ggplot(media_pp_presente_pol,aes(x=2,y=-Freq, fill=c
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos
-plot_pp_presente_pol_curso <- ggarrange(
-   plot_basica_pp_presente_pol,
-plot_media_pp_presente_pol, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_pp_presente_pol_final <- ggarrange(
-  plot_pp_presente_pol_ES,
-  plot_pp_presente_pol_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_pp_presente_pol_ES, "bottom"))
+```{r, plot-eficacia-pre, echo=FALSE}
 
 # Agregar una etiqueta global centrada
-pp_presente <- annotate_figure(
- plot_pp_presente_pol_final ,
+plot_pp_presente_pol_ES <- annotate_figure(
+ plot_pp_presente_pol_ES ,
   top = text_grob(
-    "Figura 2.4: Comprendo bien las problemáticas políticas de nuestro país",
+    "Figura 2.6: Comprendo bien las problemáticas políticas de nuestro país",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -452,18 +449,40 @@ pp_presente <- annotate_figure(
   )
 )
 
-pp_presente
+plot_pp_presente_pol_ES
 ```
 
 A modo general se observa que los
 
+```{r, plot-eficacia-pre-curso, echo=FALSE}
+
+# Combinar los gráficos
+plot_pp_presente_pol_curso <- ggarrange(
+   plot_basica_pp_presente_pol,
+plot_media_pp_presente_pol, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+
+# Agregar una etiqueta global centrada
+plot_pp_presente_pol_curso <- annotate_figure(
+ plot_pp_presente_pol_curso ,
+  top = text_grob(
+    "Figura 2.7: Comprendo bien las problemáticas políticas de nuestro país",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_pp_presente_pol_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(stringr)
+```{r, plot-eficacia-pre-sociodemo, echo=FALSE, message=FALSE, warning=FALSE}
 
 # Calcular las frecuencias originales
 frecuencias_originales <- proc_datos %>%
@@ -505,7 +524,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.5: Comprendo bien las problemáticas políticas de nuestro país"
+    title = "Figura 2.8: Comprendo bien las problemáticas políticas de nuestro país"
   ) +
   theme_blank() +
   theme(
@@ -528,7 +547,9 @@ Participación política **civil** o **prosocial**:
 
 Participación civil convencional
 
-```{r, echo=FALSE}
+```{r, donas-pp-civil-actual, echo=FALSE}
+
+#marcha
 pp_presente_marcha = round(prop.table(table(categorias=proc_datos$pp_presente_marcha)),2)
 pp_presente_marcha = as.data.frame(pp_presente_marcha)
 pp_presente_marcha$categorias <- factor(pp_presente_marcha$categorias, levels = c(1, 2), labels = c("Sí", "No"))
@@ -545,6 +566,7 @@ plot_presente_marcha_ES<-ggplot(pp_presente_marcha,aes(x=2,y=-Freq, fill=categor
   xlim(0.5,2.5) +
   labs(title="Estudiantes")
 
+#toma
 pp_presente_toma = round(prop.table(table(categorias=proc_datos$pp_presente_toma)),2)
 pp_presente_toma = as.data.frame(pp_presente_toma)
 pp_presente_toma$categorias <- factor(pp_presente_toma$categorias, levels = c(1, 2), labels = c("Sí", "No"))
@@ -561,6 +583,7 @@ plot_presente_toma_ES<-ggplot(pp_presente_toma,aes(x=2,y=-Freq, fill=categorias)
   xlim(0.5,2.5) +
   labs(title="Estudiantes")
 
+#rrss
 pp_presente_rrss = round(prop.table(table(categorias=proc_datos$pp_presente_rrss)),2)
 pp_presente_rrss = as.data.frame(pp_presente_rrss)
 pp_presente_rrss$categorias <- factor(pp_presente_rrss$categorias, levels = c(1, 2, 3, 4,5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
@@ -577,6 +600,7 @@ plot_presente_rrss_ES<-ggplot(pp_presente_rrss,aes(x=2,y=-Freq, fill=categorias)
   xlim(0.5,2.5) +
   labs(title="Estudiantes")
 
+#me gusta
 pp_presente_like = round(prop.table(table(categorias=proc_datos$pp_presente_like)),2)
 pp_presente_like = as.data.frame(pp_presente_like)
 pp_presente_like$categorias <- factor(pp_presente_like$categorias, levels = c(1, 2, 3, 4,5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
@@ -593,6 +617,7 @@ plot_presente_like_ES<-ggplot(pp_presente_like,aes(x=2,y=-Freq, fill=categorias)
   xlim(0.5,2.5) +
   labs(title="Estudiantes")
 
+#compartir publicacion
 pp_presente_compartir = round(prop.table(table(categorias=proc_datos$pp_presente_compartir)),2)
 pp_presente_compartir = as.data.frame(pp_presente_compartir)
 pp_presente_compartir$categorias <- factor(pp_presente_compartir$categorias, levels = c(1, 2, 3, 4,5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
@@ -609,6 +634,7 @@ plot_presente_compartir_ES<-ggplot(pp_presente_compartir,aes(x=2,y=-Freq, fill=c
   xlim(0.5,2.5) +
   labs(title="Estudiantes")
 
+#
 p12_2 = round(prop.table(table(categorias=proc_datos$p12_2)),2)
 p12_2 = as.data.frame(p12_2)
 p12_2$categorias <- factor(p12_2$categorias, levels = c(1, 2), labels = c("Sí", "No"))
@@ -661,7 +687,7 @@ plot_p13_5_ES<-ggplot(p13_5,aes(x=2,y=-Freq, fill=categorias))+
 
 -   **Marcha violenta**
 
-```{r, echo=FALSE}
+```{r, dona-marcha-violenta-curso, echo=FALSE}
 # dona curso: Básica
 
 basica_p12_2 <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -671,7 +697,7 @@ basica_p12_2 = round(prop.table(table(categorias=basica_p12_2$p12_2)),2) #se cre
 
 basica_p12_2 = as.data.frame(basica_p12_2) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_p12_2$categorias <- factor(basica_p12_2$categorias, levels = c(1, 2), labels = c("Sí", "No"))
 
 plot_basica_p12_2<-ggplot(basica_p12_2,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -697,6 +723,8 @@ media_p12_2 = round(prop.table(table(categorias=media_p12_2$p12_2)),2)
 
 media_p12_2 = as.data.frame(media_p12_2)
 
+media_p12_2$categorias <- factor(media_p12_2$categorias, levels = c(1, 2), labels = c("Sí", "No"))
+
 plot_media_p12_2<-ggplot(media_p12_2,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -711,29 +739,13 @@ plot_media_p12_2<-ggplot(media_p12_2,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos
-p12_2_curso <- ggarrange(
-   plot_basica_p12_2,
-plot_media_p12_2, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_p12_2_ES_final <- ggarrange(
-  plot_p12_2_ES,
-  p12_2_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_p12_2_ES, "bottom"))
+```{r, plot-marcha-violenta, echo=FALSE}
 
 # Agregar una etiqueta global centrada
-plot_p12_2_final <- annotate_figure(
- plot_p12_2_ES_final,
+plot_p12_2_ES <- annotate_figure(
+ plot_p12_2_ES,
   top = text_grob(
-    "Figura 2.6: Participación en una marcha violenta en los últimos 12 meses",
+    "Figura 2.9: Participación en una marcha violenta en los últimos 12 meses",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -741,12 +753,35 @@ plot_p12_2_final <- annotate_figure(
   )
 )
 
-plot_p12_2_final
+plot_p12_2_ES
+```
+
+```{r, plot-marcha-violenta-curso, echo=FALSE}
+p12_2_curso <- ggarrange(
+   plot_basica_p12_2,
+plot_media_p12_2, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_p12_2_curso <- annotate_figure(
+ p12_2_curso,
+  top = text_grob(
+    "Figura 2.10: Participación en una marcha violenta en los últimos 12 meses",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_p12_2_curso
 ```
 
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, plot-marcha-violenta-sociodemo, echo=FALSE, message=FALSE, warning=FALSE}
 
  #Calcular las frecuencias originales
 frecuencias_originales <- proc_datos %>%
@@ -788,7 +823,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p12_2))) +
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.7: Participación en una marcha violenta en los últimos 12 meses"
+    title = "Figura 2.11: Participación en una marcha violenta en los últimos 12 meses"
   ) +
   theme_blank() +
   theme(
@@ -808,7 +843,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p12_2))) +
 
 -   **Toma**
 
-```{r, echo=FALSE}
+```{r, dona-toma-curso, echo=FALSE}
 # dona curso: Básica
 
 basica_toma <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -818,7 +853,7 @@ basica_toma = round(prop.table(table(categorias=basica_toma$pp_presente_toma)),2
 
 basica_toma = as.data.frame(basica_toma) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_toma$categorias <- factor(basica_toma$categorias, levels = c(1, 2), labels = c("Sí", "No")) 
 
 plot_basica_toma<-ggplot(basica_toma,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -844,6 +879,8 @@ media_toma = round(prop.table(table(categorias=media_toma$pp_presente_toma)),2)
 
 media_toma = as.data.frame(media_toma)
 
+media_toma$categorias <- factor(media_toma$categorias, levels = c(1, 2), labels = c("Sí", "No")) 
+
 plot_media_toma<-ggplot(media_toma,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -858,29 +895,13 @@ plot_media_toma<-ggplot(media_toma,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-toma_curso <- ggarrange(
-   plot_basica_toma,
-plot_media_toma, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_toma_final <- ggarrange(
-  plot_presente_toma_ES,
-  toma_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_presente_toma_ES, "bottom"))
+```{r, plot-toma, echo=FALSE}
 
 # Agregar una etiqueta global centrada
-plot_toma <- annotate_figure(
- plot_toma_final,
+plot_presente_toma_ES <- annotate_figure(
+ plot_presente_toma_ES,
   top = text_grob(
-    "Figura 2.8: Participación en una toma en los últimos 12 meses",
+    "Figura 2.12: Participación en una toma en los últimos 12 meses",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -888,12 +909,36 @@ plot_toma <- annotate_figure(
   )
 )
 
-plot_toma
+plot_presente_toma_ES
+```
+
+```{r, plot-toma-curso, echo=FALSE}
+toma_curso <- ggarrange(
+   plot_basica_toma,
+plot_media_toma, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_toma_curso <- annotate_figure(
+ toma_curso,
+  top = text_grob(
+    "Figura 2.13: Participación en una toma en los últimos 12 meses",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_toma_curso
+
 ```
 
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-toma-sociodemo, echo=FALSE}
 
  #Calcular las frecuencias originales
 frecuencias_originales <- proc_datos %>%
@@ -935,7 +980,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.9: Participación en una toma en los últimos 12 meses"
+    title = "Figura 2.14: Participación en una toma en los últimos 12 meses"
   ) +
   theme_blank() +
   theme(
@@ -955,7 +1000,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
 
 -   **Marcha pacífica**
 
-```{r, echo=FALSE}
+```{r, dona-marcha-pacifica-curso, echo=FALSE}
 # dona curso: Básica
 
 basica_marcha <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -965,7 +1010,7 @@ basica_marcha = round(prop.table(table(categorias=basica_marcha$pp_presente_marc
 
 basica_marcha = as.data.frame(basica_marcha) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_marcha$categorias <- factor(basica_marcha$categorias, levels = c(1, 2), labels = c("Sí", "No")) 
 
 plot_basica_marcha<-ggplot(basica_marcha,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -991,6 +1036,8 @@ media_marcha = round(prop.table(table(categorias=media_marcha$pp_presente_marcha
 
 media_marcha = as.data.frame(media_marcha)
 
+media_marcha$categorias <- factor(media_marcha$categorias, levels = c(1, 2), labels = c("Sí", "No")) 
+
 plot_media_marcha<-ggplot(media_marcha,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -1005,30 +1052,14 @@ plot_media_marcha<-ggplot(media_marcha,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
+```{r, plot-marcha-pacifica, echo=FALSE}
 
-#combinar los gráficos 
-marcha_curso <- ggarrange(
-   plot_basica_marcha,
-plot_media_marcha, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_marcha_final <- ggarrange(
-  plot_presente_marcha_ES,
-  marcha_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_presente_marcha_ES, "bottom"))
 
 # Agregar una etiqueta global centrada
-plot_marcha <- annotate_figure(
- plot_marcha_final,
+plot_presente_marcha_ES <- annotate_figure(
+ plot_presente_marcha_ES,
   top = text_grob(
-    "Figura 2.10:  Participación en una marcha pacífica en los últimos 12 meses",
+    "Figura 2.15:  Participación en una marcha pacífica en los últimos 12 meses",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -1036,12 +1067,37 @@ plot_marcha <- annotate_figure(
   )
 )
 
-plot_marcha
+plot_presente_marcha_ES
+```
+
+```{r, plot-marcha-pacifica-curso, echo=FALSE}
+
+#combinar los gráficos 
+marcha_curso <- ggarrange(
+   plot_basica_marcha,
+plot_media_marcha, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_marcha_curso <- annotate_figure(
+ marcha_curso,
+  top = text_grob(
+    "Figura 2.16:  Participación en una marcha pacífica en los últimos 12 meses",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_marcha_curso
 ```
 
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-marcha-pacifica-sociodemo, echo=FALSE}
  #Calcular las frecuencias originales
 frecuencias_originales <- proc_datos %>%
   pivot_longer(cols = c(genero_ES, educ_max, libros_hogar),
@@ -1082,7 +1138,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.11: Participación en una marcha pacífica en los últimos 12 meses"
+    title = "Figura 2.17: Participación en una marcha pacífica en los últimos 12 meses"
   ) +
   theme_blank() +
   theme(
@@ -1106,7 +1162,7 @@ Participación civil digital
 
 -   **Dar me gusta** a contenido
 
-```{r, echo=FALSE}
+```{r, dona-like-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_like <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -1116,7 +1172,7 @@ basica_like = round(prop.table(table(categorias=basica_like$pp_presente_like)),2
 
 basica_like = as.data.frame(basica_like) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_like$categorias <- factor(basica_like$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
 
 plot_basica_like<-ggplot(basica_like,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -1142,6 +1198,8 @@ media_like = round(prop.table(table(categorias=media_like$pp_presente_like)),2)
 
 media_like = as.data.frame(media_like)
 
+media_like$categorias <- factor(media_like$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+
 plot_media_like<-ggplot(media_like,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -1156,29 +1214,13 @@ plot_media_like<-ggplot(media_like,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-#combinar los gráficos 
-like_curso <- ggarrange(
-   plot_basica_like,
-plot_media_like, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_like_final <- ggarrange(
-  plot_presente_like_ES,
-  like_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_presente_like_ES, "bottom"))
+```{r, plot-like, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_like <- annotate_figure(
- plot_like_final,
+ plot_presente_like_ES,
   top = text_grob(
-    "Figura 2.12: Uso de internet para dar me gusta a contenido sobre política",
+    "Figura 2.18: Uso de internet para dar me gusta a contenido sobre política",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -1189,9 +1231,33 @@ plot_like <- annotate_figure(
 plot_like
 ```
 
+```{r, plot-like-curso, echo=FALSE}
+#combinar los gráficos 
+like_curso <- ggarrange(
+   plot_basica_like,
+plot_media_like, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_like_curso <- annotate_figure(
+ like_curso,
+  top = text_grob(
+    "Figura 2.19: Uso de internet para dar me gusta a contenido sobre política",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_like_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-like-sociodemo, echo=FALSE}
 #Calcular las frecuencias originales
 frecuencias_originales <- proc_datos %>%
   pivot_longer(cols = c(genero_ES, educ_max, libros_hogar),
@@ -1232,7 +1298,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.13: Uso de internet para dar me gusta a contenido sobre política"
+    title = "Figura 2.20: Uso de internet para dar me gusta a contenido sobre política"
   ) +
   theme_blank() +
   theme(
@@ -1252,7 +1318,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
 
 -   **Comentar** una publicación
 
-```{r, echo=FALSE}
+```{r, dona-comnetar-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_p13_5 <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -1262,7 +1328,7 @@ basica_p13_5 = round(prop.table(table(categorias=basica_p13_5$p13_5)),2) #se cre
 
 basica_p13_5 = as.data.frame(basica_p13_5) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_p13_5$categorias <- factor(basica_p13_5$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
 
 plot_basica_p13_5<-ggplot(basica_p13_5,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -1288,6 +1354,8 @@ media_p13_5 = round(prop.table(table(categorias=media_p13_5$p13_5)),2)
 
 media_p13_5 = as.data.frame(media_p13_5)
 
+media_p13_5$categorias <- factor(media_p13_5$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+
 plot_media_p13_5<-ggplot(media_p13_5,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -1302,29 +1370,13 @@ plot_media_p13_5<-ggplot(media_p13_5,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-p13_5_curso <- ggarrange(
-   plot_basica_p13_5,
-plot_media_p13_5, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_p13_5_final <- ggarrange(
-  plot_p13_5_ES,
-  p13_5_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_p13_5_ES, "bottom"))
+```{r, plot-comentar, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_comentar <- annotate_figure(
- plot_p13_5_final,
+ plot_p13_5_ES,
   top = text_grob(
-    "Figura 2.14: Uso de internet para comentar una publicación en línea\nsobre un tema político o social",
+    "Figura 2.21: Uso de internet para comentar una publicación en línea\nsobre un tema político o social",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -1333,11 +1385,37 @@ plot_comentar <- annotate_figure(
 )
 
 plot_comentar
+
+```
+
+```{r, plot-comentar-curso, echo=FALSE}
+# Combinar los gráficos 
+p13_5_curso <- ggarrange(
+   plot_basica_p13_5,
+plot_media_p13_5, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+
+# Agregar una etiqueta global centrada
+plot_comentar_curso <- annotate_figure(
+ p13_5_curso,
+  top = text_grob(
+    "Figura 2.22: Uso de internet para comentar una publicación en línea\nsobre un tema político o social",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_comentar_curso
 ```
 
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-comentar-sociodemo, echo=FALSE}
 #Calcular las frecuencias originales
 frecuencias_originales <- proc_datos %>%
   pivot_longer(cols = c(genero_ES, educ_max, libros_hogar),
@@ -1378,7 +1456,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p13_5))) +
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.15: Uso de internet para comentar una publicación en línea \nsobre un tema político o social"
+    title = "Figura 2.23: Uso de internet para comentar una publicación en línea \nsobre un tema político o social"
   ) +
   theme_blank() +
   theme(
@@ -1398,7 +1476,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p13_5))) +
 
 -   **Compartir** contenido
 
-```{r, echo=FALSE}
+```{r, dona-compartir-curso, echo=FALSE}
 # dona curso: Básica   
 
 basica_compartir <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -1408,7 +1486,7 @@ basica_compartir = round(prop.table(table(categorias=basica_compartir$pp_present
 
 basica_compartir = as.data.frame(basica_compartir) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_compartir$categorias <- factor(basica_compartir$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
 
 plot_basica_compartir<-ggplot(basica_compartir,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -1434,6 +1512,9 @@ media_compartir = round(prop.table(table(categorias=media_compartir$pp_presente_
 
 media_compartir = as.data.frame(media_compartir)
 
+media_compartir$categorias <- factor(media_compartir$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+
+
 plot_media_compartir<-ggplot(media_compartir,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -1448,29 +1529,13 @@ plot_media_compartir<-ggplot(media_compartir,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-compartir_curso <- ggarrange(
-   plot_basica_compartir,
-plot_media_compartir, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_compartir_final <- ggarrange(
-  plot_presente_compartir_ES,
-  compartir_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_presente_compartir_ES, "bottom"))
+```{r,plot-compartir, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_compartir <- annotate_figure(
- plot_compartir_final,
+ plot_presente_compartir_ES,
   top = text_grob(
-    "Figura 2.16:  Uso de internet para compartir contenido sobre un tema político o social \npublicado por otra persona",
+    "Figura 2.24:  Uso de internet para compartir contenido sobre un tema político o social \npublicado por otra persona",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -1481,9 +1546,34 @@ plot_compartir <- annotate_figure(
 plot_compartir
 ```
 
+```{r, plot-compartir-curso, echo=FALSE}
+
+# Combinar los gráficos 
+compartir_curso <- ggarrange(
+   plot_basica_compartir,
+plot_media_compartir, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_compartir_curso <- annotate_figure(
+ compartir_curso,
+  top = text_grob(
+    "Figura 2.25:  Uso de internet para compartir contenido sobre un tema político o social \npublicado por otra persona",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_compartir_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-compartir-sociodemo, echo=FALSE}
 #Calcular las frecuencias originales
 frecuencias_originales <- proc_datos %>%
   pivot_longer(cols = c(genero_ES, educ_max, libros_hogar),
@@ -1524,7 +1614,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.17: Uso de internet para compartir contenido sobre un tema político o social \npublicado por otra persona"
+    title = "Figura 2.26: Uso de internet para compartir contenido sobre un tema político o social \npublicado por otra persona"
   ) +
   theme_blank() +
   theme(
@@ -1544,7 +1634,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
 
 -   Ver un **sitio Web**
 
-```{r, echo=FALSE}
+```{r, dona-sitio-web-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_p13_1<- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -1554,7 +1644,8 @@ basica_p13_1 = round(prop.table(table(categorias=basica_p13_1$p13_1)),2) #se cre
 
 basica_p13_1 = as.data.frame(basica_p13_1) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_p13_1$categorias <- factor(basica_p13_1$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+
 
 plot_basica_p13_1<-ggplot(basica_p13_1,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -1580,6 +1671,8 @@ media_p13_1 = round(prop.table(table(categorias=media_p13_1$p13_1)),2)
 
 media_p13_1 = as.data.frame(media_p13_1)
 
+media_p13_1$categorias <- factor(media_p13_1$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+
 plot_media_p13_1<-ggplot(media_p13_1,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -1594,29 +1687,12 @@ plot_media_p13_1<-ggplot(media_p13_1,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-p13_1_curso <- ggarrange(
-   plot_basica_p13_1,
-plot_media_p13_1, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_p13_1_final <- ggarrange(
-  plot_p13_1_ES,
-  p13_1_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_p13_1_ES, "bottom"))
-
+```{r, plot-sitio-web, echo=FALSE}
 # Agregar una etiqueta global centrada
 plot_p13_1 <- annotate_figure(
- plot_p13_1_final,
+ plot_p13_1_ES,
   top = text_grob(
-    "Figura 2.18: Uso de internet para ver un sitio Web sobre política",
+    "Figura 2.27: Uso de internet para ver un sitio Web sobre política",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -1627,9 +1703,34 @@ plot_p13_1 <- annotate_figure(
 plot_p13_1
 ```
 
+```{r, plot-sitio-web-curso, echo=FALSE}
+
+# Combinar los gráficos 
+p13_1_curso <- ggarrange(
+   plot_basica_p13_1,
+plot_media_p13_1, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_p13_1_curso <- annotate_figure(
+ p13_1_curso,
+  top = text_grob(
+    "Figura 2.28: Uso de internet para ver un sitio Web sobre política",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_p13_1_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-sitio-web-sociodemo, echo=FALSE}
 #Calcular las frecuencias originales
 frecuencias_originales <- proc_datos %>%
   pivot_longer(cols = c(genero_ES, educ_max, libros_hogar),
@@ -1670,7 +1771,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p13_1))) +
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.19: Uso de internet para ver un sitio Web sobre política"
+    title = "Figura 2.29: Uso de internet para ver un sitio Web sobre política"
   ) +
   theme_blank() +
   theme(
@@ -1690,8 +1791,8 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p13_1))) +
 
 -   Informarse en **Redes Sociales**
 
-```{r, echo=FALSE}
-# dona curso: Básica editarrrrr
+```{r, dona-rrss-curso, echo=FALSE}
+# dona curso: Básica 
 
 basica_rrss <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
   dplyr::select(pp_presente_rrss) #se filtran valores para esa categoría del curso
@@ -1700,7 +1801,7 @@ basica_rrss = round(prop.table(table(categorias=basica_rrss$pp_presente_rrss)),2
 
 basica_rrss = as.data.frame(basica_rrss) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_rrss$categorias <- factor(basica_rrss$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
 
 plot_basica_rrss<-ggplot(basica_rrss,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -1726,6 +1827,8 @@ media_rrss = round(prop.table(table(categorias=media_rrss$pp_presente_rrss)),2)
 
 media_rrss = as.data.frame(media_rrss)
 
+media_rrss$categorias <- factor(media_rrss$categorias, levels = c(1, 2, 3, 4, 5), labels = c("Nunca", "Una vez al año", "Una vez al mes", "Semanalmente", "Todos los días"))
+
 plot_media_rrss<-ggplot(media_rrss,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -1740,29 +1843,13 @@ plot_media_rrss<-ggplot(media_rrss,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-rrss_curso <- ggarrange(
-   plot_basica_rrss,
-plot_media_rrss, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_rrss_final <- ggarrange(
-  plot_presente_rrss_ES,
-  rrss_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_presente_rrss_ES, "bottom"))
+```{r, plot-rrss, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_rrss <- annotate_figure(
- plot_rrss_final,
+ plot_presente_rrss_ES,
   top = text_grob(
-    "Figura 2.20: Uso de internet para informarse en RR.SS sobre política",
+    "Figura 2.30: Uso de internet para informarse en RR.SS sobre política",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -1773,9 +1860,34 @@ plot_rrss <- annotate_figure(
 plot_rrss
 ```
 
+```{r, plot-rrss-curso, echo=FALSE}
+
+# Combinar los gráficos 
+rrss_curso <- ggarrange(
+   plot_basica_rrss,
+plot_media_rrss, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_rrss_curso <- annotate_figure(
+ rrss_curso,
+  top = text_grob(
+    "Figura 2.31: Uso de internet para informarse en RR.SS sobre política",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_rrss_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-rrss-sociodemo, echo=FALSE}
 #Calcular las frecuencias originales
 frecuencias_originales <- proc_datos %>%
   pivot_longer(cols = c(genero_ES, educ_max, libros_hogar),
@@ -1816,7 +1928,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.21: Uso de internet para informarse en RR.SS sobre política"
+    title = "Figura 2.32: Uso de internet para informarse en RR.SS sobre política"
   ) +
   theme_blank() +
   theme(
@@ -1840,7 +1952,7 @@ Esta sección refiere a preguntas respecto a las expectativas de participación 
 
 **Eficacia política**:
 
-```{r, echo=FALSE}
+```{r, dona-eficacia-fut, echo=FALSE}
 #pp_futura_pol Cuando sea adulto(a) podré participar en la política ; acuerdo
 
 pp_futura_pol = round(prop.table(table(categorias=proc_datos$pp_futura_pol)),2)
@@ -1861,8 +1973,8 @@ plot_pp_futura_pol_ES<-ggplot(pp_futura_pol,aes(x=2,y=-Freq, fill=categorias))+
 
 ```
 
-```{r, echo=FALSE}
-# dona genero: Mujer
+```{r, dona-eficacia-fut-curso, echo=FALSE}
+# dona curso: basica
 
 basica_pp_futura_pol <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
   dplyr::select(pp_futura_pol) #se filtran valores para esa categoría del curso
@@ -1871,7 +1983,7 @@ basica_pp_futura_pol = round(prop.table(table(categorias=basica_pp_futura_pol$pp
 
 basica_pp_futura_pol = as.data.frame(basica_pp_futura_pol) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_pp_futura_pol$categorias <- factor(basica_pp_futura_pol$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
 
 plot_basica_pp_futura_pol<-ggplot(basica_pp_futura_pol,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -1897,6 +2009,8 @@ media_pp_futura_pol = round(prop.table(table(categorias=media_pp_futura_pol$pp_f
 
 media_pp_futura_pol = as.data.frame(media_pp_futura_pol)
 
+media_pp_futura_pol$categorias <- factor(media_pp_futura_pol$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
+
 plot_media_pp_futura_pol<-ggplot(media_pp_futura_pol,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -1911,29 +2025,13 @@ plot_media_pp_futura_pol<-ggplot(media_pp_futura_pol,aes(x=2,y=-Freq, fill=categ
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos
-plot_pp_futura_pol_curso <- ggarrange(
-   plot_basica_pp_futura_pol,
-plot_media_pp_futura_pol, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_pp_futura_pol_final <- ggarrange(
-  plot_pp_futura_pol_ES,
-  plot_pp_futura_pol_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_pp_futura_pol_ES, "bottom"))
+```{r, plot-eficacia-fut, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 pp_futura <- annotate_figure(
- plot_pp_futura_pol_final ,
+ plot_pp_futura_pol_ES ,
   top = text_grob(
-    "Figura 2.22: Cuando sea adulto(a) podré participar en la política",
+    "Figura 2.33: Cuando sea adulto(a) podré participar en la política",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -1944,9 +2042,35 @@ pp_futura <- annotate_figure(
 pp_futura
 ```
 
+```{r, plot-eficacia-fut-curso, echo=FALSE}
+
+# Combinar los gráficos
+plot_pp_futura_pol_curso <- ggarrange(
+   plot_basica_pp_futura_pol,
+plot_media_pp_futura_pol, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+
+# Agregar una etiqueta global centrada
+pp_futura_curso <- annotate_figure(
+ plot_pp_futura_pol_curso ,
+  top = text_grob(
+    "Figura 2.34: Cuando sea adulto(a) podré participar en la política",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+pp_futura_curso
+```
+
 *Cruces con características sociodemográficas del estudiante*
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, plot-eficacia-fut-sociodemo, echo=FALSE, warning=FALSE, message=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, pp_futura_pol) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -1973,7 +2097,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_futura_p
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.23: Cuando sea adulto(a) podré participar en la política"
+    title = "Figura 2.35: Cuando sea adulto(a) podré participar en la política"
   ) +
   theme_blank() +
   theme(
@@ -1994,7 +2118,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_futura_p
 
 Participación **cívica** o **formal**:
 
-```{r, echo=FALSE}
+```{r, donas-pp-civica-fut, echo=FALSE}
 
 pp_futura_voto = round(prop.table(table(categorias=proc_datos$pp_futura_voto)),2)
 pp_futura_voto = as.data.frame(pp_futura_voto)
@@ -2049,7 +2173,7 @@ plot_p11_1_ES<-ggplot(p11_1,aes(x=2,y=-Freq, fill=categorias))+
 
 -   Votar en elecciones **presidenciales**
 
-```{r, echo=FALSE}
+```{r, dona-voto-pres-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_voto <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -2059,7 +2183,7 @@ basica_voto = round(prop.table(table(categorias=basica_voto$pp_futura_voto)),2) 
 
 basica_voto = as.data.frame(basica_voto) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_voto$categorias <- factor(basica_voto$categorias, levels = c(1, 2, 3, 4), labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")) 
 
 plot_basica_voto<-ggplot(basica_voto,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -2085,6 +2209,8 @@ media_voto = round(prop.table(table(categorias=media_voto$pp_futura_voto)),2)
 
 media_voto = as.data.frame(media_voto)
 
+media_voto$categorias <- factor(media_voto$categorias, levels = c(1, 2, 3, 4), labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")) 
+
 plot_media_voto<-ggplot(media_voto,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -2099,29 +2225,14 @@ plot_media_voto<-ggplot(media_voto,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos
-voto_curso <- ggarrange(
-   plot_basica_voto,
-plot_media_voto, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
+```{r, plot-voto-pres, echo=FALSE}
 
-
-plot_voto_final <- ggarrange(
-  plot_pp_futura_voto_ES,
-  voto_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_pp_futura_voto_ES, "bottom"))
 
 # Agregar una etiqueta global centrada
 plot_voto <- annotate_figure(
- plot_voto_final,
+ plot_pp_futura_voto_ES,
   top = text_grob(
-    "Figura 2.24: Cuando sea adulto(a) votaré en elecciones presidenciales",
+    "Figura 2.36: Cuando sea adulto(a) votaré en elecciones presidenciales",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -2132,9 +2243,34 @@ plot_voto <- annotate_figure(
 plot_voto
 ```
 
+```{r, plot-voto-pres-curso, echo=FALSE}
+
+# Combinar los gráficos
+voto_curso <- ggarrange(
+   plot_basica_voto,
+plot_media_voto, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_voto_curso <- annotate_figure(
+ voto_curso,
+  top = text_grob(
+    "Figura 2.37: Cuando sea adulto(a) votaré en elecciones presidenciales",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_voto_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-voto-pres-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, pp_futura_voto) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -2161,7 +2297,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_futura_v
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.25: Cuando sea adulto(a) votaré en elecciones presidenciales"
+    title = "Figura 2.38: Cuando sea adulto(a) votaré en elecciones presidenciales"
   ) +
   theme_blank() +
   theme(
@@ -2182,7 +2318,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_futura_v
 
 -   Votar en elecciones **municipales**
 
-```{r, echo=FALSE}
+```{r, dona-voto-mun-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_p11_1<- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -2192,7 +2328,7 @@ basica_p11_1 = round(prop.table(table(categorias=basica_p11_1$p11_1)),2) #se cre
 
 basica_p11_1 = as.data.frame(basica_p11_1) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_p11_1$categorias <- factor(basica_p11_1$categorias, levels = c(1, 2, 3, 4), labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")) 
 
 plot_basica_p11_1<-ggplot(basica_p11_1,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -2218,6 +2354,8 @@ media_p11_1 = round(prop.table(table(categorias=media_p11_1$p11_1)),2)
 
 media_p11_1 = as.data.frame(media_p11_1)
 
+media_p11_1$categorias <- factor(media_p11_1$categorias, levels = c(1, 2, 3, 4), labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")) 
+
 plot_media_p11_1<-ggplot(media_p11_1,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -2232,29 +2370,13 @@ plot_media_p11_1<-ggplot(media_p11_1,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-p11_1_curso <- ggarrange(
-   plot_basica_p11_1,
-plot_media_p11_1, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_p11_1_final <- ggarrange(
-  plot_p11_1_ES,
-  p11_1_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_p11_1_ES, "bottom"))
+```{r, plot-voto-mun, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_p11_1 <- annotate_figure(
- plot_p11_1_final,
+ plot_p11_1_ES,
   top = text_grob(
-    "Figura 2.26: Cuando sea adulto(a) votaré en elecciones municipales",
+    "Figura 2.39: Cuando sea adulto(a) votaré en elecciones municipales",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -2265,9 +2387,34 @@ plot_p11_1 <- annotate_figure(
 plot_p11_1
 ```
 
+```{r, plot-voto-mun-curso, echo=FALSE}
+
+# Combinar los gráficos 
+p11_1_curso <- ggarrange(
+   plot_basica_p11_1,
+plot_media_p11_1, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_p11_1_curso <- annotate_figure(
+ p11_1_curso,
+  top = text_grob(
+    "Figura 2.40: Cuando sea adulto(a) votaré en elecciones municipales",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_p11_1_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-voto-mun-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, p11_1) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -2294,7 +2441,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p11_1))) +
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.27: Cuando sea adulto(a) votaré en elecciones municipales"
+    title = "Figura 2.41: Cuando sea adulto(a) votaré en elecciones municipales"
   ) +
   theme_blank() +
   theme(
@@ -2315,7 +2462,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p11_1))) +
 
 -   Informarme de los **candidatos**
 
-```{r,echo=FALSE}
+```{r,dona-candidatos-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_candidatos <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -2325,7 +2472,7 @@ basica_candidatos = round(prop.table(table(categorias=basica_candidatos$pp_futur
 
 basica_candidatos = as.data.frame(basica_candidatos) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_candidatos$categorias <- factor(basica_candidatos$categorias, levels = c(1, 2, 3, 4), labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")) 
 
 plot_basica_candidatos<-ggplot(basica_candidatos,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -2351,6 +2498,8 @@ media_candidatos = round(prop.table(table(categorias=media_candidatos$pp_futura_
 
 media_candidatos = as.data.frame(media_candidatos)
 
+media_candidatos$categorias <- factor(media_candidatos$categorias, levels = c(1, 2, 3, 4), labels = c("Seguro no haré esto", "Tal vez haré esto", "Probablemente haré esto", "Seguro haré esto")) 
+
 plot_media_candidatos<-ggplot(media_candidatos,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -2365,29 +2514,13 @@ plot_media_candidatos<-ggplot(media_candidatos,aes(x=2,y=-Freq, fill=categorias)
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-candidatos_curso <- ggarrange(
-   plot_basica_candidatos,
-plot_media_candidatos, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_candidatos_final <- ggarrange(
-  plot_pp_futura_candidatos_ES,
-  candidatos_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_pp_futura_candidatos_ES, "bottom"))
+```{r, plot-candidatos, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_candidatos <- annotate_figure(
- plot_candidatos_final,
+ plot_pp_futura_candidatos_ES,
   top = text_grob(
-    "Figura 2.28:  Cuando sea adulto(a) me informaré de los candidatos",
+    "Figura 2.42:  Cuando sea adulto(a) me informaré de los candidatos",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -2398,9 +2531,34 @@ plot_candidatos <- annotate_figure(
 plot_candidatos
 ```
 
+```{r, plot-candidatos-curso, echo=FALSE}
+
+# Combinar los gráficos 
+candidatos_curso <- ggarrange(
+   plot_basica_candidatos,
+plot_media_candidatos, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_candidatos_curso <- annotate_figure(
+ candidatos_curso,
+  top = text_grob(
+    "Figura 2.43:  Cuando sea adulto(a) me informaré de los candidatos",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_candidatos_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-candidatos-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, pp_futura_candidatos) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -2427,7 +2585,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_futura_c
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.29: Cuando sea adulto(a) me informaré de los candidatos"
+    title = "Figura 2.44: Cuando sea adulto(a) me informaré de los candidatos"
   ) +
   theme_blank() +
   theme(
@@ -2452,7 +2610,7 @@ Esta sección se compone de una serie de afirmaciones que aluden al comportamien
 
 Asepctos de **participación civil**
 
-```{r, echo=FALSE}
+```{r, donas-buena-ciudadania-civil, echo=FALSE}
 ciudadania_op = round(prop.table(table(categorias=proc_datos$ciudadania_op)),2)
 ciudadania_op = as.data.frame(ciudadania_op)
 ciudadania_op$categorias <- factor(ciudadania_op$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
@@ -2541,7 +2699,7 @@ plot_p10_8_ES<-ggplot(p10_8,aes(x=2,y=-Freq, fill=categorias))+
 
 -   Respetar el derecho a **opinión**
 
-```{r, echo=FALSE}
+```{r, dona-opinion-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_op <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -2551,7 +2709,7 @@ basica_op = round(prop.table(table(categorias=basica_op$ciudadania_op)),2) #se c
 
 basica_op = as.data.frame(basica_op) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_op$categorias <- factor(basica_op$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
 
 plot_basica_op<-ggplot(basica_op,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -2577,6 +2735,8 @@ media_op = round(prop.table(table(categorias=media_op$ciudadania_op)),2)
 
 media_op = as.data.frame(media_op)
 
+media_op$categorias <- factor(media_op$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+
 plot_media_op<-ggplot(media_op,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -2591,29 +2751,13 @@ plot_media_op<-ggplot(media_op,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-op_curso <- ggarrange(
-   plot_basica_op,
-plot_media_op, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_op_final <- ggarrange(
-  plot_ciudadania_op_ES,
-  op_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_ciudadania_op_ES, "bottom"))
+```{r, plot-opinion, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_op <- annotate_figure(
- plot_op_final,
+ plot_ciudadania_op_ES,
   top = text_grob(
-    "Figura 2.30: Importancia de respetar el derecho de otros a tener su propia opinión",
+    "Figura 2.45: Importancia de respetar el derecho de otros a tener su propia opinión",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -2624,9 +2768,33 @@ plot_op <- annotate_figure(
 plot_op
 ```
 
+```{r, plot-opinion-curso, echo=FALSE}
+# Combinar los gráficos 
+op_curso <- ggarrange(
+   plot_basica_op,
+plot_media_op, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_op_curso <- annotate_figure(
+ op_curso,
+  top = text_grob(
+    "Figura 2.46: Importancia de respetar el derecho de otros a tener su propia opinión",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_op_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-opinion-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, ciudadania_op) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -2653,7 +2821,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.31: Importancia de respetar el derecho de otros a tener su propia opinión "
+    title = "Figura 2.47: Importancia de respetar el derecho de otros a tener su propia opinión "
   ) +
   theme_blank() +
   theme(
@@ -2674,7 +2842,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
 
 -   Apoyar personas en **peor situación** que uno
 
-```{r, echo=FALSE}
+```{r, dona-apoyo-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_p10_7<- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -2684,7 +2852,7 @@ basica_p10_7 = round(prop.table(table(categorias=basica_p10_7$p10_7)),2) #se cre
 
 basica_p10_7 = as.data.frame(basica_p10_7) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_p10_7$categorias <- factor(basica_p10_7$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
 
 plot_basica_p10_7<-ggplot(basica_p10_7,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -2710,6 +2878,8 @@ media_p10_7 = round(prop.table(table(categorias=media_p10_7$p10_7)),2)
 
 media_p10_7 = as.data.frame(media_p10_7)
 
+media_p10_7$categorias <- factor(media_p10_7$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+
 plot_media_p10_7<-ggplot(media_p10_7,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -2724,29 +2894,12 @@ plot_media_p10_7<-ggplot(media_p10_7,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-p10_7_curso <- ggarrange(
-   plot_basica_p10_7,
-plot_media_p10_7, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_p10_7_final <- ggarrange(
-  plot_p10_7_ES,
-  p10_7_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_p10_7_ES, "bottom"))
-
+```{r, plot-apoyo, echo=FALSE}
 # Agregar una etiqueta global centrada
 plot_p10_7 <- annotate_figure(
- plot_p10_7_final,
+ plot_p10_7_ES,
   top = text_grob(
-    "Figura 2.32: Importancia de apoyar a personas en peor situación que uno",
+    "Figura 2.48: Importancia de apoyar a personas en peor situación que uno",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -2757,9 +2910,33 @@ plot_p10_7 <- annotate_figure(
 plot_p10_7
 ```
 
+```{r, plot-apoyo-curso, echo=FALSE}
+# Combinar los gráficos 
+p10_7_curso <- ggarrange(
+   plot_basica_p10_7,
+plot_media_p10_7, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_p10_7_curso <- annotate_figure(
+ p10_7_curso,
+  top = text_grob(
+    "Figura 2.49: Importancia de apoyar a personas en peor situación que uno",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_p10_7_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-apoyo-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, p10_7) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -2786,7 +2963,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_7))) +
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.33: Importancia de apoyar a personas en peor situación que uno"
+    title = "Figura 2.50: Importancia de apoyar a personas en peor situación que uno"
   ) +
   theme_blank() +
   theme(
@@ -2807,7 +2984,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_7))) +
 
 -   Aprender **historia** del país
 
-```{r, echo=FALSE}
+```{r, dona-historia-curso, echo=FALSE}
 # dona curso: Básica
 
 basica_p10_3 <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -2817,7 +2994,7 @@ basica_p10_3 = round(prop.table(table(categorias=basica_p10_3$p10_3)),2) #se cre
 
 basica_p10_3 = as.data.frame(basica_p10_3) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_p10_3$categorias <- factor(basica_p10_3$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
 
 plot_basica_p10_3<-ggplot(basica_p10_3,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -2843,6 +3020,8 @@ media_p10_3 = round(prop.table(table(categorias=media_p10_3$p10_3)),2)
 
 media_p10_3 = as.data.frame(media_p10_3)
 
+media_p10_3$categorias <- factor(media_p10_3$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+
 plot_media_p10_3<-ggplot(media_p10_3,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -2857,29 +3036,13 @@ plot_media_p10_3<-ggplot(media_p10_3,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-p10_3_curso <- ggarrange(
-   plot_basica_p10_3,
-plot_media_p10_3, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_p10_3_final <- ggarrange(
-  plot_p10_3_ES,
-  p10_3_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_p10_3_ES, "bottom"))
+```{r, plot-historia, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_p10_3 <- annotate_figure(
- plot_p10_3_final,
+ plot_p10_3_ES,
   top = text_grob(
-    "Figura 2.34: Importancia de aprender de la historia del país",
+    "Figura 2.51: Importancia de aprender de la historia del país",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -2890,9 +3053,35 @@ plot_p10_3 <- annotate_figure(
 plot_p10_3
 ```
 
+```{r, plot-historia-curso, echo=FALSE}
+
+# Combinar los gráficos 
+p10_3_curso <- ggarrange(
+   plot_basica_p10_3,
+plot_media_p10_3, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+
+# Agregar una etiqueta global centrada
+plot_p10_3_curso <- annotate_figure(
+ p10_3_curso,
+  top = text_grob(
+    "Figura 2.52: Importancia de aprender de la historia del país",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_p10_3_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-historia-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, p10_3) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -2919,7 +3108,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_3))) +
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.35: Importancia de aprender de la historia del país"
+    title = "Figura 2.53: Importancia de aprender de la historia del país"
   ) +
   theme_blank() +
   theme(
@@ -2940,7 +3129,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_3))) +
 
 -   Participar en **protestas pacíficas**
 
-```{r, echo=FALSE}
+```{r, dona-protesta-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_p10_4 <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -2950,7 +3139,7 @@ basica_p10_4 = round(prop.table(table(categorias=basica_p10_4$p10_4)),2) #se cre
 
 basica_p10_4 = as.data.frame(basica_p10_4) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_p10_4$categorias <- factor(basica_p10_4$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
 
 plot_basica_p10_4<-ggplot(basica_p10_4,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -2976,6 +3165,8 @@ media_p10_4 = round(prop.table(table(categorias=media_p10_4$p10_4)),2)
 
 media_p10_4 = as.data.frame(media_p10_4)
 
+media_p10_4$categorias <- factor(media_p10_4$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+
 plot_media_p10_4<-ggplot(media_p10_4,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -2990,29 +3181,13 @@ plot_media_p10_4<-ggplot(media_p10_4,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-p10_4_curso <- ggarrange(
-   plot_basica_p10_4,
-plot_media_p10_4, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_p10_4_final <- ggarrange(
-  plot_p10_4_ES,
-  p10_4_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_p10_4_ES, "bottom"))
+```{r, plot-protesta, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_p10_4 <- annotate_figure(
- plot_p10_4_final,
+ plot_p10_4_ES,
   top = text_grob(
-    "Figura 2.36: Importancia de participar en protestas pacíficas en contra de\nlas leyes que considera injustas",
+    "Figura 2.54: Importancia de participar en protestas pacíficas en contra de\nlas leyes que considera injustas",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -3023,9 +3198,35 @@ plot_p10_4 <- annotate_figure(
 plot_p10_4
 ```
 
+```{r, plot-protesta-curso, echo=FALSE}
+
+# Combinar los gráficos 
+p10_4_curso <- ggarrange(
+   plot_basica_p10_4,
+plot_media_p10_4, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+
+# Agregar una etiqueta global centrada
+plot_p10_4_curso <- annotate_figure(
+ p10_4_curso,
+  top = text_grob(
+    "Figura 2.55: Importancia de participar en protestas pacíficas en contra de\nlas leyes que considera injustas",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_p10_4_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-protesta-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, p10_4) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -3052,7 +3253,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_4))) +
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.37: Importancia de participar en protestas pacíficas en contra de\nlas leyes que considera injustas"
+    title = "Figura 2.56: Importancia de participar en protestas pacíficas en contra de\nlas leyes que considera injustas"
   ) +
   theme_blank() +
   theme(
@@ -3073,7 +3274,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_4))) +
 
 -   Pagar **impuestos**
 
-```{r, echo=FALSE}
+```{r, dona-impuestos-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_p10_8 <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -3083,7 +3284,7 @@ basica_p10_8 = round(prop.table(table(categorias=basica_p10_8$p10_8)),2) #se cre
 
 basica_p10_8 = as.data.frame(basica_p10_8) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_p10_8$categorias <- factor(basica_p10_8$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
 
 plot_basica_p10_8<-ggplot(basica_p10_8,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -3109,6 +3310,8 @@ media_p10_8 = round(prop.table(table(categorias=media_p10_8$p10_8)),2)
 
 media_p10_8 = as.data.frame(media_p10_8)
 
+media_p10_8$categorias <- factor(media_p10_8$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+
 plot_media_p10_8<-ggplot(media_p10_8,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -3123,29 +3326,13 @@ plot_media_p10_8<-ggplot(media_p10_8,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-p10_8_curso <- ggarrange(
-   plot_basica_p10_8,
-plot_media_p10_8, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_p10_8_final <- ggarrange(
-  plot_p10_8_ES,
-  p10_8_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_p10_8_ES, "bottom"))
+```{r, plot-impuesto, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_p10_8 <- annotate_figure(
- plot_p10_8_final,
+ plot_p10_8_ES,
   top = text_grob(
-    "Figura 2.38: Importancia de siempre pagar los impuestos",
+    "Figura 2.57: Importancia de siempre pagar los impuestos",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -3156,9 +3343,33 @@ plot_p10_8 <- annotate_figure(
 plot_p10_8
 ```
 
+```{r, plot-impuesto-curso, echo=FALSE}
+# Combinar los gráficos 
+p10_8_curso <- ggarrange(
+   plot_basica_p10_8,
+plot_media_p10_8, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_p10_8_curso <- annotate_figure(
+ p10_8_curso,
+  top = text_grob(
+    "Figura 2.58: Importancia de siempre pagar los impuestos",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_p10_8_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-impuesto-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, p10_8) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -3185,7 +3396,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_8))) +
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.39: Importancia de siempre pagar los impuestos"
+    title = "Figura 2.59: Importancia de siempre pagar los impuestos"
   ) +
   theme_blank() +
   theme(
@@ -3206,7 +3417,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_8))) +
 
 Asepctos de **participación cívica**:
 
-```{r, echo=FALSE}
+```{r, donas-buena-ciudadania-civica, echo=FALSE}
 
 # graifco dona: voto
 
@@ -3265,7 +3476,7 @@ plot_ciudadania_ley_ES<-ggplot(ciudadania_ley,aes(x=2,y=-Freq, fill=categorias))
 
 -   Votar en elecciones **nacionales**
 
-```{r, echo=FALSE}
+```{r, dona-voto-nacional-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_ciudadania_voto <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -3275,7 +3486,7 @@ basica_ciudadania_voto = round(prop.table(table(categorias=basica_ciudadania_vot
 
 basica_ciudadania_voto = as.data.frame(basica_ciudadania_voto) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_ciudadania_voto$categorias <- factor(basica_ciudadania_voto$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
 
 plot_basica_ciudadania_voto<-ggplot(basica_ciudadania_voto,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -3301,6 +3512,8 @@ media_ciudadania_voto = round(prop.table(table(categorias=media_ciudadania_voto$
 
 media_ciudadania_voto = as.data.frame(media_ciudadania_voto)
 
+media_ciudadania_voto$categorias <- factor(media_ciudadania_voto$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+
 plot_media_ciudadania_voto<-ggplot(media_ciudadania_voto,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -3315,29 +3528,13 @@ plot_media_ciudadania_voto<-ggplot(media_ciudadania_voto,aes(x=2,y=-Freq, fill=c
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-ciudadania_voto_curso <- ggarrange(
-   plot_basica_ciudadania_voto,
-plot_media_ciudadania_voto, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_ciudadania_voto_final <- ggarrange(
-  plot_ciudadania_voto_ES,
-  ciudadania_voto_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_ciudadania_voto_ES, "bottom"))
+```{r, plot-voto-nacional, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_ciudadania_voto <- annotate_figure(
- plot_ciudadania_voto_final,
+ plot_ciudadania_voto_ES,
   top = text_grob(
-    "Figura 2.40: Importancia de votar en todas las elecciones nacionales",
+    "Figura 2.60: Importancia de votar en todas las elecciones nacionales",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -3348,9 +3545,34 @@ plot_ciudadania_voto <- annotate_figure(
 plot_ciudadania_voto
 ```
 
+```{r, plot-voto-nacional-curso, echo=FALSE}
+
+# Combinar los gráficos 
+ciudadania_voto_curso <- ggarrange(
+   plot_basica_ciudadania_voto,
+plot_media_ciudadania_voto, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_ciudadania_voto_curso <- annotate_figure(
+ ciudadania_voto_curso,
+  top = text_grob(
+    "Figura 2.61: Importancia de votar en todas las elecciones nacionales",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_ciudadania_voto_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-voto-nacional-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, ciudadania_voto_es) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -3377,7 +3599,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.41: Importancia de votar en todas las elecciones nacionales"
+    title = "Figura 2.62: Importancia de votar en todas las elecciones nacionales"
   ) +
   theme_blank() +
   theme(
@@ -3398,8 +3620,8 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
 
 -   Unirse a un **partido político**
 
-```{r, echo=FALSE}
-# dona curso: Básica editarrrrr
+```{r, dona-partido-curso, echo=FALSE}
+# dona curso: Básica 
 
 basica_ciudadania_pp<- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
   dplyr::select(ciudadania_pp) #se filtran valores para esa categoría del curso
@@ -3408,7 +3630,7 @@ basica_ciudadania_pp = round(prop.table(table(categorias=basica_ciudadania_pp$ci
 
 basica_ciudadania_pp = as.data.frame(basica_ciudadania_pp) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_ciudadania_pp$categorias <- factor(basica_ciudadania_pp$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
 
 plot_basica_ciudadania_pp<-ggplot(basica_ciudadania_pp,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -3434,6 +3656,8 @@ media_ciudadania_pp = round(prop.table(table(categorias=media_ciudadania_pp$ciud
 
 media_ciudadania_pp = as.data.frame(media_ciudadania_pp)
 
+media_ciudadania_pp$categorias <- factor(media_ciudadania_pp$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+
 plot_media_ciudadania_pp<-ggplot(media_ciudadania_pp,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -3448,29 +3672,13 @@ plot_media_ciudadania_pp<-ggplot(media_ciudadania_pp,aes(x=2,y=-Freq, fill=categ
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-ciudadania_pp_curso <- ggarrange(
-   plot_basica_ciudadania_pp,
-plot_media_ciudadania_pp, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_ciudadania_pp_final <- ggarrange(
-  plot_ciudadania_pp_ES,
-  ciudadania_pp_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_ciudadania_pp_ES, "bottom"))
+```{r, plot-partido, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_ciudadania_pp <- annotate_figure(
- plot_ciudadania_pp_final,
+ plot_ciudadania_pp_ES,
   top = text_grob(
-    "Figura 2.42: Importancia de unirse a un partido político",
+    "Figura 2.63: Importancia de unirse a un partido político",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -3481,9 +3689,33 @@ plot_ciudadania_pp <- annotate_figure(
 plot_ciudadania_pp
 ```
 
+```{r, plot-partido-curso, echo=FALSE}
+# Combinar los gráficos 
+ciudadania_pp_curso <- ggarrange(
+   plot_basica_ciudadania_pp,
+plot_media_ciudadania_pp, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_ciudadania_pp_curso <- annotate_figure(
+ ciudadania_pp_curso,
+  top = text_grob(
+    "Figura 2.64: Importancia de unirse a un partido político",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_ciudadania_pp_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-partido-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, ciudadania_pp) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -3510,7 +3742,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.43: Importancia de unirse a un partido político"
+    title = "Figura 2.65: Importancia de unirse a un partido político"
   ) +
   theme_blank() +
   theme(
@@ -3531,7 +3763,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
 
 -   Obdecer la **ley**
 
-```{r, echo=FALSE}
+```{r, dona-ley-curso, echo=FALSE}
 # dona curso: Básica 
 
 basica_ley <- proc_datos %>% dplyr::filter(curso_estudiante=="Básica") %>% 
@@ -3541,7 +3773,7 @@ basica_ley = round(prop.table(table(categorias=basica_ley$ciudadania_ley)),2) #s
 
 basica_ley = as.data.frame(basica_ley) #convertimos el objeto en data.frame
 
-#basica_esfuerzo <- factor(basica_esfuerzo$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) #por ahora lo saltaré
+basica_ley$categorias <- factor(basica_ley$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
 
 plot_basica_ley<-ggplot(basica_ley,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -3567,6 +3799,8 @@ media_ley = round(prop.table(table(categorias=media_ley$ciudadania_ley)),2)
 
 media_ley = as.data.frame(media_ley)
 
+media_ley$categorias <- factor(media_ley$categorias, levels = c(1, 2, 3, 4), labels = c("Nada importante", "Algo importante", "Importante", "Muy importante"))
+
 plot_media_ley<-ggplot(media_ley,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
            color="white")+
@@ -3581,29 +3815,13 @@ plot_media_ley<-ggplot(media_ley,aes(x=2,y=-Freq, fill=categorias))+
   labs(title="Estudiante de media") 
 ```
 
-```{r, echo=FALSE}
-# Combinar los gráficos 
-ley_curso <- ggarrange(
-   plot_basica_ley,
-plot_media_ley, 
-common.legend = TRUE,
-  ncol = 2, 
-legend = "none")
-
-
-plot_ley_final <- ggarrange(
-  plot_ciudadania_ley_ES,
-  ley_curso,                                 
-  common.legend = TRUE, 
-  nrow = 2, 
-  legend = "bottom",
-  legend.grob = get_legend(plot_ciudadania_ley_ES, "bottom"))
+```{r, plot-ley, echo=FALSE}
 
 # Agregar una etiqueta global centrada
 plot_ley <- annotate_figure(
- plot_ley_final,
+ plot_ciudadania_ley_ES,
   top = text_grob(
-    "Figura 2.44: Importancia de obdecer siempre la ley",
+    "Figura 2.66: Importancia de obdecer siempre la ley",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
@@ -3614,9 +3832,33 @@ plot_ley <- annotate_figure(
 plot_ley
 ```
 
+```{r, plot-ley-curso, echo=FALSE}
+# Combinar los gráficos 
+ley_curso <- ggarrange(
+   plot_basica_ley,
+plot_media_ley, 
+common.legend = TRUE,
+  ncol = 2, 
+legend = "bottom")
+
+# Agregar una etiqueta global centrada
+plot_ley_curso <- annotate_figure(
+ ley_curso,
+  top = text_grob(
+    "Figura 2.67: Importancia de obdecer siempre la ley",
+    size = 12, 
+    face = "italic", 
+    color = "#8B7D7B",
+    hjust = 0.5
+  )
+)
+
+plot_ley_curso
+```
+
 *Cruce con otras características sociodemográficas del estudiante*
 
-```{r, echo=FALSE}
+```{r, plot-ley-sociodemo, echo=FALSE}
 frecuencias <- proc_datos_largo %>%
   group_by(variable, categoria, ciudadania_ley) %>%
   summarise(Freq = n(), .groups = 'drop') %>%
@@ -3643,7 +3885,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
     x = NULL, # Elimina el título del eje x
     y = NULL, # Elimina el título del eje y
     fill = "Grado de acuerdo",
-    title = "Figura 2.45: Importancia de obdecer siempre la ley"
+    title = "Figura 2.68: Importancia de obdecer siempre la ley"
   ) +
   theme_blank() +
   theme(
@@ -3670,7 +3912,7 @@ Dentro de la pregunta "*¿De qué temas conversan generalmente con este adulto?*
 
 -   Tema: *Categoría **"Política"***
 
-```{r, echo=FALSE}
+```{r, plot-hogar-politica, echo=FALSE}
 
 # grafico dona: conversación sobre política 
 
@@ -3689,7 +3931,7 @@ plot_P16_o3_ES<-ggplot(P16_o3,aes(x=2,y=-Freq, fill=categorias))+
   xlim(0.5,2.5) 
   
 final_plot_P16_o3_ES <- annotate_figure(plot_P16_o3_ES,
-  top = text_grob( "Figura 2.46: Conversar sobre política con el adulto en el hogar",
+  top = text_grob( "Figura 2.69: Conversar sobre política con el adulto en el hogar",
     size = 12, 
     face = "italic", 
     color = "#8B7D7B",
