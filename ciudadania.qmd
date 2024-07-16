@@ -159,7 +159,7 @@ plot_school_ciudadania_percep <- annotate_figure(
     "Figura 2.1: ¿Cuánta importancia dirías tú que se le da a la Formación Ciudadana?",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -185,7 +185,7 @@ plot_school_ciudadania_curso <- annotate_figure(
     "Figura 2.2: ¿Cuánta importancia dirías tú que se le da a la Formación Ciudadana?",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -296,7 +296,7 @@ plot_class_es <- annotate_figure(
     "Figura 2.3: Durante una discusión de temas políticos y sociales\ndurante clases",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -324,7 +324,7 @@ plot_clases2 <- annotate_figure(
     "Figura 2.4: Durante una discusión de temas políticos y sociales\ndurante clases",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -343,7 +343,7 @@ plot_school_ciudadania_class <- annotate_figure(
     "Figura 2.5: Durante una discusión de temas políticos y sociales\ndurante clases",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -444,7 +444,7 @@ plot_pp_presente_pol_ES <- annotate_figure(
     "Figura 2.6: Comprendo bien las problemáticas políticas de nuestro país",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -472,7 +472,7 @@ plot_pp_presente_pol_curso <- annotate_figure(
     "Figura 2.7: Comprendo bien las problemáticas políticas de nuestro país",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -535,7 +535,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -748,7 +748,7 @@ plot_p12_2_ES <- annotate_figure(
     "Figura 2.9: Participación en una marcha violenta en los últimos 12 meses",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -771,7 +771,7 @@ plot_p12_2_curso <- annotate_figure(
     "Figura 2.10: Participación en una marcha violenta en los últimos 12 meses",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -834,7 +834,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p12_2))) +
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Sí", "2" = "No"),
@@ -904,7 +904,7 @@ plot_presente_toma_ES <- annotate_figure(
     "Figura 2.12: Participación en una toma en los últimos 12 meses",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -927,7 +927,7 @@ plot_toma_curso <- annotate_figure(
     "Figura 2.13: Participación en una toma en los últimos 12 meses",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -991,7 +991,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Sí", "2" = "No"),
@@ -1062,7 +1062,7 @@ plot_presente_marcha_ES <- annotate_figure(
     "Figura 2.15:  Participación en una marcha pacífica en los últimos 12 meses",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1087,7 +1087,7 @@ plot_marcha_curso <- annotate_figure(
     "Figura 2.16:  Participación en una marcha pacífica en los últimos 12 meses",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1149,7 +1149,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Sí", "2" = "No"),
@@ -1223,7 +1223,7 @@ plot_like <- annotate_figure(
     "Figura 2.18: Uso de internet para dar me gusta a contenido sobre política",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1247,7 +1247,7 @@ plot_like_curso <- annotate_figure(
     "Figura 2.19: Uso de internet para dar me gusta a contenido sobre política",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1309,7 +1309,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nunca", "2" = "Una vez al año", "3" = "Una vez al mes", "4" = "Semanalmente", "5" = "Todos los días"),
@@ -1379,7 +1379,7 @@ plot_comentar <- annotate_figure(
     "Figura 2.21: Uso de internet para comentar una publicación en línea\nsobre un tema político o social",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1405,7 +1405,7 @@ plot_comentar_curso <- annotate_figure(
     "Figura 2.22: Uso de internet para comentar una publicación en línea\nsobre un tema político o social",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1467,7 +1467,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p13_5))) +
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nunca", "2" = "Una vez al año", "3" = "Una vez al mes", "4" = "Semanalmente", "5" = "Todos los días"),
@@ -1538,7 +1538,7 @@ plot_compartir <- annotate_figure(
     "Figura 2.24:  Uso de internet para compartir contenido sobre un tema político o social \npublicado por otra persona",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1563,7 +1563,7 @@ plot_compartir_curso <- annotate_figure(
     "Figura 2.25:  Uso de internet para compartir contenido sobre un tema político o social \npublicado por otra persona",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1625,7 +1625,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nunca", "2" = "Una vez al año", "3" = "Una vez al mes", "4" = "Semanalmente", "5" = "Todos los días"),
@@ -1695,7 +1695,7 @@ plot_p13_1 <- annotate_figure(
     "Figura 2.27: Uso de internet para ver un sitio Web sobre política",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1720,7 +1720,7 @@ plot_p13_1_curso <- annotate_figure(
     "Figura 2.28: Uso de internet para ver un sitio Web sobre política",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1782,7 +1782,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p13_1))) +
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nunca", "2" = "Una vez al año", "3" = "Una vez al mes", "4" = "Semanalmente", "5" = "Todos los días"),
@@ -1852,7 +1852,7 @@ plot_rrss <- annotate_figure(
     "Figura 2.30: Uso de internet para informarse en RR.SS sobre política",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1877,7 +1877,7 @@ plot_rrss_curso <- annotate_figure(
     "Figura 2.31: Uso de internet para informarse en RR.SS sobre política",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -1939,7 +1939,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nunca", "2" = "Una vez al año", "3" = "Una vez al mes", "4" = "Semanalmente", "5" = "Todos los días"),
@@ -2034,7 +2034,7 @@ pp_futura <- annotate_figure(
     "Figura 2.33: Cuando sea adulto(a) podré participar en la política",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2060,7 +2060,7 @@ pp_futura_curso <- annotate_figure(
     "Figura 2.34: Cuando sea adulto(a) podré participar en la política",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2108,7 +2108,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_futura_p
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -2235,7 +2235,7 @@ plot_voto <- annotate_figure(
     "Figura 2.36: Cuando sea adulto(a) votaré en elecciones presidenciales",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2260,7 +2260,7 @@ plot_voto_curso <- annotate_figure(
     "Figura 2.37: Cuando sea adulto(a) votaré en elecciones presidenciales",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2308,7 +2308,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_futura_v
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Seguro no haré esto", "2" = "Tal vez haré esto", 
@@ -2379,7 +2379,7 @@ plot_p11_1 <- annotate_figure(
     "Figura 2.39: Cuando sea adulto(a) votaré en elecciones municipales",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2404,7 +2404,7 @@ plot_p11_1_curso <- annotate_figure(
     "Figura 2.40: Cuando sea adulto(a) votaré en elecciones municipales",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2452,7 +2452,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p11_1))) +
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Seguro no haré esto", "2" = "Tal vez haré esto", 
@@ -2523,7 +2523,7 @@ plot_candidatos <- annotate_figure(
     "Figura 2.42:  Cuando sea adulto(a) me informaré de los candidatos",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2548,7 +2548,7 @@ plot_candidatos_curso <- annotate_figure(
     "Figura 2.43:  Cuando sea adulto(a) me informaré de los candidatos",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2596,7 +2596,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_futura_c
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Seguro no haré esto", "2" = "Tal vez haré esto", 
@@ -2760,7 +2760,7 @@ plot_op <- annotate_figure(
     "Figura 2.45: Importancia de respetar el derecho de otros a tener su propia opinión",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2784,7 +2784,7 @@ plot_op_curso <- annotate_figure(
     "Figura 2.46: Importancia de respetar el derecho de otros a tener su propia opinión",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2832,7 +2832,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nada importante", "2" = "Algo importante", 
@@ -2902,7 +2902,7 @@ plot_p10_7 <- annotate_figure(
     "Figura 2.48: Importancia de apoyar a personas en peor situación que uno",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2926,7 +2926,7 @@ plot_p10_7_curso <- annotate_figure(
     "Figura 2.49: Importancia de apoyar a personas en peor situación que uno",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -2974,7 +2974,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_7))) +
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nada importante", "2" = "Algo importante", 
@@ -3045,7 +3045,7 @@ plot_p10_3 <- annotate_figure(
     "Figura 2.51: Importancia de aprender de la historia del país",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3071,7 +3071,7 @@ plot_p10_3_curso <- annotate_figure(
     "Figura 2.52: Importancia de aprender de la historia del país",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3119,7 +3119,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_3))) +
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nada importante", "2" = "Algo importante", 
@@ -3190,7 +3190,7 @@ plot_p10_4 <- annotate_figure(
     "Figura 2.54: Importancia de participar en protestas pacíficas en contra de\nlas leyes que considera injustas",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3216,7 +3216,7 @@ plot_p10_4_curso <- annotate_figure(
     "Figura 2.55: Importancia de participar en protestas pacíficas en contra de\nlas leyes que considera injustas",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3264,7 +3264,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_4))) +
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nada importante", "2" = "Algo importante", 
@@ -3335,7 +3335,7 @@ plot_p10_8 <- annotate_figure(
     "Figura 2.57: Importancia de siempre pagar los impuestos",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3359,7 +3359,7 @@ plot_p10_8_curso <- annotate_figure(
     "Figura 2.58: Importancia de siempre pagar los impuestos",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3407,7 +3407,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p10_8))) +
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nada importante", "2" = "Algo importante", 
@@ -3537,7 +3537,7 @@ plot_ciudadania_voto <- annotate_figure(
     "Figura 2.60: Importancia de votar en todas las elecciones nacionales",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3562,7 +3562,7 @@ plot_ciudadania_voto_curso <- annotate_figure(
     "Figura 2.61: Importancia de votar en todas las elecciones nacionales",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3610,7 +3610,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nada importante", "2" = "Algo importante", 
@@ -3681,7 +3681,7 @@ plot_ciudadania_pp <- annotate_figure(
     "Figura 2.63: Importancia de unirse a un partido político",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3705,7 +3705,7 @@ plot_ciudadania_pp_curso <- annotate_figure(
     "Figura 2.64: Importancia de unirse a un partido político",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3753,7 +3753,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nada importante", "2" = "Algo importante", 
@@ -3824,7 +3824,7 @@ plot_ley <- annotate_figure(
     "Figura 2.66: Importancia de obdecer siempre la ley",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3848,7 +3848,7 @@ plot_ley_curso <- annotate_figure(
     "Figura 2.67: Importancia de obdecer siempre la ley",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3896,7 +3896,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(ciudadania_
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Nada importante", "2" = "Algo importante", 
@@ -3934,7 +3934,7 @@ final_plot_P16_o3_ES <- annotate_figure(plot_P16_o3_ES,
   top = text_grob( "Figura 2.69: Conversar sobre política con el adulto en el hogar",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 final_plot_P16_o3_ES

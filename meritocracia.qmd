@@ -216,7 +216,7 @@ plot_merit_es_percep <- annotate_figure(
     "Figura 1.1: En Chile, las personas son recompensadas\npor sus esfuerzos",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -241,7 +241,7 @@ plot_es_percep_curso <- annotate_figure(
     "Figura 1.2: En Chile, las personas son recompensadas\npor sus esfuerzos",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 plot_es_percep_curso
@@ -302,7 +302,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(merit_esfue
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -410,7 +410,7 @@ plot_ta_percep <- annotate_figure(
     "Figura 1.4: En Chile, las personas son recompensadas\npor su inteligencia y habilidad",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -435,7 +435,7 @@ plot_ta_percep_curso <- annotate_figure(
     "Figura 1.5: En Chile, las personas son recompensadas\npor su inteligencia y habilidad",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -482,7 +482,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(merit_talen
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -612,7 +612,7 @@ plot_socialmerit_percep <- annotate_figure(
     "Figura 1.7: En Chile, todas las personas obtienen\nlo que merecen",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -637,7 +637,7 @@ plot_merito_curso <- annotate_figure(
     "Figura 1.8: En Chile, todas las personas obtienen\nlo que merecen",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -684,7 +684,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(social_meri
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -816,7 +816,7 @@ plot_padres_ricos_percep <- annotate_figure(
     "Figura 1.10: En Chile, quienes tienen padres ricos\nles va mejor en la vida",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -840,7 +840,7 @@ plot_padres_ricos_curso <- annotate_figure(
     "Figura 1.11: En Chile, quienes tienen padres ricos\nles va mejor en la vida",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -887,7 +887,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(padres_rico
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -1012,7 +1012,7 @@ plot_contactos_percep <- annotate_figure(
     "Figura 1.13: En Chile, quienes tienen buenos contactos\nles va mejor en la vida",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -1034,7 +1034,7 @@ plot_contactos_curso <- annotate_figure(
     "Figura 1.14: En Chile, quienes tienen buenos contactos\nles va mejor en la vida",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -1082,7 +1082,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(buenos_cont
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -1208,7 +1208,7 @@ plot_oportunidades_percep <- annotate_figure(
     "Figura 1.16: En Chile, todas las personas tienen las mismas oportunidades\npara salir adelante",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -1232,7 +1232,7 @@ plot_oportunidades_curso <- annotate_figure(
     "Figura 1.17: En Chile, todas las personas tienen las mismas oportunidades\npara salir adelante",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -1280,7 +1280,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(oportunidad
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -1448,7 +1448,7 @@ plot_esfuerzo_pref <- annotate_figure(
     "Figura 1.19: En Chile, Quienes más se esfuerzan\ndeberían obtener mayores recompensas \nque quienes se esfuerzan menos",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 plot_esfuerzo_pref
@@ -1469,7 +1469,7 @@ plot_esfuerzo_pref_curso <- annotate_figure(
     "Figura 1.20: En Chile, Quienes más se esfuerzan\ndeberían obtener mayores recompensas \nque quienes se esfuerzan menos",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 plot_esfuerzo_pref_curso
@@ -1516,7 +1516,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(merit_esfue
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -1601,7 +1601,7 @@ plot_talento_pref <- annotate_figure(
     "Figura 1.22: En Chile, Quienes poseen más talento\ndeberían obtener mayores recompensas\nque quienes poseen menos talento",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -1625,7 +1625,7 @@ plot_talento_pref_curso <- annotate_figure(
     "Figura 1.23: En Chile, Quienes poseen más talento\ndeberían obtener mayores recompensas\nque quienes poseen menos talento",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -1673,7 +1673,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(merit_talen
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -1798,7 +1798,7 @@ plot_social_merit_pref <- annotate_figure(
     "Figura 1.25:  Está bien que las personas más inteligentes y/o talentosas\nganen más dinero, aun cuando requieran\nesforzarse menos para ello",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -1821,7 +1821,7 @@ plot_social_merit_pref_curso <- annotate_figure(
     "Figura 1.26:  Está bien que las personas más inteligentes y/o talentosas\nganen más dinero, aun cuando requieran\nesforzarse menos para ello",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -1869,7 +1869,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(social_meri
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -1999,7 +1999,7 @@ plot_padres_ricos_pref <- annotate_figure(
     "Figura 1.28:  Está bien que quienes tienen padres ricos\nles vaya bien en la vida",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2023,7 +2023,7 @@ plot_padres_ricos_pref_curso <- annotate_figure(
     "Figura 1.29:  Está bien que quienes tienen padres ricos\nles vaya bien en la vida",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2070,7 +2070,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(padres_rico
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -2198,7 +2198,7 @@ plot_buenos_contactos_pref <- annotate_figure(
     "Figura 1.31: Está bien que quienes tienen buenos contactos\nles vaya bien en la vida",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2221,7 +2221,7 @@ plot_buenos_contactos_pref_curso <- annotate_figure(
     "Figura 1.32: Está bien que quienes tienen buenos contactos\nles vaya bien en la vida",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2269,7 +2269,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(buenos_cont
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -2490,7 +2490,7 @@ plot_school_esfuerzo <- annotate_figure(
     "Figura 1.34: En esta escuela, quienes se esfuerzan\nobtienen buenas notas",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2513,7 +2513,7 @@ plot_school_esfuerzo_curso <- annotate_figure(
     "Figura 1.35: En esta escuela, quienes se esfuerzan\nobtienen buenas notas",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2561,7 +2561,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(school_esfu
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -2645,7 +2645,7 @@ plot_school_talento <- annotate_figure(
     "Figura 1.37: En esta escuela, quienes son inteligentes\nobtienen buenas notas",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2668,7 +2668,7 @@ plot_school_talento_curso <- annotate_figure(
     "Figura 1.38: En esta escuela, quienes son inteligentes\nobtienen buenas notas",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2717,7 +2717,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(school_tale
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -2801,7 +2801,7 @@ plot_school_merito <- annotate_figure(
     "Figura 1.40: En esta escuela, los/as estudiantes obtienen\nlas notas que merecen",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2823,7 +2823,7 @@ plot_school_merito_curso <- annotate_figure(
     "Figura 1.41: En esta escuela, los/as estudiantes obtienen\nlas notas que merecen",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -2871,7 +2871,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(school_meri
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
@@ -2904,7 +2904,7 @@ ggplot(school_merit_pref, aes(x=school_merit_pref, y= pct)) +
   ggtitle("Figura 1.43: Preferencia respecto al criterio individual de mérito más importante\npara obtener buenas notas") +
   theme(plot.title = element_text(size = 12,
     face = "italic", 
-    color = "#8B7D7B", hjust = 0.5),
+    color = "black", hjust = 0.5),
         plot.margin = margin(t = 20, r = 20, b = 20, l = 20)) +
 geom_text(aes(label = paste0(round(pct, 1), "%")), 
             stat = "identity", 
@@ -2932,7 +2932,7 @@ curso <- proc_datos %>% filter(!is.na(curso_estudiante)) %>% ggplot(aes(x=school
   scale_fill_brewer(palette = "Blues") +
   theme(plot.title = element_text(size = 12,
     face = "italic", 
-    color = "#8B7D7B", hjust = 0.5),
+    color = "black", hjust = 0.5),
         plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
 curso
 
@@ -2955,7 +2955,7 @@ gen <- proc_datos %>% filter(!is.na(genero_ES))%>% ggplot(aes(x=school_merit_pre
   scale_fill_brewer(palette = "Blues") +
   theme(plot.title = element_text(size = 12,
     face = "italic", 
-    color = "#8B7D7B", hjust = 0.5),
+    color = "black", hjust = 0.5),
         plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
 
 gen
@@ -2978,7 +2978,7 @@ nepa <- proc_datos %>% filter(!is.na(educ_max)) %>%
   scale_fill_brewer(palette = "Blues") +
   theme(plot.title = element_text(size = 12,
     face = "italic", 
-    color = "#8B7D7B", hjust = 0.5),
+    color = "black", hjust = 0.5),
         plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
 
 nepa
@@ -2998,7 +2998,7 @@ libros <- proc_datos %>% filter(!is.na(libros_hogar))%>% ggplot(aes(x=school_mer
   scale_fill_brewer(palette = "Blues") +
   theme(plot.title = element_text(size = 12,
     face = "italic", 
-    color = "#8B7D7B", hjust = 0.5),
+    color = "black", hjust = 0.5),
         plot.margin = margin(t = 20, r = 20, b = 20, l = 20))
 
 libros
@@ -3103,7 +3103,7 @@ plot_notas_merit <- annotate_figure(
     "Figura 1.48: ¿Te parece que este promedio fue más o menos de lo que merecías?",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -3132,7 +3132,7 @@ plot_curso_notas_merit <- annotate_figure(
     "Figura 1.49: ¿Te parece que este promedio fue más o menos de lo que merecías?",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5))
 
 
@@ -3178,7 +3178,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(notas_merit
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Menos de lo que merzco", "2" = "Lo que merzco", 
@@ -3262,7 +3262,7 @@ plot_notas_esfuerzo <- annotate_figure(
     "Figura 1.51: Tomando en cuenta el tiempo que le dedicas a tus estudios,\nlas notas que me saco son…",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3292,7 +3292,7 @@ plot_curso_notas_esfuerzo <- annotate_figure(
     "Figura 1.52: Tomando en cuenta el tiempo que le dedicas a tus estudios,\nlas notas que me saco son…",
     size = 12, 
     face = "italic", 
-    color = "#8B7D7B",
+    color = "black",
     hjust = 0.5
   )
 )
@@ -3339,7 +3339,7 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(notas_esfue
     strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
     axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
     legend.position = "bottom",# Colocar la leyenda en la parte inferior
-     plot.title = element_text(size = 12, face = "italic", color = "#8B7D7B")
+     plot.title = element_text(size = 12, face = "italic", color = "black")
   ) +
   scale_fill_brewer(palette = "Blues", 
                     labels = c("1" = "Menos de lo que merzco", "2" = "Lo que merzco", 
@@ -3422,7 +3422,7 @@ final_plot <- cowplot::plot_grid(
       "Figura 1.54: Contraste entre la nota obtenida y la nota preferida\npor el estudiante",
       size = 12, 
       face = "italic", 
-      color = "#8B7D7B",
+      color = "black",
       hjust = 0.5
     ),
     bottom = NULL
