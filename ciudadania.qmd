@@ -209,7 +209,7 @@ plot_school_ciudadania_es<-ggplot(school_ciudadania_es,aes(x=2,y=-Freq, fill=cat
   scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank(),
-    plot.title = element_text(size=9, face="bold", hjust=0.5))+
+    plot.title = element_text(size=11, face="bold", hjust=0.5))+
   xlim(0.5,2.5) +
   labs(title= "Los estudiantes pueden\nmanifestar abiertamente su desacuerdo\ncon sus profesores(as)")
 
@@ -275,7 +275,7 @@ plot_p18_3<-ggplot(p18_3,aes(x=2,y=-Freq, fill=categorias))+
   scale_fill_brewer(palette = "Blues")+
     theme_void()+
   theme(legend.title = element_blank(),
-    plot.title = element_text(size=9, face="bold", hjust=0.5))+
+    plot.title = element_text(size=11, face="bold", hjust=0.5))+
   xlim(0.5,2.5) +
   labs(title= "Los estudiantes plantean\nhechos políticos de actualidad para\nser discutidos en clases")
 ```
@@ -294,7 +294,7 @@ plot_class_es <- annotate_figure(
  plot_clases1 ,
   top = text_grob(
     "Figura 2.3: Durante una discusión de temas políticos y sociales\ndurante clases",
-    size = 12, 
+    size = 14, 
     face = "italic", 
     color = "black",
     hjust = 0.5
