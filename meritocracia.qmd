@@ -3348,8 +3348,25 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(notas_esfue
 
 ```
 
-```{r, echo=FALSE}
+```{r, plot-notas-merit-colegio, echo=FALSE}
 #cruce con colegios 
+
+#proc_datos$school_dependencia <- factor(proc_datos$school_dependencia, levels = c(1,2,3,4,5,6,7,8,9,10,11,12), labels = c("Colegio A", "Colegio B", "Colegio C", "Colegio D", "Colegio E","Colegio F","Colegio G","Colegio H","Colegio I","Colegio J","Colegio K","Colegio L"))
+
+#proc_datos$notas_merit <- factor(proc_datos$notas_merit, levels = c(1, 2, 3), labels = c("Menos de lo que merezco", "Lo que merezco", "Más de lo que merezco"))
+
+#ggplot(proc_datos, aes(x = school_dependencia, fill = notas_merit)) +
+#  geom_bar(position = "stack") +
+ # scale_fill_manual(values = c("#c6dbef", "#6baed6", "#2171b5")) + # Escala de azules
+  #labs(x = "Colegio", y = "Frecuencia", fill = "Notas Merit") +
+  #theme_classic() +
+  #ggtitle("Figura 1.: Sensación de recompensa por la nota \nde acuerdo al colegio que pertenece") +
+#  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+ #   plot.title = element_text(size = 12,
+  #  face = "italic", 
+   # color = "black", hjust = 0.5),
+    #    plot.margin = margin(t = 20, r = 20, b = 20, l = 20)) 
+
 ```
 
 #### Notas del estudiante
@@ -3435,40 +3452,21 @@ final_plot
 
 En primera instancia, se puede observar que los estudiantes que se sienten subrecompensados con su nota tienden a preferir en mayor medida notas superiores a 5,0. Además, se observa un contraste entre una gran cantidad de estudiantes que preferían una nota 7,0 o cercana a la nota máxima, y quienes obtuvieron efectivamente esa nota. Para los estudiantes que se sintieron sobrerecompensados, se observa un contraste entre la nota obtenida y la nota que creen merecer en torno a las notas cercanas al 4,0 y 5,0. Así, estos estudiantes obtuvieron en mayor medida notas entre 6,0 y menor a 7,0, creyendo merecer notas entre el 4.0 y el 6,0.
 
-```{r, echo=FALSE}
-#estudiante recompensado segun nota obtenida 
+```{r, plot-notas-colegios, echo=FALSE}
 
+#promedios <- proc_datos %>%
+  #group_by(school_dependencia) %>%
+  #summarise(promedio_nota = mean(nota_obtenida, na.rm = TRUE))
 
-
-```
-
-```{r, echo=FALSE}
-#recompensa 
-
-#nota:
-#5.00 -> 52
-#5.90 -> 62
-#6.00 -> 129
-#6.10 -> 52
-#6.30 -> 54
-#6.40 -> 60 
-#6.50 -> 78 
-
-```
-
-```{r, echo=FALSE}
-#tabla_cruzada <- sjt.xtab(datos$nota_obtenida, 
- #                         datos$school_dependecia, 
-  #                        show.col.prc = TRUE,
-   #                       show.summary = FALSE)
-#tabla_cruzada
-
-#tabla_cruzada1 <- sjt.xtab(datos$nota_merit, 
- #                         datos$school_dependencia, 
-  #                        show.col.prc = TRUE,
-   #                       show.summary = FALSE)
-#tabla_cruzada1
-
-
-
+#ggplot(promedios, aes(x = school_dependencia, y = promedio_nota)) +
+ # geom_point(aes(size = promedio_nota), color = "#BA55D3") +
+  #labs(x = "Colegio",
+   #    y = "Nota promedio") +
+  #theme_classic()  +
+#  ggtitle("Figura 1.: Promedio de notas por colegio") +
+ # theme(axis.text.x = element_text(angle = 45, hjust = 1), 
+  #      plot.title = element_text(size = 12,
+   # face = "italic", 
+  #  color = "#8B7D7B", hjust = 0.5),
+   #     plot.margin = margin(t = 20, r = 20, b = 20, l = 20)) 
 ```
