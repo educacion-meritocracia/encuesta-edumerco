@@ -107,7 +107,7 @@ basica_school_ciudadania = round(prop.table(table(categorias=basica_school_ciuda
 
 basica_school_ciudadania = as.data.frame(basica_school_ciudadania) #convertimos el objeto en data.frame
 
-basica_school_ciudadania$categorias <- factor(basica_school_ciudadania$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
+basica_school_ciudadania$categorias <- factor(basica_school_ciudadania$categorias, levels = c(1, 2, 3, 4), labels = c("Ninguna importancia", "Algo de importancia", "Mediana importancia", "Mucha importancia")) 
 
 plot_basica_school_ciudadania<-ggplot(basica_school_ciudadania,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -133,7 +133,7 @@ media_school_ciudadania = round(prop.table(table(categorias=media_school_ciudada
 
 media_school_ciudadania = as.data.frame(media_school_ciudadania)
 
-media_school_ciudadania$categorias <- factor(media_school_ciudadania$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")) 
+media_school_ciudadania$categorias <- factor(media_school_ciudadania$categorias, levels = c(1, 2, 3, 4), labels = c("Ninguna importancia", "Algo de importancia", "Mediana importancia", "Mucha importancia")) 
 
 plot_media_school_ciudadania<-ggplot(media_school_ciudadania,aes(x=2,y=-Freq, fill=categorias))+
   geom_bar(stat = "identity", 
@@ -166,7 +166,7 @@ plot_school_ciudadania_percep <- annotate_figure(
 plot_school_ciudadania_percep
 ```
 
-En general, los estudiantes consideran que se le da una mediana importancia a la Formación Ciudadana en la escuela. Particularmente ,los estudiantes de enseñanza báscia consideran que se le da más importnacia, contestando en un 29% que la escuela le entrega mucha importancia, encompración con los estudiantes de media (20%).
+En general, los estudiantes consideran que se le da una mediana importancia a la Formación Ciudadana en la escuela (47%).
 
 ```{r, plot-importancia-ciudadania-curso, echo=FALSE}
 
@@ -191,6 +191,8 @@ plot_school_ciudadania_curso <- annotate_figure(
 
 plot_school_ciudadania_curso
 ```
+
+Estudiantes de enseñanza báscia consideran que se le da más importnacia, contestando en un 29% que la escuela le entrega mucha importancia, en compración con los estudiantes de media (20%).
 
 ### En el espacio de clases
 
@@ -332,7 +334,7 @@ plot_clases2 <- annotate_figure(
 plot_clases2
 ```
 
-Los(as) profesores(as) estimulan siempre (42%) la expresión de las propias opiniones de los estudiantes y casi siempre (42%) la conversación de estos mismos con gente que opina disntinto. Además, los estudiantes reconocen que sus profesores(as) exponen los temas desde distintos enfoques en su explicación durante la clase, de ese modo contestaron en un 30% que siempre se realizaba dicha acción y en un 48% que se cumplía casi siempre.
+Los(as) profesores(as) estimulan siempre (42%) la expresión de las propias opiniones de los estudiantes y casi siempre (42%) la conversación de estos mismos con gente que opina disntinto.
 
 ```{r, plot-clases-PROF-enfoque, echo=FALSE}
 
@@ -350,6 +352,8 @@ plot_school_ciudadania_class <- annotate_figure(
 
 plot_school_ciudadania_class
 ```
+
+Los estudiantes reconocen que sus profesores(as) exponen los temas desde distintos enfoques en su explicación durante la clase, de ese modo contestaron en un 30% que siempre se realizaba dicha acción y en un 48% que se cumplía casi siempre.
 
 ## Participación política
 
@@ -452,7 +456,7 @@ plot_pp_presente_pol_ES <- annotate_figure(
 plot_pp_presente_pol_ES
 ```
 
-A modo general se observa que los
+A modo general se observa que los estudiantes están de acuerdo en un 60% en que comprenden bien las problemáticas del país.
 
 ```{r, plot-eficacia-pre-curso, echo=FALSE}
 
@@ -479,6 +483,8 @@ plot_pp_presente_pol_curso <- annotate_figure(
 
 plot_pp_presente_pol_curso
 ```
+
+Tanto estudiantes de enseñanza básica como estudiantes de enseñanza media están de acuerdo en un 60% en que comprenden bien las problemáticas del país.
 
 *Cruce con otras características sociodemográficas del estudiante*
 
@@ -542,6 +548,8 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(pp_presente
                                "3" = "De acuerdo", "4" = "Muy de acuerdo"),
                     name = NULL)
 ```
+
+Estudiantes con padres que poseen estudios superiores consideran que comprenden bien las problematicas del país en un 62% que estudiantes que tienen padres con enseñanza media o menos (56%). Al diferenciar por género, los hombres consideran en un pequeño porcentaje (61%) estar más de acuerdo con la frase que las mujeres (59%). Estudiantes con menos de 25 libros consideran en un 61% estar de acuerdo con la frase.
 
 Participación política **civil** o **prosocial**:
 
@@ -756,6 +764,8 @@ plot_p12_2_ES <- annotate_figure(
 plot_p12_2_ES
 ```
 
+El 83% de los estudiantes no participo de una marcha violenta en los últimos 12 meses.
+
 ```{r, plot-marcha-violenta-curso, echo=FALSE}
 p12_2_curso <- ggarrange(
    plot_basica_p12_2,
@@ -778,6 +788,8 @@ plot_p12_2_curso <- annotate_figure(
 
 plot_p12_2_curso
 ```
+
+Los estudiantes de básica contestaron en un 21% haber participado en una marcha violenta en comparación con los estudiantes de media (13%).
 
 *Cruce con otras características sociodemográficas del estudiante*
 
@@ -840,6 +852,8 @@ ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(p12_2))) +
                     labels = c("1" = "Sí", "2" = "No"),
                     name = NULL)
 ```
+
+Estudiantes con padres que tienen estudios en enseñanza media o menos participaron más en marchas violentas (20%) que estudiantes con padres con estudios superiores (15%) en los últimos 12 meses. Al diferenciar por género se observa una participación similar, donde los hombres participan en un 2% más que las mujeres. Estudiantes con menos de 25 libros en el hogar participan más en marchas violentas (18%) que estudiantes que tienen más libros en su hogar (14%).
 
 -   **Toma**
 
@@ -912,6 +926,8 @@ plot_presente_toma_ES <- annotate_figure(
 plot_presente_toma_ES
 ```
 
+Los estudiantes contestaron en un 87% no haber participado en una toma durante los últimos 12 meses.
+
 ```{r, plot-toma-curso, echo=FALSE}
 toma_curso <- ggarrange(
    plot_basica_toma,
@@ -935,6 +951,8 @@ plot_toma_curso <- annotate_figure(
 plot_toma_curso
 
 ```
+
+Estudiantes de básica participaron un 1% más que los estudiantes de media en los últimos 12 meses. Aún así, en su mayoría estos no participaron en este tipo de acción política.
 
 *Cruce con otras características sociodemográficas del estudiante*
 
@@ -3938,17 +3956,4 @@ final_plot_P16_o3_ES <- annotate_figure(plot_P16_o3_ES,
     hjust = 0.5))
 
 final_plot_P16_o3_ES
-```
-
-```{r, echo=FALSE}
-
-#solo quienes contestan 1
-
-#la identidad politica de los apoderados que si hablan de politica con los estudiantes en su hogar se concentra en la categoría 5 (6 casos) y la categoría 7 (12 casos)
-
-#respecto a la religion 19 casos contestan la categoría 1, 2 casos la categoría 2. 
-
-#cantidad de libros: menos de 25 82 casos y más de 25 64 casos 
-
-#género estudiante 70 hombres y 71 mujeres
 ```
