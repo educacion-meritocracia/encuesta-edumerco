@@ -3,9 +3,9 @@ project:
   output-dir: docs
 
 book:
-  title: "Informe descriptivo colegios"
+  title: "Estudio panel Educación y Meritocracia"
   author: "Equipo Edumer"
-  date: "22-05-2024"
+#  date: "22-05-2024"
   chapters:
     - index.qmd
     - intro.qmd
@@ -14,7 +14,7 @@ book:
     - ciudadania.qmd
     - references.qmd
 
-bibliography: references.bib
+bibliography: Educacion-meritocracia.bib
 
 format:
   html:

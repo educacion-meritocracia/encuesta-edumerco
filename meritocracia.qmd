@@ -60,15 +60,16 @@ for (i in names(dplyr::select(proc_datos, tidyselect::starts_with("p18_")))) {
 
 ```
 
-La meritocracia es una idea o un principio que hace alusión a la forma en que serán asignados los recursos dentro de la sociedad. Dicha asignación, se realiza de acuerdo a una compensación ligada al mérito individual. Este último es central para entender la meritocracia, el cual se encuentra compuesto por las nociones de talento y esfuerzo. De ese modo ambos funcionan como criterios de mérito individual. 
+El concepto de **meritocracia** se originó en la novela distópica *The Rise of Meritocracy* [-@young_rise_1958] del sociólogo Michael Young. En este contexto, la meritocracia se refiere a un sistema de organización social en el que se otorga mayor poder, estatus y prestigio a aquellos individuos que poseen más mérito, definido como una combinación de esfuerzo y talento. Este concepto implica que los bienes y las recompensas se distribuyen de manera proporcional al esfuerzo y al talento de cada individuo, siguiendo el principio distributivo de justicia por equidad o igualdad proporcional. Sin embargo, los críticos argumentan que la meritocracia no siempre cumple con su propósito inicial y, en la práctica, se utiliza para ocultar y legitimar desigualdades y privilegios que no están necesariamente vinculados al esfuerzo o al talento.
 
-Así, es posible hablar de un ideal meritocrático, el cual se observa simbólicamente dentro de la sociedad en términos de una ideología (es decir, un conjunto de ideas). Una de las formas en que se socializa esta ideología es a través de la educación. Por ello, este estudio busca observar la forma en que se expresa la meritocracia en la escuela. 
+En el contexto escolar, el concepto de mérito es central. A través de las calificaciones, premios y diplomas, que son considerados "certificados de mérito", se premia y clasifica a los mejores estudiantes, bajo la premisa de que los incentivos y las penalizaciones ejemplares conducirán a un mejor rendimiento colectivo. 
 
-Con esa definición en mente, el presente módulo se estructurará en dos apartados: **meritocracia en la sociedad** y **meritocracia en la escuela**. Dentro de cada uno se observará operacionalmente la meritocracia a través de las *creencias de las/los estudiantes*. Asimismo, al interior de dichas creencias es posible distinguir dos tipos: *preferencias* respecto de lo que debería ocurrir en la sociedad o en la escuela y *percepciones* de lo que efectivamente ocurre al interior de esos dos espacios.
+Para poder investigar la meritocracia en el ámbito escolar vamos a establecer dos distinciones principales. La primera es estructurar este módulo en dos apartados: **meritocracia en la sociedad** y **meritocracia en la escuela**. Dentro de cada una de estas secciones se observará la meritocracia a través de las *creencias de las/los estudiantes*. La segunda distinción ocurre al interior de dichas creencias, donde es posible distinguir dos tipos: **Percepciones**, donde nos referimos a cómo las personas visualizacn en la sociedad el cumplimiento de los principios meritocráticos (*lo que es*) y **preferencias**, que refieren al apoyo a ideales normativos (*lo que debería ser*).
+
 
 ## Meritocracia en la sociedad
 
-Dentro del espacio más general a nivel de la sociedad, se presentan preguntas que aluden a creencias respecto a lo que sucede (percepciones) o debería suceder (preferencias) en el país.
+Dentro del espacio más general a nivel de sociedad se presentan preguntas que aluden a creencias respecto a lo que sucede (percepciones) o debería suceder (preferencias) en el país.
 
 ### Creencias en la meritocracia
 
@@ -223,7 +224,7 @@ plot_merit_es_percep <- annotate_figure(
 plot_merit_es_percep
 ```
 
-En primer lugar, se observan diferencias entre apoderados y estudiantes. Los apoderados están en desacuerdo con la frase (57%) y, al contrario, los estudiantes estan más de acuerdo con que las personas en el país son recompensadas por sus esfuerzos (67%).
+En primer lugar, se observan diferencias entre apoderados y estudiantes. Los apoderados están en desacuerdo con que en Chile las personas son recompensadas por sus esfuerzos (57%) y, al contrario, los estudiantes estan más de acuerdo con que las personas en el país son recompensadas por sus esfuerzos (67%).
 
 ```{r, plot-esfuerzo-percep-curso, echo=FALSE}
 
@@ -2329,7 +2330,7 @@ Tanto estudiantes con padres con estudios superiores como con padres que cursaro
 
 ## Meritocracia en la escuela
 
-En este módulo se considera otro apartado adicional a las creencias de las/los estudiantes, el que está referido a la experiencia de estas mismas/mismos en sus notas. La forma en que se estudia la meritocracia escolar a partir de la experiencia en la nota se evidencia en la idea de que el mérito de ellas/ellos sea justamente reconocido en la nota obtenida. Por esa razón, dicho apartado se denominará "justicia en las notas".
+En este módulo se presenta la segunda parte de la distinción realizada sobre la meritocracia, referida a las creencias de las/los estudiantes sobre su experiencia en la escuela. La forma en que se estudia la meritocracia escolar es principalmente a partir de su experiencia en las notan, lo que evidencia la idea de que el mérito de ellas/ellos sea justamente reconocido en la nota obtenida. Por esa razón, dicho apartado se denominará "justicia en las notas".
 
 De este modo, se presentan dos apartados: **creencias en la meritocracia** y **justicia en las notas**.
 
@@ -2996,7 +2997,7 @@ school_merit_pref <- proc_datos %>%
 
   
   ggplot(school_merit_pref, aes(x = school_merit_pref, y = pct, fill = curso_estudiante)) +
-  geom_bar(stat = "identity", position = "stack") + 
+  geom_bar(stat = "identity", position = "dodge") + 
   labs(x = "Preferencia de mérito en la escuela", 
        y = "Frecuencia" )   +
   scale_x_continuous(breaks = c(0, 5, 10), labels = c("Esfuerzo", "Ambos", "Talento")) +
@@ -3015,7 +3016,7 @@ school_merit_pref <- proc_datos %>%
             stat = "identity", 
             vjust = -0.5, 
             color = "black",
-            position = position_stack(0.5), 
+            position = position_dodge(width=0.9), 
             size = 4)
 
 
@@ -3036,7 +3037,7 @@ school_merit_pref <- proc_datos %>%
 #gen <- proc_datos %>% filter(!is.na(genero_ES))%>% 
   
  ggplot(school_merit_pref, aes(x = school_merit_pref, y = pct, fill = genero_ES)) +
-  geom_bar(stat = "identity", position = "stack") + 
+  geom_bar(stat = "identity", position = "dodge") + 
   labs(x = "Preferencia de mérito en la escuela", 
        y = "Frecuencia" )   +
   scale_x_continuous(breaks = c(0, 5, 10), labels = c("Esfuerzo", "Ambos", "Talento")) +
@@ -3055,7 +3056,7 @@ school_merit_pref <- proc_datos %>%
             stat = "identity", 
             vjust = -0.5, 
             color = "black",
-            position = position_stack(0.5), 
+            position = position_dodge(width=0.9), 
             size = 4)
 
 ```
@@ -3071,7 +3072,7 @@ school_merit_pref <- proc_datos %>%
   mutate(pct = count / sum(count) * 100)
 
  ggplot(school_merit_pref, aes(x = school_merit_pref, y = pct, fill = educ_max)) +
-  geom_bar(stat = "identity", position = "stack") + 
+  geom_bar(stat = "identity", position = "dodge") + 
   labs(x = "Preferencia de mérito en la escuela", 
        y = "Frecuencia" )   +
   scale_x_continuous(breaks = c(0, 5, 10), labels = c("Esfuerzo", "Ambos", "Talento")) +
@@ -3090,7 +3091,7 @@ school_merit_pref <- proc_datos %>%
             stat = "identity", 
             vjust = -0.5, 
             color = "black",
-            position = position_stack(0.5), 
+            position = position_dodge(width=0.9), 
             size = 4)
 
 ```
@@ -3105,7 +3106,7 @@ school_merit_pref <- proc_datos %>%
 
 
  ggplot(school_merit_pref, aes(x = school_merit_pref, y = pct, fill = libros_hogar)) +
-  geom_bar(stat = "identity", position = "stack") + 
+  geom_bar(stat = "identity", position = "dodge") + 
   labs(x = "Preferencia de mérito en la escuela", 
        y = "Frecuencia" )   +
   scale_x_continuous(breaks = c(0, 5, 10), labels = c("Esfuerzo", "Ambos", "Talento")) +
@@ -3124,7 +3125,7 @@ school_merit_pref <- proc_datos %>%
             stat = "identity", 
             vjust = -0.5, 
             color = "black",
-            position = position_stack(0.5), 
+            position = position_dodge(width=0.9), 
             size = 4)
 
 ```

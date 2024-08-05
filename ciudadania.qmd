@@ -62,17 +62,19 @@ for (i in names(dplyr::select(proc_datos, tidyselect::starts_with("p18_")))) {
 
 ```
 
-La idea de ciudadanía se entiende a partir de dos dimensiones: cívica y civil. Esta se encuentra orientada a la idea de participación en la sociedad, en tanto aspectos políticos formales como proyectos colectivos de acción social y aspectos de convivencia que son entendidos como prosociales. Ambos tipos pretenden aportar a la cohesión de las sociedades cuando se ejerce dicha participación ciudadana. Así, esas características de participación se posicionan como un ideal normativo enmarcado en la idea de buena ciudadanía.
+Los aprendizajes que se le adjudican a la educación ciudadana en las escuelas pretenden dar respuesta a la necesidad de preparar a las nuevas generaciones para la vida en democracia y sus requerimientos morales y cognitivos (Cox & García, 2015). La nueva ley de Formación Ciudadana (ley n° 20.911) dispone que todos los establecimientos educacionales deben diseñar un Plan de Formación Ciudadana que brinde a los estudiantes la preparación necesaria para asumir una vida responsable en una sociedad libre y de orientación hacia el mejoramiento integral de la persona humana, como fundamento del sistema democrático, la justicia social y el progreso. Entre sus principales objetivos, esta nueva ley busca promover la comprensión y análisis del concepto de ciudadanía y los derechos y deberes asociados a ella, además de fomentar en los estudiantes la valoración de la diversidad social y cultural del país y fomentar en los estudiantes la tolerancia y el pluralismo.
 
-La escuela como espacio de socialización política aporta en dicha formación de ciudadanía en los estudiantes. Lo anterior, se produce a partir de los Planes de Formación Ciudadana que se encuentran presentes en los curriculos escolares de los establecimientos. Con ello, el aula y las prácticas pedagogicas son esenciales para la reproducción de las ideas de ciudadanía que refieren al funcionamiento de la sociedad y la democracia.
+La idea de ciudadanía se entiende a partir de dos dimensiones: cívica y civil. Esta se encuentra orientada a la idea de participación en la sociedad, en tanto aspectos políticos formales como proyectos colectivos de acción social y aspectos de convivencia que son entendidos como prosociales. Ambos tipos pretenden aportar a la cohesión social cuando se ejerce dicha participación ciudadana. Así, esas características de participación se posicionan como un ideal normativo enmarcado en la idea de buena ciudadanía.
 
-Adicionalmente, se reconoce otro espacio de socialización política y que se consolida como el primer momento en que los niños/as son socializados respecto a los criterios de buena ciudadanía: la familia. De ese modo, el hogar es fundamental como primer espacio de acercamiento a las ideas sobre la política.
+La escuela como espacio de socialización política aporta en dicha formación de ciudadanía en las/los estudiantes. El aula y las prácticas pedagogicas son esenciales para la reproducción de las ideas de ciudadanía que refieren al funcionamiento de la sociedad y la democracia.
 
-Con aquello presente, este módulo se estrcutrará en cuatro grandes apartados: **Formación ciudadana en la escuela**, **Participación política**, **Buena ciudadanía** y **Relación con el adulto en el hogar**. Dentro de cada uno se presentarán diversas preguntas referidas a actitudes y participación para medir la ciudadanía en torno a las percepciones de los estudiantes sobre criterios posicionados tanto a nivel del espacio escolar como en la sociedad.
+Adicionalmente, se reconoce otro espacio de socialización política y que se consolida como el primer momento en que los niños/as son socializados respecto a los criterios de buena ciudadanía: la familia. El proceso de socialización política familiar se concibe como prácticas de crianza o estrategias de socialización concretas que buscan modelar las conductas de sus hijos e hijas según las propias valoraciones y personalidades que se estimen como positivas para la integración y el desenvolvimiento social en el futuro
+
+Este módulo se estructurará en cuatro grandes apartados: **Formación ciudadana en la escuela**, **Participación política**, **Buena ciudadanía** y **Relación con el adulto en el hogar**. Dentro de cada uno se presentarán diversas preguntas referidas a actitudes y participación para medir la ciudadanía en torno a las percepciones de las/los estudiantes sobre criterios posicionados tanto a nivel del espacio escolar como en la sociedad.
 
 ## Formación ciudadana en la escuela
 
-En este primer apartado se presentan dos secciones: percepción de importancia del establecimiento y dinámicas del proceso formativo por parte del docente en el aula.
+En este primer apartado se presentan dos secciones: 1) percepción de importancia del establecimiento y 2) dinámicas del proceso formativo por parte del docente en el aula.
 
 ### Percepción respecto a la importancia que le entrega la escuela
 
@@ -357,7 +359,7 @@ Los estudiantes reconocen que sus profesores(as) exponen los temas desde distint
 
 ## Participación política
 
-La participación política se distingue en dos expresiones generales: cívica o formal y civil o prosocial/comunitaria. Asimismo, la participación de los estudiantes se puede distinguir de forma temporal, en tanto cómo se produce está en la actualidad y cuáles son sus expectativas de participación en el futuro. Es por ello, que se dividirá en dos grandes secciones: participación política actual y participación política futura. Además, dentro de cada una se distinguirá su expresión de participación.
+La participación política se distingue en dos expresiones generales: cívica o formal y civil o prosocial/comunitaria. Asimismo, la participación de los estudiantes se puede distinguir de forma temporal, primero en cómo se produce esta en la actualidad y, segundo, cuáles son sus expectativas de participación en el futuro. Es por ello que se dividirá en dos grandes secciones: participación política actual y participación política futura. Además, dentro de cada una se distinguirá su expresión de participación.
 
 ### Participación politica actual
 
