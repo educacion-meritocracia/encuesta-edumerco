@@ -4,15 +4,10 @@ Reporte descriptivo [en este enlace](https://educacion-meritocracia.github.io/ed
 
 Reporte colegios <https://educacion-meritocracia.github.io/edumer-ola1/>
 
-
 # Estructura del repositorio
 
-```plaintext
+``` plaintext
 ├── README.md
-├── .Rproj.user/
-│   ├── shared/
-│   ├── sources/
-│   └── ...
 ├── docs/
 │   ├── Estudio-panel-Educación-y-Meritocracia.pdf
 │   ├── index.html
@@ -44,7 +39,4 @@ Reporte colegios <https://educacion-meritocracia.github.io/edumer-ola1/>
 ├── Educacion-meritocracia.bib
 ├── references.qmd
 └── reporte_metodologico.qmd
-
 ```
-
-

@@ -1,3 +1,10 @@
+<p style="text-align: left;">
+    <a href="https://educacion-meritocracia.github.io/edumer-ola1/Estudio-panel-Educacion-y-Meritocracia.pdf" download>
+        <img src="https://img.icons8.com/color/24/000000/pdf.png" alt="PDF icon">
+        Descargar en PDF
+    </a>
+</p>
+
 # Estudio panel: Educación y Meritocracia {.unnumbered}
 
 ## Resumen
@@ -6,25 +13,24 @@ En este informe se presentan los principales resultados del estudio panel Educac
 
 La investigación busca responder en qué medida un sistema educativo caracterizado por una economía moral que enfatiza logros individuales es capaz de promover efectivamente los comportamientos y valores políticos y sociales asociados a los contenidos de formación ciudadana. Los hallazgos de este estudio ofrecen una visión comprensiva sobre las dinámicas de la meritocracia en el contexto escolar y su influencia dentro de la formación de los futuros ciudadanos activos en la sociedad.
 
-
 ## Equipo de investigación
 
 ### Investigador principal
 
-- Juan Carlos Castillo (Universidad de chile - COES - NUDOS)
+-   Juan Carlos Castillo (Universidad de chile - COES - NUDOS)
 
 ### Co-investigadores
 
-- Camila Moyano (Universidad Finis Terrae)
+-   Camila Moyano (Universidad Finis Terrae)
 
-- Mauricio Salgado (Centro de estudios públicos)
+-   Mauricio Salgado (Centro de estudios públicos)
 
-- Nicolás Angelcos (Universidad de chile - COES)
+-   Nicolás Angelcos (Universidad de chile - COES)
 
 ### Asistentes de investigación
 
-- María Fernanda Núñez (Universidad de chile)
+-   María Fernanda Núñez (Universidad de chile)
 
-- Kevin Carrasco (COES)
+-   Kevin Carrasco (COES)
 
-- Andreas Laffert (Universidad Católica)
+-   Andreas Laffert (Universidad Católica)

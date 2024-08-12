@@ -5,7 +5,7 @@ project:
 book:
   title: "Estudio panel Educación y Meritocracia"
   author: "Equipo Edumer"
-#  date: "22-05-2024"
+  date: "08/12/2024"
   chapters:
     - index.qmd
     - intro.qmd
@@ -19,6 +19,7 @@ bibliography: Educacion-meritocracia.bib
 format:
   html:
     theme: cosmo
+    language: "es"
   pdf:
     documentclass: scrreprt
 
