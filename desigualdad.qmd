@@ -1,0 +1,627 @@
+# Desigualdad
+
+- Diferencia entre desigualdad objetiva y desigualdad subjetiva
+
+- Percepción de desigualdad
+
+- Preferencias redistributivas
+
+- Justicia de mercado
+
+```{r, data, echo=FALSE, include=FALSE}
+pacman::p_load(dplyr, sjPlot, stargazer, kableExtra, texreg, haven, sjlabelled, ggplot2, summarytools, ggtext, ggpubr, hrbrthemes, tidyr, stringr)
+
+load("input/data/proc/data_proc.RData")
+```
+
+```{r, preparacion, echo=FALSE, eval=TRUE}
+for (i in names(dplyr::select(proc_data, tidyselect::starts_with("merit_"), des_01, des_02, des_03, des_07, des_08, des_09, des_10, des_11, des_12))) {
+  proc_data[[i]] <- sjlabelled::set_labels(
+    x = proc_data[[i]],
+    labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo")
+  )
+}
+
+
+for (i in names(dplyr::select(proc_data, carac_a13, carac_a14,carac_a15,carac_a16))) {
+  proc_data[[i]] <- sjlabelled::set_labels(
+    x = proc_data[[i]],
+    labels = c("No", "Si")
+  )
+}
+
+for (i in names(dplyr::select(proc_data, des_06))) {
+  proc_data[[i]] <- sjlabelled::set_labels(
+    x = proc_data[[i]],
+    labels = c("Nada a la cuenta individual, todo al fondo solidario", "", "", "", "", "", "Todo a la cuenta individual, nada al fondo solidario")
+  )
+}
+
+for (i in names(dplyr::select(proc_data, des_04))) {
+  proc_data[[i]] <- sjlabelled::set_labels(
+    x = proc_data[[i]],
+    labels = c("Gobierno", "", "", "", "", "", "", "", "", "", "Empresas")
+  )
+}
+proc_data$des_05 <- car::recode(proc_data$des_05, "c(7,8)=NA")
+proc_data$des_05 <- set_labels(
+    proc_data$des_05, labels = c(`1` = "Empresas privadas",
+                           `2` = "Gobierno",
+                           `3` = "Sindicatos",
+                           `4` = "Las personas con altos ingresos por sí mismas",
+                           `5` = "Las personas con bajos ingresos por sí mismas",
+                           `6` = "Las diferencias de ingreso no necesitan ser reducidas"
+                                                  ))
+```
+
+## Percepción de desigualdad
+
+```{r, dona-perc-des, echo=FALSE}
+perc_des = round(prop.table(table(categorias=proc_data$des_01)),2)
+perc_des = as.data.frame(perc_des)
+perc_des$categorias <- factor(perc_des$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_perc_des<-ggplot(perc_des,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5)
+
+```
+
+```{r, plot-importancia-ciudadania, echo=FALSE}
+
+# Agregar una etiqueta global centrada
+plot_perc_des <- annotate_figure(
+  plot_perc_des,
+  top = text_grob(
+    "Figura 2.1: Las diferencias económicas entre ricos y pobres\n en Chile son demasiado grandes",
+    size = 12, 
+    face = "italic", 
+    color = "black",
+    hjust = 0.5))
+
+
+plot_perc_des
+```
+
+En general, los estudiantes consideran que se le da una mediana importancia a la Formación Ciudadana en la escuela (47%).
+
+```{r, plot-esfuerzo-sociodemo-percep, echo=FALSE, message=FALSE}
+
+# Calcular las frecuencias originales
+frecuencias_originales <- proc_data %>%
+  pivot_longer(cols = c(screen_sex, screen_education),
+               names_to = "variable",
+               values_to = "categoria") %>%
+  group_by(variable, categoria) %>%
+  summarise(Freq_Original = n(), .groups = 'drop')
+
+# Combinar las frecuencias originales con la base transformada
+proc_data_largo <- proc_data %>%
+  pivot_longer(cols = c(screen_sex, screen_education),
+               names_to = "variable",
+               values_to = "categoria")
+
+frecuencias <- proc_data_largo %>%
+  group_by(variable, categoria, des_01) %>%
+  summarise(Freq = n(), .groups = 'drop') %>%
+  left_join(frecuencias_originales, by = c("variable", "categoria")) %>%
+  mutate(Porcentaje = Freq / Freq_Original) %>%
+  ungroup() %>% 
+  na.omit()
+# nombre facet_wrap
+variable_names <- list("screen_education" = "Nivel educacional",
+                       "screen_sex" = "Sexo")
+variable_labeller <- function(variable, value){return(variable_names[value])}
+
+# Ajustar las etiquetas largas
+frecuencias$categoria <- str_wrap(frecuencias$categoria, width = 10)
+
+# Crear la gráfica
+ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(des_01))) +
+  geom_bar(stat = "identity", position = "fill", color = "white") +
+  facet_wrap(~ variable, scales = "free_x", labeller = as_labeller(variable_labeller)) +
+  geom_text(aes(label = scales::percent(Porcentaje, accuracy = 1)), 
+            position = position_stack(vjust = 0.5), color = "black", size = 4.5) +
+  labs(
+    x = NULL, # Elimina el título del eje x
+    y = NULL, # Elimina el título del eje y
+    fill = "Grado de acuerdo",
+    title = "Figura 2.2: Las diferencias económicas entre ricos y pobres\n en Chile son demasiado grandes"
+  ) +
+  theme_blank() +
+  theme(
+    axis.text.y = element_blank(),  # Ocultar etiquetas del eje y
+    axis.ticks.y = element_blank(), # Ocultar marcas del eje y
+    axis.title.x = element_blank(), # Ocultar título del eje x
+    axis.title.y = element_blank(), # Ocultar título del eje y
+    strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
+    axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
+    legend.position = "bottom",# Colocar la leyenda en la parte inferior
+     plot.title = element_text(size = 12, face = "italic", color = "black")
+  ) +
+  scale_fill_brewer(palette = "Blues", 
+                    labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
+                               "3" = "De acuerdo", "4" = "Muy de acuerdo"),
+                    name = NULL)
+
+```
+
+## Preferencias redistributivas
+
+### Rol del gobierno
+
+```{r, dona-rol-gobierno, echo=FALSE}
+perc_des = round(prop.table(table(categorias=proc_data$des_02)),2)
+perc_des = as.data.frame(perc_des)
+perc_des$categorias <- factor(perc_des$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_perc_des<-ggplot(perc_des,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5)
+
+```
+
+```{r, plot-rol-gobierno, echo=FALSE}
+
+# Agregar una etiqueta global centrada
+plot_perc_des <- annotate_figure(
+  plot_perc_des,
+  top = text_grob(
+    "Figura 2.3: Es responsabilidad del gobierno reducir las diferencias económicas\n entre las personas con altos ingresos y aquellas con bajos ingresos",
+    size = 12, 
+    face = "italic", 
+    color = "black",
+    hjust = 0.5))
+
+
+plot_perc_des
+```
+
+En general, los estudiantes consideran que se le da una mediana importancia a la Formación Ciudadana en la escuela (47%).
+
+```{r, plot-rol-gobierno-percep, echo=FALSE, message=FALSE}
+
+frecuencias <- proc_data_largo %>%
+  group_by(variable, categoria, des_02) %>%
+  summarise(Freq = n(), .groups = 'drop') %>%
+  left_join(frecuencias_originales, by = c("variable", "categoria")) %>%
+  mutate(Porcentaje = Freq / Freq_Original) %>%
+  ungroup() %>% 
+  na.omit()
+# nombre facet_wrap
+variable_labeller <- function(variable, value){return(variable_names[value])}
+
+# Ajustar las etiquetas largas
+frecuencias$categoria <- str_wrap(frecuencias$categoria, width = 10)
+
+# Crear la gráfica
+ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(des_02))) +
+  geom_bar(stat = "identity", position = "fill", color = "white") +
+  facet_wrap(~ variable, scales = "free_x", labeller = as_labeller(variable_labeller)) +
+  geom_text(aes(label = scales::percent(Porcentaje, accuracy = 1)), 
+            position = position_stack(vjust = 0.5), color = "black", size = 4.5) +
+  labs(
+    x = NULL, # Elimina el título del eje x
+    y = NULL, # Elimina el título del eje y
+    fill = "Grado de acuerdo",
+    title = "Figura 2.4: Es responsabilidad del gobierno reducir las diferencias económicas\n entre las personas con altos ingresos y aquellas con bajos ingresos"
+  ) +
+  theme_blank() +
+  theme(
+    axis.text.y = element_blank(),  # Ocultar etiquetas del eje y
+    axis.ticks.y = element_blank(), # Ocultar marcas del eje y
+    axis.title.x = element_blank(), # Ocultar título del eje x
+    axis.title.y = element_blank(), # Ocultar título del eje y
+    strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
+    axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
+    legend.position = "bottom",# Colocar la leyenda en la parte inferior
+     plot.title = element_text(size = 12, face = "italic", color = "black")
+  ) +
+  scale_fill_brewer(palette = "Blues", 
+                    labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
+                               "3" = "De acuerdo", "4" = "Muy de acuerdo"),
+                    name = NULL)
+
+```
+
+```{r, dona-rol-gobierno-2, echo=FALSE}
+perc_des = round(prop.table(table(categorias=proc_data$des_08)),2)
+perc_des = as.data.frame(perc_des)
+perc_des$categorias <- factor(perc_des$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_perc_des<-ggplot(perc_des,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5)
+
+```
+
+```{r, plot-rol-gobierno-2, echo=FALSE}
+
+# Agregar una etiqueta global centrada
+plot_perc_des <- annotate_figure(
+  plot_perc_des,
+  top = text_grob(
+    "Figura 2.5: El gobierno debería proveer un estandar\n de vida decente para las personas desempleadas",
+    size = 12, 
+    face = "italic", 
+    color = "black",
+    hjust = 0.5))
+
+
+plot_perc_des
+```
+
+En general, los estudiantes consideran que se le da una mediana importancia a la Formación Ciudadana en la escuela (47%).
+
+```{r, plot-rol-gobierno-percep-2, echo=FALSE, message=FALSE}
+
+frecuencias <- proc_data_largo %>%
+  group_by(variable, categoria, des_08) %>%
+  summarise(Freq = n(), .groups = 'drop') %>%
+  left_join(frecuencias_originales, by = c("variable", "categoria")) %>%
+  mutate(Porcentaje = Freq / Freq_Original) %>%
+  ungroup() %>% 
+  na.omit()
+# nombre facet_wrap
+variable_labeller <- function(variable, value){return(variable_names[value])}
+
+# Ajustar las etiquetas largas
+frecuencias$categoria <- str_wrap(frecuencias$categoria, width = 10)
+
+# Crear la gráfica
+ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(des_08))) +
+  geom_bar(stat = "identity", position = "fill", color = "white") +
+  facet_wrap(~ variable, scales = "free_x", labeller = as_labeller(variable_labeller)) +
+  geom_text(aes(label = scales::percent(Porcentaje, accuracy = 1)), 
+            position = position_stack(vjust = 0.5), color = "black", size = 4.5) +
+  labs(
+    x = NULL, # Elimina el título del eje x
+    y = NULL, # Elimina el título del eje y
+    fill = "Grado de acuerdo",
+    title = "Figura 2.6: El gobierno debería proveer un estandar\n de vida decente para las personas desempleadas"
+  ) +
+  theme_blank() +
+  theme(
+    axis.text.y = element_blank(),  # Ocultar etiquetas del eje y
+    axis.ticks.y = element_blank(), # Ocultar marcas del eje y
+    axis.title.x = element_blank(), # Ocultar título del eje x
+    axis.title.y = element_blank(), # Ocultar título del eje y
+    strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
+    axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
+    legend.position = "bottom",# Colocar la leyenda en la parte inferior
+     plot.title = element_text(size = 12, face = "italic", color = "black")
+  ) +
+  scale_fill_brewer(palette = "Blues", 
+                    labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
+                               "3" = "De acuerdo", "4" = "Muy de acuerdo"),
+                    name = NULL)
+
+```
+
+```{r, dona-rol-gobierno-3, echo=FALSE}
+perc_des = round(prop.table(table(categorias=proc_data$des_07)),2)
+perc_des = as.data.frame(perc_des)
+perc_des$categorias <- factor(perc_des$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_perc_des<-ggplot(perc_des,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5)
+
+```
+
+```{r, plot-rol-gobierno-3, echo=FALSE}
+
+# Agregar una etiqueta global centrada
+plot_perc_des <- annotate_figure(
+  plot_perc_des,
+  top = text_grob(
+    "Figura 2.7: La mayoría de los políticos en Chile no se preocupan\n acerca de reducir las diferencias en los ingresos entre\n personas con altos ingresos y las personas con bajos ingresos",
+    size = 12, 
+    face = "italic", 
+    color = "black",
+    hjust = 0.5))
+
+
+plot_perc_des
+```
+
+En general, los estudiantes consideran que se le da una mediana importancia a la Formación Ciudadana en la escuela (47%).
+
+```{r, plot-rol-gobierno-percep-3, echo=FALSE, message=FALSE}
+
+frecuencias <- proc_data_largo %>%
+  group_by(variable, categoria, des_08) %>%
+  summarise(Freq = n(), .groups = 'drop') %>%
+  left_join(frecuencias_originales, by = c("variable", "categoria")) %>%
+  mutate(Porcentaje = Freq / Freq_Original) %>%
+  ungroup() %>% 
+  na.omit()
+# nombre facet_wrap
+variable_labeller <- function(variable, value){return(variable_names[value])}
+
+# Ajustar las etiquetas largas
+frecuencias$categoria <- str_wrap(frecuencias$categoria, width = 10)
+
+# Crear la gráfica
+ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(des_08))) +
+  geom_bar(stat = "identity", position = "fill", color = "white") +
+  facet_wrap(~ variable, scales = "free_x", labeller = as_labeller(variable_labeller)) +
+  geom_text(aes(label = scales::percent(Porcentaje, accuracy = 1)), 
+            position = position_stack(vjust = 0.5), color = "black", size = 4.5) +
+  labs(
+    x = NULL, # Elimina el título del eje x
+    y = NULL, # Elimina el título del eje y
+    fill = "Grado de acuerdo",
+    title = "Figura 2.8: La mayoría de los políticos en Chile no se preocupan\n acerca de reducir las diferencias en los ingresos entre\n personas con altos ingresos y las personas con bajos ingresos"
+  ) +
+  theme_blank() +
+  theme(
+    axis.text.y = element_blank(),  # Ocultar etiquetas del eje y
+    axis.ticks.y = element_blank(), # Ocultar marcas del eje y
+    axis.title.x = element_blank(), # Ocultar título del eje x
+    axis.title.y = element_blank(), # Ocultar título del eje y
+    strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
+    axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
+    legend.position = "bottom",# Colocar la leyenda en la parte inferior
+     plot.title = element_text(size = 12, face = "italic", color = "black")
+  ) +
+  scale_fill_brewer(palette = "Blues", 
+                    labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
+                               "3" = "De acuerdo", "4" = "Muy de acuerdo"),
+                    name = NULL)
+
+```
+
+
+### Rol de las empresas privadas
+
+```{r, dona-rol-empresa, echo=FALSE}
+perc_des = round(prop.table(table(categorias=proc_data$des_03)),2)
+perc_des = as.data.frame(perc_des)
+perc_des$categorias <- factor(perc_des$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_perc_des<-ggplot(perc_des,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5)
+
+```
+
+```{r, plot-rol-empresa, echo=FALSE}
+
+# Agregar una etiqueta global centrada
+plot_perc_des <- annotate_figure(
+  plot_perc_des,
+  top = text_grob(
+    "Figura 2.5: Es responsabilidad de las empresas privadas reducir las diferencias económicas\n entre las personas con altos ingresos y aquellas con bajos ingresos",
+    size = 12, 
+    face = "italic", 
+    color = "black",
+    hjust = 0.5))
+
+
+plot_perc_des
+```
+
+En general, los estudiantes consideran que se le da una mediana importancia a la Formación Ciudadana en la escuela (47%).
+
+```{r, plot-rol-empresa-percep, echo=FALSE, message=FALSE}
+
+frecuencias <- proc_data_largo %>%
+  group_by(variable, categoria, des_03) %>%
+  summarise(Freq = n(), .groups = 'drop') %>%
+  left_join(frecuencias_originales, by = c("variable", "categoria")) %>%
+  mutate(Porcentaje = Freq / Freq_Original) %>%
+  ungroup() %>% 
+  na.omit()
+# nombre facet_wrap
+variable_labeller <- function(variable, value){return(variable_names[value])}
+
+# Ajustar las etiquetas largas
+frecuencias$categoria <- str_wrap(frecuencias$categoria, width = 10)
+
+# Crear la gráfica
+ggplot(frecuencias, aes(x = categoria, y = Porcentaje, fill = factor(des_03))) +
+  geom_bar(stat = "identity", position = "fill", color = "white") +
+  facet_wrap(~ variable, scales = "free_x", labeller = as_labeller(variable_labeller)) +
+  geom_text(aes(label = scales::percent(Porcentaje, accuracy = 1)), 
+            position = position_stack(vjust = 0.5), color = "black", size = 4.5) +
+  labs(
+    x = NULL, # Elimina el título del eje x
+    y = NULL, # Elimina el título del eje y
+    fill = "Grado de acuerdo",
+    title = "Figura 2.6: Es responsabilidad de las empresas privadas reducir las diferencias económicas\n entre las personas con altos ingresos y aquellas con bajos ingresos"
+  ) +
+  theme_blank() +
+  theme(
+    axis.text.y = element_blank(),  # Ocultar etiquetas del eje y
+    axis.ticks.y = element_blank(), # Ocultar marcas del eje y
+    axis.title.x = element_blank(), # Ocultar título del eje x
+    axis.title.y = element_blank(), # Ocultar título del eje y
+    strip.text = element_text(size = 9, face = "bold"), # Ajustar tamaño y estilo del título de las facetas
+    axis.text.x = element_text(size = 9), # Ajustar el tamaño de las etiquetas del eje x
+    legend.position = "bottom",# Colocar la leyenda en la parte inferior
+     plot.title = element_text(size = 12, face = "italic", color = "black")
+  ) +
+  scale_fill_brewer(palette = "Blues", 
+                    labels = c("1" = "Muy en desacuerdo", "2" = "En desacuerdo", 
+                               "3" = "De acuerdo", "4" = "Muy de acuerdo"),
+                    name = NULL)
+
+```
+
+### Gobierno o empresas?
+
+```{r}
+df <- proc_data %>% 
+  count(des_04) %>%
+  mutate(percentage = (n / sum(n)) * 100)
+
+# Crear el gráfico de barras
+ggplot(df, aes(x = factor(des_04), y = percentage)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label = paste0(round(percentage, 1), "%")), vjust = -0.5, size = 4) +  # Etiquetas de porcentaje
+  scale_x_discrete(labels = function(x) ifelse(x == "0", "Gobierno", ifelse(x == "10", "Empresas\n privadas", x))) +
+  scale_y_continuous(limits = c(0, 100), expand = expansion(mult = c(0, 0.05))) +  # Ajuste del eje Y
+  labs(x = "Preferencia Gobierno o empresas privadas", y = "Porcentaje", title = "Y si tuviera que elegir, en una escala donde 0 es preferencia por el Gobierno\n y 10 preferencia por las empresas privadas, ¿preferirías que el gobierno\n o que las empresas privadas estén a cargo de reducir las diferencias económicas\n entre las personas con altos ingresos y aquellas con bajos ingresos?") +
+  theme_minimal()
+```
+
+### Mirando la lista a continuación, ¿quién cree que debería tener la mayor responsabilidad en reducir las diferencias de ingreso entre las personas con altos ingresos y las personas con bajos ingresos?
+
+```{r}
+df <- proc_data %>% na.omit() %>%
+  count(des_05) %>%
+  mutate(percentage = (n / sum(n)) * 100)
+
+labels_custom <- c(
+  `1` = "Empresas\n privadas",
+  `2` = "Gobierno",
+  `3` = "Sindicatos",
+  `4` = "Las personas con altos\n ingresos por sí mismas",
+  `5` = "Las personas con bajos\n ingresos por sí mismas",
+  `6` = "Las diferencias de ingreso\n no necesitan ser reducidas"
+)
+
+# Crear el gráfico de barras
+ggplot(df, aes(x = factor(des_05), y = percentage)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label = paste0(round(percentage, 1), "%")), vjust = -0.5, size = 4) +  # Etiquetas de porcentaje
+  scale_x_discrete(labels = labels_custom) +  # Aplicar etiquetas personalizadas
+  scale_y_continuous(limits = c(0, 100), expand = expansion(mult = c(0, 0.05))) +  # Ajuste del eje Y
+  labs(x = "", y = "Porcentaje", title = "") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotar etiquetas para mejor lectura
+```
+
+### Pensiones
+
+En Chile un 10% de los sueldos se descuenta para ahorro previsional (pensiones). Actualmente se está discutiendo una reforma que propone sumar un 6% adicional con cargo al empleador. El principal tema de esta discusión es cómo repartir este 6%: si debería destinarse a un fondo solidario (para disminuir las brechas entre las pensiones), o a las cuentas individuales (para incrementar los ahorros personales de cada trabajador a futuro).
+
+¿Cómo distribuiría Ud. este 6%? Marque abajo su preferencia, donde 0 significa que nada se asigna a la cuenta individual y todo al fondo solidario, mientras 6 es todo a la cuenta individual y nada al fondo solidario
+
+```{r}
+df <- proc_data %>% 
+  count(des_06) %>%
+  mutate(percentage = (n / sum(n)) * 100)
+
+# Crear el gráfico de barras
+ggplot(df, aes(x = factor(des_06), y = percentage)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  geom_text(aes(label = paste0(round(percentage, 1), "%")), vjust = -0.5, size = 4) +  # Etiquetas de porcentaje
+  scale_x_discrete(labels = function(x) ifelse(x == "0", "Nada a la cuenta individual,\n todo al fondo solidario", ifelse(x == "6", "Todo a la cuenta individual,\n nada al fondo solidario", x))) +
+  scale_y_continuous(limits = c(0, 100), expand = expansion(mult = c(0, 0.05))) +  # Ajuste del eje Y
+  labs(x = "", y = "Porcentaje", title = "") +
+  theme_minimal()
+```
+
+### Justicia de mercado
+
+```{r, dona-mjp-1, echo=FALSE}
+perc_des = round(prop.table(table(categorias=proc_data$des_09)),2)
+perc_des = as.data.frame(perc_des)
+perc_des$categorias <- factor(perc_des$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_mjp1<-ggplot(perc_des,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5)+
+  labs(title="Educación") 
+
+```
+
+
+```{r, dona-mjp-2, echo=FALSE}
+perc_des = round(prop.table(table(categorias=proc_data$des_10)),2)
+perc_des = as.data.frame(perc_des)
+perc_des$categorias <- factor(perc_des$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_mjp2<-ggplot(perc_des,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5)+
+  labs(title="Salud") 
+
+```
+
+
+```{r, dona-mjp-3, echo=FALSE}
+perc_des = round(prop.table(table(categorias=proc_data$des_11)),2)
+perc_des = as.data.frame(perc_des)
+perc_des$categorias <- factor(perc_des$categorias, levels = c(1, 2, 3, 4), labels = c("Muy en desacuerdo", "Desacuerdo", "De acuerdo", "Muy de acuerdo"))
+plot_mjp3<-ggplot(perc_des,aes(x=2,y=-Freq, fill=categorias))+
+  geom_bar(stat = "identity", 
+           color="white")+
+    geom_text(aes(label = scales::percent(Freq)),
+              position=position_stack(vjust=0.5),color="black",size=4.5)+
+  coord_polar(theta = "y")+
+  scale_fill_brewer(palette = "Blues")+
+    theme_void()+
+  theme(legend.title = element_blank(),
+    plot.title = element_text(size=12, face="bold", hjust=0.5))+
+  xlim(0.5,2.5)+
+  labs(title="Pensiones") 
+
+```
+
+
+```{r}
+school_ciudadania_curso <- ggarrange(
+   plot_mjp1, 
+   plot_mjp2,
+   plot_mjp3,
+  common.legend = TRUE, 
+ ncol = 3, 
+  legend = "bottom")
+
+school_ciudadania_curso
+```
+
+
+

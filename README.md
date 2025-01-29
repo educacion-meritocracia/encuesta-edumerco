@@ -1,18 +1,17 @@
-# Encuesta Fondecyt EDUMER - Ola 1 (2023)
+# Encuesta adultos Fondecyt EDUMER - "Educación, Meritocracia y Cohesión Social" (2025)
 
-Reporte descriptivo [en este enlace](https://educacion-meritocracia.github.io/edumer-ola1/processing/descriptivos.html)
-
-Reporte colegios <https://educacion-meritocracia.github.io/edumer-ola1/>
+Reporte de resultados <https://educacion-meritocracia.github.io/encuesta-edumerco/>
 
 # Estructura del repositorio
 
 ``` plaintext
 ├── README.md
 ├── docs/
-│   ├── Estudio-panel-Educación-y-Meritocracia.pdf
+│   ├── Estudio-Educación-Meritocracia-cohesion-social.pdf
 │   ├── index.html
 │   ├── intro.html
 │   ├── meritocracia.html
+|   ├── desigualdad.html
 │   ├── references.html
 |   └── reporte_metodologico.html
 ├── input/
@@ -23,20 +22,15 @@ Reporte colegios <https://educacion-meritocracia.github.io/edumer-ola1/>
 │   ├── codebook-edumer.R
 │   ├── descriptivos.html
 |   ├── descriptivos.Rmd
-|   ├── doc-colegios-con profes y apoderados.html
-|   ├── doc-colegios-con profes y apoderados.qmd
-|   ├── doc-colegios-estudiantes.html
-|   ├── doc-colegios-estudiantes.qmd
-|   ├── doc-colegios-modulos.pdf
 │   └── preparacion.R
 ├── _quarto.yml
-├── ciudadania.qmd
 ├── cover.png
+├── desigualdad.qmd
+├── Educacion-meritocracia.bib
+├── encuesta-edumerco.Rproj
 ├── index.qmd
 ├── intro.qmd
 ├── meritocracia.qmd
-├── panel-edumer.Rproj
-├── Educacion-meritocracia.bib
 ├── references.qmd
 └── reporte_metodologico.qmd
 ```

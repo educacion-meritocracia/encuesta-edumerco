@@ -3,15 +3,15 @@ project:
   output-dir: docs
 
 book:
-  title: "Estudio panel Educación y Meritocracia"
+  title: "Estudio Educación, Meritocracia y Cohesión Social"
   author: "Equipo Edumer"
-  date: "08/12/2024"
+  date: "28/01/2024"
   chapters:
     - index.qmd
     - intro.qmd
     - reporte_metodologico.qmd
     - meritocracia.qmd
-    - ciudadania.qmd
+    - desigualdad.qmd
     - references.qmd
 
 bibliography: Educacion-meritocracia.bib
@@ -23,5 +23,5 @@ format:
   pdf:
     documentclass: scrreprt
 
-editor: visual
+editor: source
 
