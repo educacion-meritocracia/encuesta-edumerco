@@ -21,4 +21,4 @@ La base de datos final de EDUMERCO Adultos se encuentra disponible en **Zenodo**
 
 **Referencia:** Castillo, J. C., Lafferte Tamayo, A. P., & Carrasco, K. (2025). *EDUMERCO Adultos: base de datos* \[Dataset\]. Zenodo. https://doi.org/10.5281/zenodo.22939453.
 
-[**DOI:** https://doi.org/10.5281/zenodo.22939453](Referencia: Castillo, J. C., Lafferte Tamayo, A. P., & Carrasco, K. (2025). EDUMERCO Adultos: base de datos [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.22939453)
+**DOI:** https://doi.org/10.5281/zenodo.22939453

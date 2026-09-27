@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Manual Metodológico de Encuesta EDUMERCO",
     "section": "",
-    "text": "Presentación\nEste manual documenta la encuesta Educación, Meritocracia y Cohesión Social (EDUMERCO), realizada en el marco del proyecto “Meritocracia en la escuela: Fundamentos morales del mercado educativo y sus implicancias para la formación ciudadana en Chile” (EDUMER), FONDECYT Regular N.º 1210847, dirigido por Juan Carlos Castillo, del Departamento de Sociología de la Universidad de Chile, y financiado por la Agencia Nacional de Investigación y Desarrollo (ANID). EDUMERCO tiene como objetivo estudiar las creencias y actitudes sobre meritocracia, desigualdad y cohesión social en la población adulta en Chile.\nEDUMERCO surge como una extensión del Estudio Panel Educación y Meritocracia (EDUMER), desarrollado con estudiantes de enseñanza básica y media, sus profesores y apoderados. El diseño original del proyecto contemplaba tres olas del estudio panel escolar, sin embargo, los retrasos en la recolección de datos asociados a la pandemia de COVID-19 desplazaron el inicio del panel a 2023, permitiendo realizar dos olas durante el período de ejecución del proyecto. En este contexto, se incorporó una encuesta a población adulta, orientada a ampliar el estudio de los temas centrales del proyecto y permitir la comparación de actitudes y creencias entre jóvenes y adultos.\nEl cuestionario de EDUMERCO se estructuró en seis módulos temáticos. Los módulos de caracterización sociodemográfica, meritocracia y actitudes hacia la desigualdad fueron desarrollados por el equipo de investigación del proyecto. Adicionalmente, el instrumento incorporó un experimento factorial basado en viñetas, una batería de valores sociales y una escala de ideales de convivencia social. Estos componentes fueron elaborados o adaptados a partir de instrumentos utilizados por el Research Institute Social Cohesion (RISC, Alemania), en el contexto de una colaboración académica orientada a la utilización de herramientas comparables para el estudio de la cohesión social.\nEl componente experimental basado en viñetas fue desarrollado mediante un trabajo conjunto entre investigadores de COES y del equipo asociado al RISC y la Universidad de Bremen. La batería de valores sociales corresponde a una adaptación de la escala de Valores Humanos Básicos de Shalom Schwartz (PVQ-21), mientras que la batería sobre ideales de convivencia social fue incorporada a partir del instrumento Ideals for Living Together, empleado en el Social Cohesion Panel del RISC\nLa encuesta EDUMERCO fue realizada entre diciembre de 2024 y enero de 2025 mediante un panel en línea dirigido a personas de 18 años o más residentes en Chile. La muestra fue proporcionada por Netquest, mientras que la programación y administración del cuestionario fueron implementadas por el equipo de investigación utilizando la plataforma Formr. El diseño contempló un tamaño muestral de 3.500 casos y cobertura nacional, con cuotas de sexo, edad y nivel socioeconómico. Durante el levantamiento se incorporó además el nivel educacional como una cuota adicional. La base final disponible contiene 3.484 casos.\nEste manual tiene como propósito sistematizar la información metodológica asociada a EDUMERCO y proporcionar la documentación necesaria para comprender y utilizar los datos producidos por el estudio. Para ello, se organiza en las secciones Diseño, Instrumento, Implementación, Base de datos, Libro de códigos y Apéndice. Estas secciones documentan, respectivamente, las características del diseño de la encuesta, la composición y procedencia del instrumento y del componente experimental, el proceso de programación y levantamiento de los datos, la base final disponible y sus condiciones de acceso, la estructura y definición de las variables, y la información complementaria asociada al estudio.",
+    "text": "Presentación\nEste manual documenta la encuesta Educación, Meritocracia y Cohesión Social (EDUMERCO), realizada en el marco del proyecto “Meritocracia en la escuela: Fundamentos morales del mercado educativo y sus implicancias para la formación ciudadana en Chile” (EDUMER), FONDECYT Regular N.º 1210847, dirigido por Juan Carlos Castillo, del Departamento de Sociología de la Universidad de Chile, y financiado por la Agencia Nacional de Investigación y Desarrollo (ANID). EDUMERCO tiene como objetivo estudiar las creencias y actitudes sobre meritocracia, desigualdad y cohesión social en la población adulta en Chile.\nEDUMERCO surge como una extensión del Estudio Panel Educación y Meritocracia (EDUMER), desarrollado con estudiantes de enseñanza básica y media, sus profesores y apoderados. A este estudio se incorporó una encuesta a población adulta, orientada a ampliar el análisis de los temas centrales del proyecto y permitir la comparación de actitudes y creencias entre jóvenes y adultos.\nEl cuestionario de EDUMERCO se estructuró en seis módulos temáticos. Los módulos de caracterización sociodemográfica, meritocracia y actitudes hacia la desigualdad fueron desarrollados por el equipo de investigación del proyecto. Adicionalmente, el instrumento incorporó un experimento factorial basado en viñetas, una batería de valores sociales y una escala de ideales de convivencia social. Estos componentes fueron elaborados o adaptados a partir de instrumentos utilizados por el Research Institute Social Cohesion (RISC, Alemania), en el contexto de una colaboración académica orientada a la utilización de herramientas comparables para el estudio de la cohesión social.\nEl componente experimental basado en viñetas fue desarrollado mediante un trabajo conjunto entre investigadores de COES y del equipo asociado al RISC y la Universidad de Bremen. La batería de valores sociales corresponde a una adaptación de la escala de Valores Humanos Básicos de Shalom Schwartz (PVQ-21) (Schwartz (2012)) mientras que la batería sobre ideales de convivencia social fue incorporada a partir del instrumento Ideals for Living Together, empleado en el Social Cohesion Panel del RISC (Groh-Samberg et al. (2024)).\nLa encuesta EDUMERCO fue realizada entre diciembre de 2024 y enero de 2025 mediante un panel en línea dirigido a personas de 18 años o más residentes en Chile. La muestra fue proporcionada por Netquest, mientras que la programación y administración del cuestionario fueron implementadas por el equipo de investigación utilizando la plataforma Formr. El diseño contempló un tamaño muestral de 3.500 casos y cobertura nacional, con cuotas de sexo, edad y nivel socioeconómico. Durante el levantamiento se incorporó además el nivel educacional como una cuota adicional. La base final disponible contiene 3.484 casos.\nEste manual tiene como propósito sistematizar la información metodológica asociada a EDUMERCO y proporcionar la documentación necesaria para comprender y utilizar los datos producidos por el estudio. Para ello, se organiza en las secciones Diseño, Instrumento, Implementación, Base de datos, Libro de códigos y Apéndice. Estas secciones documentan, respectivamente, las características del diseño de la encuesta, la composición y procedencia del instrumento y del componente experimental, el proceso de programación y levantamiento de los datos, la base final disponible y sus condiciones de acceso, la estructura y definición de las variables, y la información complementaria asociada al estudio.",
     "crumbs": [
       "Presentación"
     ]
@@ -160,36 +160,6 @@
     ]
   },
   {
-    "objectID": "04-base-datos.html",
-    "href": "04-base-datos.html",
-    "title": "4  Base de datos",
-    "section": "",
-    "text": "4.1 Acceso a los datos y condiciones de uso\nEsta sección documenta la base de datos utilizada para el procesamiento y análisis de EDUMERCO Adultos, incluyendo su estructura, la versión final disponible y las condiciones de acceso y reutilización de los datos.\nLa base de datos final de EDUMERCO Adultos corresponde a la base integrada utilizada para el procesamiento y análisis de la encuesta. Contiene 3.484 casos y 526 variables y se encuentra disponible en un único archivo en formato .RData.\nEl archivo disponible es completas-280125.RData.",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Base de datos</span>"
-    ]
-  },
-  {
-    "objectID": "04-base-datos.html#sec-bases",
-    "href": "04-base-datos.html#sec-bases",
-    "title": "4  Base de datos",
-    "section": "4.2 Acceso a los datos y condiciones de uso",
-    "text": "4.2 Acceso a los datos y condiciones de uso\nLa base de datos final de EDUMERCO Adultos se encuentra disponible en Zenodo bajo una licencia Creative Commons Attribution 4.0 International (CC BY 4.0).\nReferencia: Castillo, J. C., Lafferte Tamayo, A. P., & Carrasco, K. (2025). EDUMERCO Adultos: base de datos [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.22939453.\nDOI: https://doi.org/10.5281/zenodo.22939453",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Base de datos</span>"
-    ]
-  },
-  {
-    "objectID": "05-libro-codigos.html",
-    "href": "05-libro-codigos.html",
-    "title": "5  Libro de códigos",
-    "section": "",
-    "text": "5.1 Instrucciones\nEsta sección documenta las variables presentes en la base final de EDUMERCO Adultos y proporciona la información necesaria para interpretar su contenido y estructura. Para cada variable se presenta su nombre, etiqueta, opciones de respuesta cuando corresponde, tipo de variable y número de casos válidos.\nLa información se organiza en una tabla que permite consultar las variables mediante distintos atributos y facilita la búsqueda e identificación de variables específicas de la base.",
-    "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Libro de códigos</span>"
-    ]
-  },
-  {
     "objectID": "04-bases-datos.html",
     "href": "04-bases-datos.html",
     "title": "4  Bases de datos",
@@ -207,6 +177,26 @@
     "text": "4.2 Acceso a los datos y condiciones de uso\nLa base de datos final de EDUMERCO Adultos se encuentra disponible en Zenodo bajo una licencia Creative Commons Attribution 4.0 International (CC BY 4.0).\nReferencia: Castillo, J. C., Lafferte Tamayo, A. P., & Carrasco, K. (2025). EDUMERCO Adultos: base de datos [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.22939453.\nDOI: https://doi.org/10.5281/zenodo.22939453",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Bases de datos</span>"
+    ]
+  },
+  {
+    "objectID": "05-libro-codigos.html",
+    "href": "05-libro-codigos.html",
+    "title": "5  Libro de códigos",
+    "section": "",
+    "text": "5.1 Instrucciones\nEsta sección documenta las variables presentes en la base final de EDUMERCO Adultos y proporciona la información necesaria para interpretar su contenido y estructura. Para cada variable se presenta su nombre, etiqueta, opciones de respuesta cuando corresponde, tipo de variable y número de casos válidos.\nLa información se organiza en una tabla que permite consultar las variables mediante distintos atributos y facilita la búsqueda e identificación de variables específicas de la base.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Libro de códigos</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#section",
+    "href": "index.html#section",
+    "title": "Manual Metodológico de Encuesta EDUMERCO",
+    "section": "",
+    "text": "Groh-Samberg, Olaf, Julian B. Axenfeld, Jean-Yves Gerlitz, et al. 2024. German Social Cohesion Panel 2021/22 – Wave 1: Dataset and Documentation. RDC-RISC, RDC-SOEP. https://doi.org/10.60532/SCP.2021_22.W1.V1.\n\n\nSchwartz, Shalom H. 2012. “An Overview of the Schwartz Theory of Basic Values.” Online Readings in Psychology and Culture 2 (1). https://doi.org/10.9707/2307-0919.1116.",
+    "crumbs": [
+      "Presentación"
     ]
   }
 ]

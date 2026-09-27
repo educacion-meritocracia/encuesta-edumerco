@@ -3,6 +3,7 @@ format:
   html:
     toc: false
     css: justify.css
+    bibliography: references.bib
 ---
 
 ![](images/edumer.png){.float-end width="160px"}
@@ -11,11 +12,11 @@ format:
 
 Este manual documenta la encuesta Educación, Meritocracia y Cohesión Social (EDUMERCO), realizada en el marco del proyecto “Meritocracia en la escuela: Fundamentos morales del mercado educativo y sus implicancias para la formación ciudadana en Chile” (EDUMER), FONDECYT Regular N.º 1210847, dirigido por Juan Carlos Castillo, del Departamento de Sociología de la Universidad de Chile, y financiado por la Agencia Nacional de Investigación y Desarrollo (ANID). EDUMERCO tiene como objetivo estudiar las creencias y actitudes sobre meritocracia, desigualdad y cohesión social en la población adulta en Chile.
 
-EDUMERCO surge como una extensión del Estudio Panel Educación y Meritocracia (EDUMER), desarrollado con estudiantes de enseñanza básica y media, sus profesores y apoderados. El diseño original del proyecto contemplaba tres olas del estudio panel escolar, sin embargo, los retrasos en la recolección de datos asociados a la pandemia de COVID-19 desplazaron el inicio del panel a 2023, permitiendo realizar dos olas durante el período de ejecución del proyecto. En este contexto, se incorporó una encuesta a población adulta, orientada a ampliar el estudio de los temas centrales del proyecto y permitir la comparación de actitudes y creencias entre jóvenes y adultos.
+EDUMERCO surge como una extensión del Estudio Panel Educación y Meritocracia (EDUMER), desarrollado con estudiantes de enseñanza básica y media, sus profesores y apoderados. A este estudio se incorporó una encuesta a población adulta, orientada a ampliar el análisis de los temas centrales del proyecto y permitir la comparación de actitudes y creencias entre jóvenes y adultos.
 
 El cuestionario de EDUMERCO se estructuró en seis módulos temáticos. Los módulos de caracterización sociodemográfica, meritocracia y actitudes hacia la desigualdad fueron desarrollados por el equipo de investigación del proyecto. Adicionalmente, el instrumento incorporó un experimento factorial basado en viñetas, una batería de valores sociales y una escala de ideales de convivencia social. Estos componentes fueron elaborados o adaptados a partir de instrumentos utilizados por el Research Institute Social Cohesion (RISC, Alemania), en el contexto de una colaboración académica orientada a la utilización de herramientas comparables para el estudio de la cohesión social.
 
-El componente experimental basado en viñetas fue desarrollado mediante un trabajo conjunto entre investigadores de COES y del equipo asociado al RISC y la Universidad de Bremen. La batería de valores sociales corresponde a una adaptación de la escala de Valores Humanos Básicos de Shalom Schwartz (PVQ-21), mientras que la batería sobre ideales de convivencia social fue incorporada a partir del instrumento *Ideals for Living Together*, empleado en el Social Cohesion Panel del RISC
+El componente experimental basado en viñetas fue desarrollado mediante un trabajo conjunto entre investigadores de COES y del equipo asociado al RISC y la Universidad de Bremen. La batería de valores sociales corresponde a una adaptación de la escala de Valores Humanos Básicos de Shalom Schwartz (PVQ-21) (@schwartz_overview_2012) mientras que la batería sobre ideales de convivencia social fue incorporada a partir del instrumento *Ideals for Living Together*, empleado en el Social Cohesion Panel del RISC (@groh-samberg_german_2024).
 
 La encuesta EDUMERCO fue realizada entre diciembre de 2024 y enero de 2025 mediante un panel en línea dirigido a personas de 18 años o más residentes en Chile. La muestra fue proporcionada por Netquest, mientras que la programación y administración del cuestionario fueron implementadas por el equipo de investigación utilizando la plataforma Formr. El diseño contempló un tamaño muestral de 3.500 casos y cobertura nacional, con cuotas de sexo, edad y nivel socioeconómico. Durante el levantamiento se incorporó además el nivel educacional como una cuota adicional. La base final disponible contiene 3.484 casos.
 
