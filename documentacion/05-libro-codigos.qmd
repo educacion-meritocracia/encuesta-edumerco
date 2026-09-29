@@ -7,8 +7,119 @@ format:
 
 # Libro de códigos {#codebook}
 
-Esta sección documenta las variables presentes en la base final de EDUMERCO Adultos y proporciona la información necesaria para interpretar su contenido y estructura. Para cada variable se presenta su nombre, etiqueta, opciones de respuesta cuando corresponde, tipo de variable y número de casos válidos. 
+Para el uso adecuado de la base de datos EDUMERCO Adultos, se recomienda trabajar con el libro de códigos que se presenta a continuación. Esta sección busca facilitar el uso de la base de datos, entregando los nombres de las variables, sus etiquetas y las etiquetas de las categorías de respuesta.
 
-## Instrucciones
+Cada libro muestra el código de cada variable (`name`), la etiqueta asociada al ítem (`label`) y las categorías de respuesta con sus códigos (`value_label`).
 
-La información se organiza en una tabla que permite consultar las variables mediante distintos atributos y facilita la búsqueda e identificación de variables específicas de la base.
+Se puede usar el buscador del inicio de la tabla para filtrar por cualquier columna, o los buscadores individuales de cada columna para refinar la búsqueda.
+
+```{r}
+#| label: setup-codebook
+#| echo: false
+#| message: false
+#| warning: false
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(readxl, dplyr, DT, httr)
+
+url_codebook <- "https://raw.githubusercontent.com/javieraalvarez0208-hue/encuesta-edumerco/main/input/data/original/codebook.xlsx"
+
+temp_xlsx <- tempfile(fileext = ".xlsx")
+invisible(httr::GET(url_codebook, httr::write_disk(temp_xlsx, overwrite = TRUE)))
+
+codebook <- read_excel(temp_xlsx)
+
+render_codebook_modulo <- function(mod, titulo = NULL) {
+  codebook %>%
+    filter(modulo == mod) %>%
+    select(name, label, value_label) %>%
+    datatable(
+      filter = "top",
+      rownames = FALSE,
+      colnames = c("Variable", "Etiqueta", "Valores"),
+      caption = titulo,
+      options = list(
+        pageLength = 20,
+        scrollX = TRUE,
+        autoWidth = TRUE,
+        columnDefs = list(
+          list(width = "12%", targets = 0),
+          list(width = "44%", targets = 1),
+          list(width = "44%", targets = 2)
+        )
+      )
+    )
+}
+```
+
+## Módulo A. Caracterización inicial
+
+En el primer módulo, las preguntas buscan caracterizar a los participantes de la encuesta.
+
+```{r}
+#| label: cb-a
+#| echo: false
+
+pacman::p_load(DT)
+render_codebook_modulo("A", "Libro de códigos - Módulo A. Caracterización inicial")
+```
+
+## Módulo B. Meritocracia
+
+En el módulo de meritocracia se realizan preguntas sobre la importancia del mérito en Chile y las oportunidades para acceder a mayores recompensas.
+
+```{r}
+#| label: cb-b
+#| echo: false
+
+pacman::p_load(DT)
+render_codebook_modulo("B", "Libro de códigos - Módulo B. Meritocracia")
+```
+
+## Módulo C. Actitudes hacia la desigualdad
+
+En este módulo las preguntas están orientadas a las actitudes hacia la desigualdad.
+
+```{r}
+#| label: cb-c
+#| echo: false
+
+pacman::p_load(DT)
+render_codebook_modulo("C", "Libro de códigos - Módulo C. Actitudes hacia la desigualdad")
+```
+
+## Módulo E. Valores sociales
+
+En este módulo se presentan tipos de personas y se pregunta el grado de similitud con el participante.
+
+```{r}
+#| label: cb-e
+#| echo: false
+
+pacman::p_load(DT)
+render_codebook_modulo("E", "Libro de códigos - Módulo E. Valores sociales")
+```
+
+## Módulo F. Cohesión social
+
+En este módulo se realizan preguntas sobre convivencia con el resto de personas dentro de la sociedad.
+
+```{r}
+#| label: cb-f
+#| echo: false
+
+pacman::p_load(DT)
+render_codebook_modulo("F", "Libro de códigos - Módulo F. Cohesión social")
+```
+
+## Anexo. Módulo D. Experimento factorial de viñetas
+
+El módulo D corresponde al experimento factorial de viñetas. Debido al elevado número de variables que lo componen, se presenta en un anexo separado.
+
+```{r}
+#| label: cb-d
+#| echo: false
+
+pacman::p_load(DT)
+render_codebook_modulo("D", "Libro de códigos - Módulo D. Experimento factorial de viñetas")
+```
