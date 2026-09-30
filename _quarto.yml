@@ -1,27 +1,32 @@
 project:
-  type: book
+  type: website
   output-dir: docs
+  render:
+    - documentacion/*.qmd
 
-book:
-  title: "Estudio Educación, Meritocracia y Cohesión Social"
-  author: "Equipo Edumer"
-  date: "28/01/2024"
-  chapters:
-    - index.qmd
-    - intro.qmd
-    - reporte_metodologico.qmd
-    - meritocracia.qmd
-    - desigualdad.qmd
-    - references.qmd
-
-bibliography: Educacion-meritocracia.bib
+website:
+  title: "Manual metodológico EDUMERCO"
+  navbar:
+    left:
+      - text: "Presentación"
+        href: documentacion/01-presentacion.qmd
+      - text: "Diseño"
+        href: documentacion/02-diseno.qmd
+      - text: "Instrumento"
+        href: documentacion/03-instrumento.qmd
+      - text: "Implementación"
+        href: documentacion/04-implementacion.qmd
+      - text: "Base de datos"
+        href: documentacion/05-bases-datos.qmd
+      - text: "Libro de códigos"
+        href: documentacion/06-libro-codigos.qmd
+      - text: "Apéndice"
+        href: documentacion/07-apendice.qmd
 
 format:
   html:
+    toc: true
+    toc-depth: 3
+    css: documentacion/styles/justify.css
+    bibliography: references.bib
     theme: cosmo
-    language: "es"
-  pdf:
-    documentclass: scrreprt
-
-editor: source
-

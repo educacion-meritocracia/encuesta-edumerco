@@ -112,14 +112,6 @@ pacman::p_load(DT)
 render_codebook_modulo("F", "Libro de códigos - Módulo F. Cohesión social")
 ```
 
-## Anexo. Módulo D. Experimento factorial de viñetas
+## Módulo D. Experimento factorial de viñetas
 
-El módulo D corresponde al experimento factorial de viñetas. Debido al elevado número de variables que lo componen, se presenta en un anexo separado.
-
-```{r}
-#| label: cb-d
-#| echo: false
-
-pacman::p_load(DT)
-render_codebook_modulo("D", "Libro de códigos - Módulo D. Experimento factorial de viñetas")
-```
+El módulo D corresponde al experimento factorial de viñetas. Debido a la estructura particular de sus variables —432 variables organizadas por deck, viñeta e ítem—, el detalle del diseño, el listado de las 144 viñetas y una guía para trabajar con estos datos se presentan en el [Apéndice, sección Detalle del experimento factorial de viñetas](#sec-anexo-vinetas).

@@ -7,7 +7,7 @@ format:
 
 # Diseño {#sec-estadis}
 
-Esta sección describe las principales características del diseño de EDUMERCO Adultos. Se trata de una encuesta transversal, aplicada en una única medición a población adulta residente en Chile. En esta sección se presentan la población objetivo y la población efectivamente accesible mediante el panel, las unidades de análisis, la estrategia de selección de participantes, las cuotas utilizadas durante el levantamiento y el tamaño de la muestra. También se documentan el seguimiento de las cuotas, la ausencia de procedimientos de ponderación y calibración, las principales consideraciones sobre precisión e incertidumbre y los aspectos éticos de la encuesta.
+Esta sección describe las características del diseño muestral y los aspectos éticos de la encuesta.
 
 ## Población objetivo y población de la encuesta {#sec-target}
 
@@ -15,19 +15,17 @@ La población objetivo de EDUMERCO corresponde a personas de 18 años o más res
 
 La población de la encuesta corresponde al subconjunto de la población objetivo accesible a través del panel en línea de Netquest durante el período de levantamiento. En consecuencia, la cobertura efectiva del estudio se encuentra delimitada por las personas pertenecientes al panel que cumplían con los criterios de elegibilidad definidos para el estudio.
 
-## Unidades de análisis y dominios {#sec-units}
+## Unidades de análisis y dominios
 
 La unidad de observación y de información corresponde a cada persona de 18 años o más que respondió individualmente el cuestionario. La unidad de análisis corresponde igualmente a las personas adultas estudiadas por EDUMERCO.
 
-El estudio fue diseñado con cobertura nacional y no se definieron dominios territoriales específicos de estimación. Por lo tanto, el diseño no contempla estimaciones independientes para regiones u otras subdivisiones territoriales.
+El estudio fue diseñado con cobertura nacional y no se definieron dominios territoriales específicos de estimación.
 
-## Estrategia de muestreo y selección de la muestra {#sec-strategy}
+## Estrategia de muestreo y selección de la muestra
 
 EDUMERCO utilizó una muestra no probabilística mediante un panel en línea administrado por Netquest. Las personas participantes fueron seleccionadas entre integrantes elegibles del panel y accedieron al cuestionario mediante la infraestructura de integración entre el proveedor de la muestra y la encuesta en línea.
 
 El diseño contempló el control de la composición de la muestra mediante cuotas sociodemográficas.
-
-Los criterios generales de elegibilidad correspondieron a personas de 18 años o más residentes en Chile.
 
 ## Cuotas y tamaño de la muestra {#sec-quotas}
 
@@ -75,10 +73,12 @@ cuotas |>
   column_spec(4, width = "5em")
 ```
 
-*Notas metodológicas:*
+***Notas metodológicas:***
 
 1.  *La definición de nivel socioeconómico propuesta por el proveedor no resultó operativamente clara, por lo que esta dimensión se monitoreó a partir de la variable de ingresos mensuales líquidos (`carac_a10`).*
 2.  *Durante el trabajo de campo se incorporó el nivel educacional como cuota adicional, cuyo cumplimiento fue objeto de seguimiento operativo.*
+
+El tamaño muestral previsto fue de 3.500 casos. La base final contiene 3.484 casos.
 
 ## Alcance del control de cuotas
 

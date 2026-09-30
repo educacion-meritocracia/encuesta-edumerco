@@ -284,3 +284,16 @@ vars_f %>%
   column_spec(4, width = "6em") %>%
   collapse_rows(columns = 1:3, valign = "top")
 ```
+
+## Detalle del experimento factorial de viñetas {#sec-anexo-vinetas}
+
+### Estructura del módulo
+
+El módulo D corresponde a un experimento factorial de viñetas. Cada persona participante fue asignada aleatoriamente a uno de 15 conjuntos de viñetas (decks) y evaluó entre 9 y 10 viñetas. Cada viñeta describe a una persona ficticia mediante la combinación de 9 dimensiones.
+
+En la base, las variables del módulo D se nombran con el patrón `dDvV_pII`, donde `D` indica el deck (1 a 15), `V` la viñeta dentro del deck, y `II` el ítem de evaluación (01 a 03). Por ejemplo, `d3v1_p01` corresponde al primer ítem de evaluación de la primera viñeta del deck 3. La variable `ran_group` indica el deck asignado a cada persona.
+
+### Listado de las 144 viñetas
+
+A continuación se presenta el detalle de las 144 viñetas del experimento, incluyendo el deck al que pertenecen, el texto presentado a las personas participantes y las dimensiones que las componen.
+
