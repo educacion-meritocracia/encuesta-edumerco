@@ -2,8 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+.RDataTmp
 
 /.quarto/
 
 .DS_Store
-**/.DS_Storereporte-resultados/
+**/.DS_Store
