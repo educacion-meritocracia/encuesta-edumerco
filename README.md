@@ -1,36 +1,9 @@
-# Encuesta adultos Fondecyt EDUMER - "Educación, Meritocracia y Cohesión Social" (2025)
+# Encuesta adultos FONDECYT EDUMER — "Educación, Meritocracia y Cohesión Social" (2025)
 
-Reporte de resultados <https://educacion-meritocracia.github.io/encuesta-edumerco/>
+Manual metodológico y reporte de resultados de la encuesta **Educación, Meritocracia y Cohesión Social (EDUMERCO)**, realizada en el marco del proyecto FONDECYT Regular N.º 1210847, dirigido por Juan Carlos Castillo (Departamento de Sociología, Universidad de Chile) y financiado por ANID y COES.
 
-# Estructura del repositorio
+**Manual metodológico:** https://educacion-meritocracia.github.io/encuesta-edumerco/documentacion/
 
-``` plaintext
-├── README.md
-├── docs/
-│   ├── Estudio-Educación-Meritocracia-cohesion-social.pdf
-│   ├── index.html
-│   ├── intro.html
-│   ├── meritocracia.html
-|   ├── desigualdad.html
-│   ├── references.html
-|   └── reporte_metodologico.html
-├── input/
-│   ├── data/
-│   │   ├── original
-│   └── ├── proc
-├── processing/
-│   ├── codebook-edumer.R
-│   ├── descriptivos.html
-|   ├── descriptivos.Rmd
-│   └── preparacion.R
-├── _quarto.yml
-├── cover.png
-├── desigualdad.qmd
-├── Educacion-meritocracia.bib
-├── encuesta-edumerco.Rproj
-├── index.qmd
-├── intro.qmd
-├── meritocracia.qmd
-├── references.qmd
-└── reporte_metodologico.qmd
-```
+**Reporte de resultados:** https://educacion-meritocracia.github.io/encuesta-edumerco/reporte-resultados/
+
+## Estructura del repositorio
