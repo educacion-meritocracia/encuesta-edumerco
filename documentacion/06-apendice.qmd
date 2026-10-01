@@ -297,3 +297,34 @@ En la base, las variables del módulo D se nombran con el patrón `dDvV_pII`, do
 
 A continuación se presenta el detalle de las 144 viñetas del experimento, incluyendo el deck al que pertenecen, el texto presentado a las personas participantes y las dimensiones que las componen.
 
+
+```{r}
+#| label: tbl-vinetas
+#| echo: false
+#| message: false
+#| warning: false
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(readxl, dplyr, DT, httr)
+
+url_vinetas <- "https://raw.githubusercontent.com/javieraalvarez0208-hue/encuesta-edumerco/main/input/data/original/vignettes_ESP.xlsx"
+
+temp_xlsx <- tempfile(fileext = ".xlsx")
+invisible(httr::GET(url_vinetas, httr::write_disk(temp_xlsx, overwrite = TRUE)))
+
+vinetas <- read_excel(temp_xlsx)
+
+vinetas %>%
+  select(
+    Deck = deck,
+    Viñeta = vig,
+    Perfil = letter,
+    Texto = vig_text_ESP
+  ) %>%
+  datatable(
+    filter = "top",
+    rownames = FALSE,
+    options = list(pageLength = 10, scrollX = TRUE),
+    caption = "Detalle de las 144 viñetas del experimento factorial"
+  )
+```
