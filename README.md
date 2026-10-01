@@ -2,3 +2,4 @@
 
 Manual metodológico y reporte de resultados de la encuesta **Educación, Meritocracia y Cohesión Social (EDUMERCO)**
 
+[Link al manual metodológico](https://educacion-meritocracia.github.io/encuesta-edumerco/documentacion/docs/index.html)
