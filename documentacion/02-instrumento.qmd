@@ -37,6 +37,8 @@ El cuestionario combina preguntas y baterías provenientes de instrumentos utili
 | E. Valores sociales | Valores personales | PVQ-21 de Schwartz |
 | F. Cohesión social | F. Cohesión social | *Ideals for Living Together* (RISC) |
 
+El listado detallado de variables se puede encontrar en [Apéndice](06-apendice.qmd#sec-listado-vars).
+
 ### Módulo D. Experimento
 
 El Módulo D corresponde al experimento factorial de viñetas incorporado en EDUMERCO. El diseño presenta perfiles ficticios cuyas características se combinan sistemáticamente para evaluar percepciones y disposiciones asociadas a la cohesión social. El experimento fue desarrollado en el marco de la colaboración internacional asociada al estudio, con participación de equipos vinculados a COES y al *Research Institute Social Cohesion* (RISC) de la Universidad de Bremen.
@@ -66,3 +68,5 @@ Después de leer cada viñeta, las personas participantes evaluaron a la persona
 3.  *Imagina que la persona \[X\] se muda a tu barrio. ¿Qué probabilidad hay de que entres en conflicto con esa persona?*
 
 Cada persona participante fue asignada aleatoriamente a uno de los 15 decks, sin cuotas ni control de tamaño. El número de participantes por deck varió entre 208 y 266 (media ≈ 232). Cada persona evaluó las viñetas de un único deck, por lo que cada viñeta fue evaluada por aproximadamente 230 personas.
+
+El detalle completo de las 144 viñetas se puede encontrar en [Apéndice](06-apendice.qmd#sec-anexo-vinetas).
