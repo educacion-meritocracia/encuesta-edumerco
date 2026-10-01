@@ -114,4 +114,4 @@ render_codebook_modulo("F", "Libro de códigos - Módulo F. Cohesión social")
 
 ## Módulo D. Experimento factorial de viñetas
 
-El módulo D corresponde al experimento factorial de viñetas. Debido a la estructura particular de sus variables —432 variables organizadas por deck, viñeta e ítem—, el detalle del diseño, el listado de las 144 viñetas y una guía para trabajar con estos datos se presentan en el [Apéndice, sección Detalle del experimento factorial de viñetas](#sec-anexo-vinetas).
+El módulo D corresponde al experimento factorial de viñetas. Debido a la estructura de sus variables (432 variables organizadas por deck, viñeta e ítem), su estructura y el listado de las 144 viñetas se presentan en el [Apéndice](06-apendice.qmd#sec-anexo-vinetas).
