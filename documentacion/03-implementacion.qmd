@@ -1,0 +1,85 @@
+---
+format:
+  html:
+    toc: true
+    css: justify.css
+---
+
+# Implementación {#imp-instrument}
+
+Esta sección documenta la implementación de la encuesta, desde su programación hasta el procesamiento de los registros obtenidos.
+
+## Programación y aplicación de la encuesta
+
+La encuesta fue programada y administrada mediante la plataforma formr, utilizada para implementar el cuestionario en línea y registrar las respuestas. La aplicación se organizó en cuatro componentes correspondientes a las principales secciones del instrumento: `inicio`, `meritocracy`, `vignetas` y `cohesion`.
+
+La aplicación correspondió a una encuesta autoadministrada en línea. La participación se realizó mediante el panel de Netquest, mientras que formr fue utilizado para la presentación del cuestionario, el registro de las respuestas y la administración de los distintos componentes.
+
+## Trabajo de campo
+
+El levantamiento se realizó mediante un panel en línea administrado por Netquest, con población elegible de personas de 18 años o más residentes en Chile.
+
+El trabajo de campo se desarrolló entre diciembre de 2024 y enero de 2025, y fue cerrado el 28 de enero de 2025. El tamaño muestral previsto fue de 3.500 casos.
+
+Durante el levantamiento se realizó un seguimiento de las cuotas muestrales por sexo, edad, nivel educacional y nivel socioeconómico. Este seguimiento registraba los casos acumulados y faltantes por categoría y se reportaba a Netquest para orientar el cierre de las cuotas.
+
+Netquest aplica controles de calidad a todas las encuestas que se envían a su panel: una pregunta trampa previa al acceso, verificación de duplicados, verificación cruzada de sexo y edad, y un captcha de acceso. Estos controles operan antes de que las personas lleguen al cuestionario.
+
+El cierre de campo siguió el protocolo del proveedor, que incluye notificar el término del levantamiento, enviar el listado de IDs de participación dentro de las 72 horas siguientes, y reportar las métricas finales (casos completos, incidencia y duración media) dentro de las 48 horas siguientes.
+
+## Integración y procesamiento de las bases
+
+Una vez finalizado el levantamiento, los resultados de los distintos componentes de formr fueron extraídos y posteriormente integrados en R. La vinculación de los registros se realizó mediante la variable `session`, utilizada como identificador común.
+
+Como parte del procesamiento inicial se eliminaron variables y registros técnicos asociados al funcionamiento de la plataforma, y se excluyeron los casos utilizados para pruebas de programación mediante una lista explícita de identificadores.
+
+Posteriormente, se definieron distintos estados de participación a partir de variables observables en la base. Los participantes fueron identificados mediante la presencia de `pid`; los cuestionarios iniciados, mediante `start_01`; y los cuestionarios completos, mediante `cohesion_12`.
+
+El script de procesamiento también calculó la duración de respuesta para los casos completos a partir de las variables `created` y `modified`.
+
+La última versión disponible de la base integrada, `completas-280125.RData`, contiene 3.484 casos y 526 variables.
+
+## Indicadores de desempeño del trabajo de campo
+
+```{r}
+#| label: tbl-desempeno
+#| tbl-cap: "Indicadores de desempeño del trabajo de campo"
+#| echo: false
+
+library(knitr)
+library(kableExtra)
+
+indicadores_campo <- data.frame(
+  Indicador = c(
+    "Casos completos en la base final",
+    "Duración mediana registrada",
+    "Casos con duración superior a 30 minutos",
+    "Casos con duración superior a 1 hora",
+    "Casos con duración superior a 2 horas",
+    "Casos con duración superior a 24 horas"
+  ),
+  
+  Resultado = c(
+    "3.484",
+    "22,87 minutos",
+    "1.116",
+    "460",
+    "274",
+    "95"
+  )
+)
+
+indicadores_campo |>
+  kable(
+    format = "html",
+    col.names = c("Indicador", "Resultado"),
+    align = c("l", "r")
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    full_width = FALSE
+  ) |>
+  column_spec(2, width = "8em")
+```
+
+**Nota**: Los tiempos corresponden al intervalo registrado entre las variables `created` y `modified` de los cuestionarios completos. La presencia de duraciones prolongadas afecta especialmente el promedio, por lo que se utiliza la mediana como medida descriptiva.

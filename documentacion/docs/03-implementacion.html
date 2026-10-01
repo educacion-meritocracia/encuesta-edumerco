@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Manual Metodológico de Encuesta EDUMERCO</title>
+<title>3&nbsp; Implementación – Manual Metodológico de Encuesta EDUMERCO</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,26 +26,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -55,7 +36,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-diseno.html" rel="next">
+<link href="./04-bases-datos.html" rel="next">
+<link href="./02-instrumento.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -92,12 +74,14 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="justify.css">
 </head>
 
-<body class="nav-sidebar docked fullcontent quarto-light">
+<body class="nav-sidebar docked quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -106,7 +90,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Presentación</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-implementacion.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Implementación</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -141,7 +125,7 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Presentación</span></a>
   </div>
 </li>
@@ -159,7 +143,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-implementacion.html" class="sidebar-item-text sidebar-link">
+  <a href="./03-implementacion.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Implementación</span></span></a>
   </div>
 </li>
@@ -186,13 +170,24 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#programación-y-aplicación-de-la-encuesta" id="toc-programación-y-aplicación-de-la-encuesta" class="nav-link active" data-scroll-target="#programación-y-aplicación-de-la-encuesta"><span class="header-section-number">3.1</span> Programación y aplicación de la encuesta</a></li>
+  <li><a href="#trabajo-de-campo" id="toc-trabajo-de-campo" class="nav-link" data-scroll-target="#trabajo-de-campo"><span class="header-section-number">3.2</span> Trabajo de campo</a></li>
+  <li><a href="#integración-y-procesamiento-de-las-bases" id="toc-integración-y-procesamiento-de-las-bases" class="nav-link" data-scroll-target="#integración-y-procesamiento-de-las-bases"><span class="header-section-number">3.3</span> Integración y procesamiento de las bases</a></li>
+  <li><a href="#indicadores-de-desempeño-del-trabajo-de-campo" id="toc-indicadores-de-desempeño-del-trabajo-de-campo" class="nav-link" data-scroll-target="#indicadores-de-desempeño-del-trabajo-de-campo"><span class="header-section-number">3.4</span> Indicadores de desempeño del trabajo de campo</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Manual Metodológico de Encuesta EDUMERCO</h1>
+<h1 class="title"><span id="imp-instrument" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Implementación</span></span></h1>
 </div>
 
 
@@ -209,25 +204,80 @@ div.csl-indent {
 </header>
 
 
-<p><img src="images/edumer.png" class="float-end img-fluid" width="160"></p>
-<section id="presentación" class="level1 unnumbered">
-<h1 class="unnumbered">Presentación</h1>
-<p>Este manual documenta la encuesta Educación, Meritocracia y Cohesión Social (EDUMERCO), realizada en el marco del proyecto “Meritocracia en la escuela: Fundamentos morales del mercado educativo y sus implicancias para la formación ciudadana en Chile” (EDUMER), FONDECYT Regular N.º 1210847. El proyecto es dirigido por Juan Carlos Castillo, del Departamento de Sociología de la Universidad de Chile, y financiado por la Agencia Nacional de Investigación y Desarrollo (ANID). EDUMERCO tiene como objetivo estudiar las creencias y actitudes sobre meritocracia, desigualdad y cohesión social en la población adulta en Chile.</p>
-<p>EDUMERCO surge como una extensión del Estudio Panel Educación y Meritocracia (EDUMER), desarrollado con estudiantes de enseñanza básica y media, sus profesores y apoderados. En este marco, se incorporó una encuesta dirigida exclusivamente a población adulta, orientada a ampliar el análisis de los temas centrales del proyecto y permitir la comparación de actitudes y creencias entre jóvenes y adultos.</p>
-<p>El cuestionario de EDUMERCO se estructuró en seis módulos temáticos. Los módulos de caracterización sociodemográfica, meritocracia y actitudes hacia la desigualdad fueron adaptados a partir de instrumentos utilizados previamente en EDUMER. Adicionalmente, el instrumento incorporó un experimento factorial basado en viñetas, una batería de valores sociales y una escala de ideales de convivencia social. Estos instrumentos y componentes fueron elaborados o adaptados a partir de instrumentos utilizados por el Research Institute Social Cohesion (RISC, Alemania), en el contexto de una colaboración académica orientada a la utilización de herramientas comparables para el estudio de la cohesión social.</p>
-<p>El componente experimental basado en viñetas fue desarrollado mediante un trabajo conjunto entre investigadores de COES y del equipo asociado al RISC y la Universidad de Bremen. La batería de valores sociales corresponde a una adaptación de la escala de Valores Humanos Básicos de Shalom Schwartz (PVQ-21) (<span class="citation" data-cites="schwartz_overview_2012">Schwartz (<a href="#ref-schwartz_overview_2012" role="doc-biblioref">2012</a>)</span>), mientras que la batería sobre ideales de convivencia social fue incorporada a partir del instrumento Ideals for Living Together, empleado en el Social Cohesion Panel del RISC (<span class="citation" data-cites="groh-samberg_german_2024">Groh-Samberg et al. (<a href="#ref-groh-samberg_german_2024" role="doc-biblioref">2024</a>)</span>).</p>
-<p>La encuesta EDUMERCO fue realizada entre diciembre de 2024 y enero de 2025 mediante un panel en línea dirigido a personas de 18 años o más residentes en Chile. La muestra fue proporcionada por Netquest, mientras que la programación y administración del cuestionario estuvieron a cargo del equipo de investigación, utilizando la plataforma Formr. El diseño contempló un tamaño muestral de 3.500 casos y cobertura nacional, con cuotas de sexo y edad. Durante el levantamiento, se incorporó además el nivel educacional como cuota adicional. La base final disponible contiene 3.484 casos.</p>
-<p>Este manual tiene como propósito sistematizar la información metodológica asociada a EDUMERCO Adultos y proporcionar la documentación necesaria para comprender y utilizar los datos producidos por el estudio. Para ello, se organiza en las secciones Diseño, Instrumento, Implementación, Base de datos, Libro de códigos y Apéndice. Estas secciones abordan, respectivamente, las características del diseño de la encuesta; la composición y procedencia del instrumento y del componente experimental; el proceso de programación y levantamiento de los datos; la base final disponible y sus condiciones de acceso; el libro de códigos interactivo; y el listado completo de variables y demás información complementaria.</p>
+<p>Esta sección documenta la implementación de la encuesta, desde su programación hasta el procesamiento de los registros obtenidos.</p>
+<section id="programación-y-aplicación-de-la-encuesta" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="programación-y-aplicación-de-la-encuesta"><span class="header-section-number">3.1</span> Programación y aplicación de la encuesta</h2>
+<p>La encuesta fue programada y administrada mediante la plataforma formr, utilizada para implementar el cuestionario en línea y registrar las respuestas. La aplicación se organizó en cuatro componentes correspondientes a las principales secciones del instrumento: <code>inicio</code>, <code>meritocracy</code>, <code>vignetas</code> y <code>cohesion</code>.</p>
+<p>La aplicación correspondió a una encuesta autoadministrada en línea. La participación se realizó mediante el panel de Netquest, mientras que formr fue utilizado para la presentación del cuestionario, el registro de las respuestas y la administración de los distintos componentes.</p>
+</section>
+<section id="trabajo-de-campo" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="trabajo-de-campo"><span class="header-section-number">3.2</span> Trabajo de campo</h2>
+<p>El levantamiento se realizó mediante un panel en línea administrado por Netquest, con población elegible de personas de 18 años o más residentes en Chile.</p>
+<p>El trabajo de campo se desarrolló entre diciembre de 2024 y enero de 2025, y fue cerrado el 28 de enero de 2025. El tamaño muestral previsto fue de 3.500 casos.</p>
+<p>Durante el levantamiento se realizó un seguimiento de las cuotas muestrales por sexo, edad, nivel educacional y nivel socioeconómico. Este seguimiento registraba los casos acumulados y faltantes por categoría y se reportaba a Netquest para orientar el cierre de las cuotas.</p>
+<p>Netquest aplica controles de calidad a todas las encuestas que se envían a su panel: una pregunta trampa previa al acceso, verificación de duplicados, verificación cruzada de sexo y edad, y un captcha de acceso. Estos controles operan antes de que las personas lleguen al cuestionario.</p>
+<p>El cierre de campo siguió el protocolo del proveedor, que incluye notificar el término del levantamiento, enviar el listado de IDs de participación dentro de las 72 horas siguientes, y reportar las métricas finales (casos completos, incidencia y duración media) dentro de las 48 horas siguientes.</p>
+</section>
+<section id="integración-y-procesamiento-de-las-bases" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="integración-y-procesamiento-de-las-bases"><span class="header-section-number">3.3</span> Integración y procesamiento de las bases</h2>
+<p>Una vez finalizado el levantamiento, los resultados de los distintos componentes de formr fueron extraídos y posteriormente integrados en R. La vinculación de los registros se realizó mediante la variable <code>session</code>, utilizada como identificador común.</p>
+<p>Como parte del procesamiento inicial se eliminaron variables y registros técnicos asociados al funcionamiento de la plataforma, y se excluyeron los casos utilizados para pruebas de programación mediante una lista explícita de identificadores.</p>
+<p>Posteriormente, se definieron distintos estados de participación a partir de variables observables en la base. Los participantes fueron identificados mediante la presencia de <code>pid</code>; los cuestionarios iniciados, mediante <code>start_01</code>; y los cuestionarios completos, mediante <code>cohesion_12</code>.</p>
+<p>El script de procesamiento también calculó la duración de respuesta para los casos completos a partir de las variables <code>created</code> y <code>modified</code>.</p>
+<p>La última versión disponible de la base integrada, <code>completas-280125.RData</code>, contiene 3.484 casos y 526 variables.</p>
+</section>
+<section id="indicadores-de-desempeño-del-trabajo-de-campo" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="indicadores-de-desempeño-del-trabajo-de-campo"><span class="header-section-number">3.4</span> Indicadores de desempeño del trabajo de campo</h2>
+<div class="cell">
+<div id="tbl-desempeno" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.1: Indicadores de desempeño del trabajo de campo
+</figcaption>
+<div aria-describedby="tbl-desempeno-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Indicador</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Casos completos en la base final</td>
+<td style="text-align: right; width: 8em;">3.484</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Duración mediana registrada</td>
+<td style="text-align: right; width: 8em;">22,87 minutos</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Casos con duración superior a 30 minutos</td>
+<td style="text-align: right; width: 8em;">1.116</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Casos con duración superior a 1 hora</td>
+<td style="text-align: right; width: 8em;">460</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Casos con duración superior a 2 horas</td>
+<td style="text-align: right; width: 8em;">274</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Casos con duración superior a 24 horas</td>
+<td style="text-align: right; width: 8em;">95</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><strong>Nota</strong>: Los tiempos corresponden al intervalo registrado entre las variables <code>created</code> y <code>modified</code> de los cuestionarios completos. La presencia de duraciones prolongadas afecta especialmente el promedio, por lo que se utiliza la mediana como medida descriptiva.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-groh-samberg_german_2024" class="csl-entry" role="listitem">
-Groh-Samberg, Olaf, Julian B. Axenfeld, Jean-Yves Gerlitz, et al. 2024. <em>German <span>Social</span> <span>Cohesion</span> <span>Panel</span> 2021/22 – <span>Wave</span> 1: <span>Dataset</span> and <span>Documentation</span></em>. RDC-RISC, RDC-SOEP. <a href="https://doi.org/10.60532/SCP.2021_22.W1.V1">https://doi.org/10.60532/SCP.2021_22.W1.V1</a>.
-</div>
-<div id="ref-schwartz_overview_2012" class="csl-entry" role="listitem">
-Schwartz, Shalom H. 2012. <span>“An <span>Overview</span> of the <span>Schwartz</span> <span>Theory</span> of <span>Basic</span> <span>Values</span>.”</span> <em>Online Readings in Psychology and Culture</em> 2 (1). <a href="https://doi.org/10.9707/2307-0919.1116">https://doi.org/10.9707/2307-0919.1116</a>.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -633,10 +683,13 @@ Schwartz, Shalom H. 2012. <span>“An <span>Overview</span> of the <span>Schwart
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./02-instrumento.html" class="pagination-link" aria-label="Instrumento">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Instrumento</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-diseno.html" class="pagination-link" aria-label="Diseño">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Diseño</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./04-bases-datos.html" class="pagination-link" aria-label="Bases de datos">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bases de datos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

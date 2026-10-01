@@ -1,0 +1,103 @@
+---
+format:
+  html:
+    toc: true
+    css: justify.css
+---
+
+# Diseño {#sec-estadis}
+
+Esta sección describe las características del diseño muestral y los aspectos éticos de la encuesta.
+
+## Población objetivo y población de la encuesta {#sec-target}
+
+La población objetivo de EDUMERCO corresponde a personas de 18 años o más residentes en Chile. La encuesta fue diseñada con cobertura nacional y dirigida a población general.
+
+La población de la encuesta corresponde al subconjunto de la población objetivo accesible a través del panel en línea de Netquest durante el período de levantamiento. En consecuencia, la cobertura efectiva del estudio se encuentra delimitada por las personas pertenecientes al panel que cumplían con los criterios de elegibilidad definidos para el estudio.
+
+## Unidades de análisis y dominios
+
+La unidad de observación y de información corresponde a cada persona de 18 años o más que respondió individualmente el cuestionario. La unidad de análisis corresponde igualmente a las personas adultas estudiadas por EDUMERCO.
+
+El estudio fue diseñado con cobertura nacional y no se definieron dominios territoriales específicos de estimación.
+
+## Estrategia de muestreo y selección de la muestra
+
+EDUMERCO utilizó una muestra no probabilística mediante un panel en línea administrado por Netquest. Las personas participantes fueron seleccionadas entre integrantes elegibles del panel y accedieron al cuestionario mediante la infraestructura de integración entre el proveedor de la muestra y la encuesta en línea.
+
+El diseño contempló el control de la composición de la muestra mediante cuotas sociodemográficas.
+
+## Cuotas y tamaño de la muestra {#sec-quotas}
+
+El diseño del levantamiento contempló el control de la composición de la muestra mediante cuotas de sexo y edad. Las categorías y proporciones objetivo fueron las siguientes:
+
+```{r}
+#| label: tbl-cuotas
+#| tbl-cap: "Cuotas muestrales"
+#| echo: false
+
+library(knitr)
+library(kableExtra)
+
+cuotas <- data.frame(
+  Variable = c(
+    "Sexo", "Sexo",
+    "Edad", "Edad", "Edad", "Edad", "Edad", "Edad"
+  ),
+  Categoría = c(
+    "Hombre", "Mujer",
+    "18–24 años", "25–34 años", "35–44 años",
+    "45–54 años", "55–64 años", "65 años o más"
+  ),
+  N = c(
+    1712, 1788,
+    476, 745, 637, 630, 511, 501
+  ),
+  Porcentaje = c(
+    48.9, 51.1,
+    13.6, 21.3, 18.2, 18.0, 14.6, 14.3
+  )
+)
+
+cuotas |>
+  kable(
+    format = "html",
+    col.names = c("Variable", "Categoría", "N", "%"),
+    align = c("l", "l", "r", "r")
+  ) |>
+  kable_styling(
+    bootstrap_options = c("striped", "condensed"),
+    full_width = FALSE
+  ) |>
+  column_spec(3, width = "4em") |>
+  column_spec(4, width = "5em")
+```
+
+***Notas metodológicas:***
+
+1.  *La definición de nivel socioeconómico propuesta por el proveedor no resultó operativamente clara, por lo que esta dimensión se monitoreó a partir de la variable de ingresos mensuales líquidos (`carac_a10`).*
+2.  *Durante el trabajo de campo se incorporó el nivel educacional como cuota adicional, cuyo cumplimiento fue objeto de seguimiento operativo.*
+
+El tamaño muestral previsto fue de 3.500 casos. La base final contiene 3.484 casos.
+
+## Alcance del control de cuotas
+
+Durante el levantamiento se realizó un seguimiento de las cuotas mediante el registro de los casos acumulados y de los casos faltantes para cada categoría. Esta información era reportada a Netquest para orientar el cierre de las cuotas durante el trabajo de campo.
+
+El seguimiento cubrió las cuotas de sexo, edad y nivel educacional. Adicionalmente, se revisó el nivel socioeconómico a partir de la variable de ingresos mensuales líquidos (`carac_a10`). La distribución final de los casos según estas dimensiones se revisó mediante el cálculo de frecuencias en el procesamiento de la base.
+
+## Ponderación y calibración {#sec-weighting}
+
+No se aplicaron procedimientos de ponderación ni calibración a la base final de EDUMERCO.
+
+## Precisión, incertidumbre y errores ajenos al muestreo {#sec-errors}
+
+EDUMERCO utilizó una muestra no probabilística obtenida mediante un panel en línea, por lo que las unidades de la población objetivo no tienen probabilidades conocidas de inclusión. En consecuencia, los resultados no se interpretan bajo los supuestos de un diseño probabilístico ni se les atribuye un margen de error muestral basado en el muestreo aleatorio simple.
+
+Entre las principales fuentes de incertidumbre asociadas al diseño se encuentran la cobertura del panel, la participación y no respuesta de sus integrantes y los posibles errores de medición propios de una encuesta autoadministrada por internet.
+
+## Ética
+
+EDUMERCO se desarrolló en el marco del proyecto FONDECYT Regular N.º 1210847, cuyo protocolo de investigación fue sometido a revisión por el Comité de Ética de la Investigación de la Facultad de Ciencias Sociales de la Universidad de Chile. La encuesta a población adulta correspondió a una modificación del estudio original, para la cual se actualizaron los antecedentes y documentos asociados al proyecto.
+
+En diciembre de 2024, mediante la Carta N.º 54-2024, el Comité de Ética aprobó las modificaciones asociadas a la encuesta de población adulta. Estas incluyeron el cambio de denominación de la encuesta a “Educación, meritocracia y cohesión social”, la incorporación de una nueva fuente de financiamiento asociada a COES y el nuevo documento de consentimiento informado para la participación de personas adultas. El Comité señaló que estas modificaciones no implicaban cambios en los objetivos ni en el nivel de riesgo del proyecto.

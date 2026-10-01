@@ -1,0 +1,72 @@
+---
+format:
+  html:
+    toc: true
+    css: justify.css
+---
+
+# Instrumento {#sec-items}
+
+Esta sección describe el instrumento de recolección utilizado en EDUMERCO, su organización en módulos y la procedencia de los contenidos incorporados en el cuestionario. También se presenta el experimento factorial de viñetas.
+
+## Consentimiento Informado
+
+La participación en EDUMERCO Adultos estuvo precedida por un procedimiento de consentimiento informado incorporado a la aplicación en línea. Este documento informó sobre los objetivos del estudio, las características y voluntariedad de la participación, el tratamiento confidencial de la información y las condiciones de participación. El consentimiento debía ser aceptado antes de acceder al cuestionario.
+
+## Módulo de preguntas
+
+El instrumento de recolección consiste en un cuestionario estructurado dirigido a personas de 18 años o más residentes en Chile. El cuestionario aborda distintas dimensiones relacionadas con la meritocracia, las actitudes hacia la desigualdad, los valores sociales y la cohesión social, e incorpora además un componente experimental de viñetas.
+
+Los contenidos del cuestionario se organizan en los siguientes módulos:
+
+- Módulo A. Caracterización inicial
+- Módulo B. Meritocracia
+- Módulo C. Actitudes hacia la desigualdad
+- Módulo D. Experimento factorial de viñetas
+- Módulo E. Valores sociales
+- Módulo F. Cohesión social
+
+El cuestionario combina preguntas y baterías provenientes de instrumentos utilizados previamente con contenidos incorporados específicamente para EDUMERCO Adultos. La procedencia y composición de los distintos módulos se resumen a continuación:
+
+| Módulo | Contenido | Procedencia |
+|------------------------|------------------------|------------------------|
+| A. Caracterización inicial | Caracterización sociodemográfica | Elaboración propia |
+| B. Meritocracia | Meritocracia | Trasladado desde EDUMER. Adaptado para población adulta |
+| C. Actitudes hacia la desigualdad | Actitudes hacia la desigualdad | Trasladado desde EDUMER. Adaptado para población adulta |
+| D. Experimento factorial | Evaluación de perfiles mediante viñetas | Diseño desarrollado en colaboración con RISC |
+| E. Valores sociales | Valores personales | PVQ-21 de Schwartz |
+| F. Cohesión social | F. Cohesión social | *Ideals for Living Together* (RISC) |
+
+El listado detallado de variables se puede encontrar en [Apéndice](06-apendice.qmd#sec-listado-vars).
+
+### Módulo D. Experimento
+
+El Módulo D corresponde al experimento factorial de viñetas incorporado en EDUMERCO. El diseño presenta perfiles ficticios cuyas características se combinan sistemáticamente para evaluar percepciones y disposiciones asociadas a la cohesión social. El experimento fue desarrollado en el marco de la colaboración internacional asociada al estudio, con participación de equipos vinculados a COES y al *Research Institute Social Cohesion* (RISC) de la Universidad de Bremen.
+
+El diseño contempla nueve dimensiones: sexo, edad, antecedentes migratorios, religión, nivel educacional, situación laboral, ingreso del hogar, orientación política y orientación valórica. Cada dimensión varía entre 2 y 4 niveles, según se detalla a continuación:
+
+| Dimensión | Niveles |
+|------------------------------------|------------------------------------|
+| Sexo | Hombre; Mujer |
+| Edad | 25; 45; 65 años |
+| Antecedentes migratorios | Nacional; segunda generación; migrante reciente |
+| Religión | Católico/a; Evangélico/a; Judío/a; No religioso/a |
+| Nivel educacional | Educación básica; Educación media; Educación universitaria |
+| Situación laboral | Empleado/a a tiempo completo; Desempleado/a; Dueño/a de casa |
+| Ingreso del hogar | \$250.000; \$710.000; \$4.100.000 |
+| Orientación política | Izquierda; Centro; Derecha; Políticamente desinteresado/a |
+| Orientación valórica | Apertura al cambio; Conservación; Autotrascendencia; Autoensalzamiento |
+
+Cada viñeta describe a una persona ficticia combinando un nivel de cada una de estas nueve dimensiones. El diseño completo contempla 144 viñetas, que fueron organizadas en 15 conjuntos o *decks*. Cada deck contiene entre 9 y 10 viñetas. La siguiente es una viñeta de ejemplo:
+
+> *La Persona A es hombre y tiene 45 años. Nació en Venezuela, vino a Chile y es católico. La Persona A terminó la Educación Media, es dueño de casa y tiene unos ingresos mensuales de \$4.100.000 a su disposición. Se considera políticamente de izquierda. Para la persona A es importante tomar sus propias decisiones y llevar una vida divertida y llena de aventuras.*
+
+Después de leer cada viñeta, las personas participantes evaluaron a la persona descrita mediante tres ítems en una escala de 0 a 10, con anclas "nada probable" (0) y "absolutamente probable" (10):
+
+1.  *Imagina que conoces a la persona \[X\] a través de tu círculo de conocidos. ¿Qué probabilidad hay de que te lleves bien con la persona \[X\]?*
+2.  *Imagina que te enfrentas a una tarea que no puedes realizar por ti mismo. ¿Con qué probabilidad pedirías ayuda a la persona \[X\]?*
+3.  *Imagina que la persona \[X\] se muda a tu barrio. ¿Qué probabilidad hay de que entres en conflicto con esa persona?*
+
+Cada persona participante fue asignada aleatoriamente a uno de los 15 decks, sin cuotas ni control de tamaño. El número de participantes por deck varió entre 208 y 266 (media ≈ 232). Cada persona evaluó las viñetas de un único deck, por lo que cada viñeta fue evaluada por aproximadamente 230 personas.
+
+El detalle completo de las 144 viñetas se puede encontrar en [Apéndice](06-apendice.qmd#sec-anexo-vinetas).

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Manual Metodológico de Encuesta EDUMERCO</title>
+<title>1&nbsp; Diseño – Manual Metodológico de Encuesta EDUMERCO</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,26 +26,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -55,7 +36,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-diseno.html" rel="next">
+<link href="./02-instrumento.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -92,12 +74,14 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="justify.css">
 </head>
 
-<body class="nav-sidebar docked fullcontent quarto-light">
+<body class="nav-sidebar docked quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -106,7 +90,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Presentación</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-diseno.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Diseño</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -141,13 +125,13 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Presentación</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-diseno.html" class="sidebar-item-text sidebar-link">
+  <a href="./01-diseno.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Diseño</span></span></a>
   </div>
 </li>
@@ -186,13 +170,28 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-target" id="toc-sec-target" class="nav-link active" data-scroll-target="#sec-target"><span class="header-section-number">1.1</span> Población objetivo y población de la encuesta</a></li>
+  <li><a href="#unidades-de-análisis-y-dominios" id="toc-unidades-de-análisis-y-dominios" class="nav-link" data-scroll-target="#unidades-de-análisis-y-dominios"><span class="header-section-number">1.2</span> Unidades de análisis y dominios</a></li>
+  <li><a href="#estrategia-de-muestreo-y-selección-de-la-muestra" id="toc-estrategia-de-muestreo-y-selección-de-la-muestra" class="nav-link" data-scroll-target="#estrategia-de-muestreo-y-selección-de-la-muestra"><span class="header-section-number">1.3</span> Estrategia de muestreo y selección de la muestra</a></li>
+  <li><a href="#sec-quotas" id="toc-sec-quotas" class="nav-link" data-scroll-target="#sec-quotas"><span class="header-section-number">1.4</span> Cuotas y tamaño de la muestra</a></li>
+  <li><a href="#alcance-del-control-de-cuotas" id="toc-alcance-del-control-de-cuotas" class="nav-link" data-scroll-target="#alcance-del-control-de-cuotas"><span class="header-section-number">1.5</span> Alcance del control de cuotas</a></li>
+  <li><a href="#sec-weighting" id="toc-sec-weighting" class="nav-link" data-scroll-target="#sec-weighting"><span class="header-section-number">1.6</span> Ponderación y calibración</a></li>
+  <li><a href="#sec-errors" id="toc-sec-errors" class="nav-link" data-scroll-target="#sec-errors"><span class="header-section-number">1.7</span> Precisión, incertidumbre y errores ajenos al muestreo</a></li>
+  <li><a href="#ética" id="toc-ética" class="nav-link" data-scroll-target="#ética"><span class="header-section-number">1.8</span> Ética</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Manual Metodológico de Encuesta EDUMERCO</h1>
+<h1 class="title"><span id="sec-estadis" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Diseño</span></span></h1>
 </div>
 
 
@@ -209,25 +208,125 @@ div.csl-indent {
 </header>
 
 
-<p><img src="images/edumer.png" class="float-end img-fluid" width="160"></p>
-<section id="presentación" class="level1 unnumbered">
-<h1 class="unnumbered">Presentación</h1>
-<p>Este manual documenta la encuesta Educación, Meritocracia y Cohesión Social (EDUMERCO), realizada en el marco del proyecto “Meritocracia en la escuela: Fundamentos morales del mercado educativo y sus implicancias para la formación ciudadana en Chile” (EDUMER), FONDECYT Regular N.º 1210847. El proyecto es dirigido por Juan Carlos Castillo, del Departamento de Sociología de la Universidad de Chile, y financiado por la Agencia Nacional de Investigación y Desarrollo (ANID). EDUMERCO tiene como objetivo estudiar las creencias y actitudes sobre meritocracia, desigualdad y cohesión social en la población adulta en Chile.</p>
-<p>EDUMERCO surge como una extensión del Estudio Panel Educación y Meritocracia (EDUMER), desarrollado con estudiantes de enseñanza básica y media, sus profesores y apoderados. En este marco, se incorporó una encuesta dirigida exclusivamente a población adulta, orientada a ampliar el análisis de los temas centrales del proyecto y permitir la comparación de actitudes y creencias entre jóvenes y adultos.</p>
-<p>El cuestionario de EDUMERCO se estructuró en seis módulos temáticos. Los módulos de caracterización sociodemográfica, meritocracia y actitudes hacia la desigualdad fueron adaptados a partir de instrumentos utilizados previamente en EDUMER. Adicionalmente, el instrumento incorporó un experimento factorial basado en viñetas, una batería de valores sociales y una escala de ideales de convivencia social. Estos instrumentos y componentes fueron elaborados o adaptados a partir de instrumentos utilizados por el Research Institute Social Cohesion (RISC, Alemania), en el contexto de una colaboración académica orientada a la utilización de herramientas comparables para el estudio de la cohesión social.</p>
-<p>El componente experimental basado en viñetas fue desarrollado mediante un trabajo conjunto entre investigadores de COES y del equipo asociado al RISC y la Universidad de Bremen. La batería de valores sociales corresponde a una adaptación de la escala de Valores Humanos Básicos de Shalom Schwartz (PVQ-21) (<span class="citation" data-cites="schwartz_overview_2012">Schwartz (<a href="#ref-schwartz_overview_2012" role="doc-biblioref">2012</a>)</span>), mientras que la batería sobre ideales de convivencia social fue incorporada a partir del instrumento Ideals for Living Together, empleado en el Social Cohesion Panel del RISC (<span class="citation" data-cites="groh-samberg_german_2024">Groh-Samberg et al. (<a href="#ref-groh-samberg_german_2024" role="doc-biblioref">2024</a>)</span>).</p>
-<p>La encuesta EDUMERCO fue realizada entre diciembre de 2024 y enero de 2025 mediante un panel en línea dirigido a personas de 18 años o más residentes en Chile. La muestra fue proporcionada por Netquest, mientras que la programación y administración del cuestionario estuvieron a cargo del equipo de investigación, utilizando la plataforma Formr. El diseño contempló un tamaño muestral de 3.500 casos y cobertura nacional, con cuotas de sexo y edad. Durante el levantamiento, se incorporó además el nivel educacional como cuota adicional. La base final disponible contiene 3.484 casos.</p>
-<p>Este manual tiene como propósito sistematizar la información metodológica asociada a EDUMERCO Adultos y proporcionar la documentación necesaria para comprender y utilizar los datos producidos por el estudio. Para ello, se organiza en las secciones Diseño, Instrumento, Implementación, Base de datos, Libro de códigos y Apéndice. Estas secciones abordan, respectivamente, las características del diseño de la encuesta; la composición y procedencia del instrumento y del componente experimental; el proceso de programación y levantamiento de los datos; la base final disponible y sus condiciones de acceso; el libro de códigos interactivo; y el listado completo de variables y demás información complementaria.</p>
+<p>Esta sección describe las características del diseño muestral y los aspectos éticos de la encuesta.</p>
+<section id="sec-target" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-target"><span class="header-section-number">1.1</span> Población objetivo y población de la encuesta</h2>
+<p>La población objetivo de EDUMERCO corresponde a personas de 18 años o más residentes en Chile. La encuesta fue diseñada con cobertura nacional y dirigida a población general.</p>
+<p>La población de la encuesta corresponde al subconjunto de la población objetivo accesible a través del panel en línea de Netquest durante el período de levantamiento. En consecuencia, la cobertura efectiva del estudio se encuentra delimitada por las personas pertenecientes al panel que cumplían con los criterios de elegibilidad definidos para el estudio.</p>
+</section>
+<section id="unidades-de-análisis-y-dominios" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="unidades-de-análisis-y-dominios"><span class="header-section-number">1.2</span> Unidades de análisis y dominios</h2>
+<p>La unidad de observación y de información corresponde a cada persona de 18 años o más que respondió individualmente el cuestionario. La unidad de análisis corresponde igualmente a las personas adultas estudiadas por EDUMERCO.</p>
+<p>El estudio fue diseñado con cobertura nacional y no se definieron dominios territoriales específicos de estimación.</p>
+</section>
+<section id="estrategia-de-muestreo-y-selección-de-la-muestra" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="estrategia-de-muestreo-y-selección-de-la-muestra"><span class="header-section-number">1.3</span> Estrategia de muestreo y selección de la muestra</h2>
+<p>EDUMERCO utilizó una muestra no probabilística mediante un panel en línea administrado por Netquest. Las personas participantes fueron seleccionadas entre integrantes elegibles del panel y accedieron al cuestionario mediante la infraestructura de integración entre el proveedor de la muestra y la encuesta en línea.</p>
+<p>El diseño contempló el control de la composición de la muestra mediante cuotas sociodemográficas.</p>
+</section>
+<section id="sec-quotas" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="sec-quotas"><span class="header-section-number">1.4</span> Cuotas y tamaño de la muestra</h2>
+<p>El diseño del levantamiento contempló el control de la composición de la muestra mediante cuotas de sexo y edad. Las categorías y proporciones objetivo fueron las siguientes:</p>
+<div class="cell">
+<div id="tbl-cuotas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cuotas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1.1: Cuotas muestrales
+</figcaption>
+<div aria-describedby="tbl-cuotas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped table-condensed cell caption-top table-sm small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Variable</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Categoría</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">N</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sexo</td>
+<td style="text-align: left;">Hombre</td>
+<td style="text-align: right; width: 4em;">1712</td>
+<td style="text-align: right; width: 5em;">48.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sexo</td>
+<td style="text-align: left;">Mujer</td>
+<td style="text-align: right; width: 4em;">1788</td>
+<td style="text-align: right; width: 5em;">51.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Edad</td>
+<td style="text-align: left;">18–24 años</td>
+<td style="text-align: right; width: 4em;">476</td>
+<td style="text-align: right; width: 5em;">13.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edad</td>
+<td style="text-align: left;">25–34 años</td>
+<td style="text-align: right; width: 4em;">745</td>
+<td style="text-align: right; width: 5em;">21.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Edad</td>
+<td style="text-align: left;">35–44 años</td>
+<td style="text-align: right; width: 4em;">637</td>
+<td style="text-align: right; width: 5em;">18.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edad</td>
+<td style="text-align: left;">45–54 años</td>
+<td style="text-align: right; width: 4em;">630</td>
+<td style="text-align: right; width: 5em;">18.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Edad</td>
+<td style="text-align: left;">55–64 años</td>
+<td style="text-align: right; width: 4em;">511</td>
+<td style="text-align: right; width: 5em;">14.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edad</td>
+<td style="text-align: left;">65 años o más</td>
+<td style="text-align: right; width: 4em;">501</td>
+<td style="text-align: right; width: 5em;">14.3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><strong><em>Notas metodológicas:</em></strong></p>
+<ol type="1">
+<li><em>La definición de nivel socioeconómico propuesta por el proveedor no resultó operativamente clara, por lo que esta dimensión se monitoreó a partir de la variable de ingresos mensuales líquidos (<code>carac_a10</code>).</em></li>
+<li><em>Durante el trabajo de campo se incorporó el nivel educacional como cuota adicional, cuyo cumplimiento fue objeto de seguimiento operativo.</em></li>
+</ol>
+<p>El tamaño muestral previsto fue de 3.500 casos. La base final contiene 3.484 casos.</p>
+</section>
+<section id="alcance-del-control-de-cuotas" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="alcance-del-control-de-cuotas"><span class="header-section-number">1.5</span> Alcance del control de cuotas</h2>
+<p>Durante el levantamiento se realizó un seguimiento de las cuotas mediante el registro de los casos acumulados y de los casos faltantes para cada categoría. Esta información era reportada a Netquest para orientar el cierre de las cuotas durante el trabajo de campo.</p>
+<p>El seguimiento cubrió las cuotas de sexo, edad y nivel educacional. Adicionalmente, se revisó el nivel socioeconómico a partir de la variable de ingresos mensuales líquidos (<code>carac_a10</code>). La distribución final de los casos según estas dimensiones se revisó mediante el cálculo de frecuencias en el procesamiento de la base.</p>
+</section>
+<section id="sec-weighting" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="sec-weighting"><span class="header-section-number">1.6</span> Ponderación y calibración</h2>
+<p>No se aplicaron procedimientos de ponderación ni calibración a la base final de EDUMERCO.</p>
+</section>
+<section id="sec-errors" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="sec-errors"><span class="header-section-number">1.7</span> Precisión, incertidumbre y errores ajenos al muestreo</h2>
+<p>EDUMERCO utilizó una muestra no probabilística obtenida mediante un panel en línea, por lo que las unidades de la población objetivo no tienen probabilidades conocidas de inclusión. En consecuencia, los resultados no se interpretan bajo los supuestos de un diseño probabilístico ni se les atribuye un margen de error muestral basado en el muestreo aleatorio simple.</p>
+<p>Entre las principales fuentes de incertidumbre asociadas al diseño se encuentran la cobertura del panel, la participación y no respuesta de sus integrantes y los posibles errores de medición propios de una encuesta autoadministrada por internet.</p>
+</section>
+<section id="ética" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="ética"><span class="header-section-number">1.8</span> Ética</h2>
+<p>EDUMERCO se desarrolló en el marco del proyecto FONDECYT Regular N.º 1210847, cuyo protocolo de investigación fue sometido a revisión por el Comité de Ética de la Investigación de la Facultad de Ciencias Sociales de la Universidad de Chile. La encuesta a población adulta correspondió a una modificación del estudio original, para la cual se actualizaron los antecedentes y documentos asociados al proyecto.</p>
+<p>En diciembre de 2024, mediante la Carta N.º 54-2024, el Comité de Ética aprobó las modificaciones asociadas a la encuesta de población adulta. Estas incluyeron el cambio de denominación de la encuesta a “Educación, meritocracia y cohesión social”, la incorporación de una nueva fuente de financiamiento asociada a COES y el nuevo documento de consentimiento informado para la participación de personas adultas. El Comité señaló que estas modificaciones no implicaban cambios en los objetivos ni en el nivel de riesgo del proyecto.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-groh-samberg_german_2024" class="csl-entry" role="listitem">
-Groh-Samberg, Olaf, Julian B. Axenfeld, Jean-Yves Gerlitz, et al. 2024. <em>German <span>Social</span> <span>Cohesion</span> <span>Panel</span> 2021/22 – <span>Wave</span> 1: <span>Dataset</span> and <span>Documentation</span></em>. RDC-RISC, RDC-SOEP. <a href="https://doi.org/10.60532/SCP.2021_22.W1.V1">https://doi.org/10.60532/SCP.2021_22.W1.V1</a>.
-</div>
-<div id="ref-schwartz_overview_2012" class="csl-entry" role="listitem">
-Schwartz, Shalom H. 2012. <span>“An <span>Overview</span> of the <span>Schwartz</span> <span>Theory</span> of <span>Basic</span> <span>Values</span>.”</span> <em>Online Readings in Psychology and Culture</em> 2 (1). <a href="https://doi.org/10.9707/2307-0919.1116">https://doi.org/10.9707/2307-0919.1116</a>.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -633,10 +732,13 @@ Schwartz, Shalom H. 2012. <span>“An <span>Overview</span> of the <span>Schwart
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Presentación">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Presentación</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-diseno.html" class="pagination-link" aria-label="Diseño">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Diseño</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./02-instrumento.html" class="pagination-link" aria-label="Instrumento">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Instrumento</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

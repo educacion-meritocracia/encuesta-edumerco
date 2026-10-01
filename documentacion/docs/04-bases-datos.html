@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Manual Metodológico de Encuesta EDUMERCO</title>
+<title>4&nbsp; Bases de datos – Manual Metodológico de Encuesta EDUMERCO</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,26 +26,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -55,7 +36,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-diseno.html" rel="next">
+<link href="./05-libro-codigos.html" rel="next">
+<link href="./03-implementacion.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -97,7 +79,7 @@ div.csl-indent {
 <link rel="stylesheet" href="justify.css">
 </head>
 
-<body class="nav-sidebar docked fullcontent quarto-light">
+<body class="nav-sidebar docked quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -106,7 +88,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Presentación</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-bases-datos.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bases de datos</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -141,7 +123,7 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Presentación</span></a>
   </div>
 </li>
@@ -165,7 +147,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-bases-datos.html" class="sidebar-item-text sidebar-link">
+  <a href="./04-bases-datos.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bases de datos</span></span></a>
   </div>
 </li>
@@ -186,13 +168,22 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#estructura-de-la-base" id="toc-estructura-de-la-base" class="nav-link active" data-scroll-target="#estructura-de-la-base"><span class="header-section-number">4.0.1</span> Estructura de la base</a></li>
+  <li><a href="#acceso-a-los-datos-y-condiciones-de-uso" id="toc-acceso-a-los-datos-y-condiciones-de-uso" class="nav-link" data-scroll-target="#acceso-a-los-datos-y-condiciones-de-uso"><span class="header-section-number">4.0.2</span> Acceso a los datos y condiciones de uso</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Manual Metodológico de Encuesta EDUMERCO</h1>
+<h1 class="title"><span id="databases" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Bases de datos</span></span></h1>
 </div>
 
 
@@ -209,25 +200,18 @@ div.csl-indent {
 </header>
 
 
-<p><img src="images/edumer.png" class="float-end img-fluid" width="160"></p>
-<section id="presentación" class="level1 unnumbered">
-<h1 class="unnumbered">Presentación</h1>
-<p>Este manual documenta la encuesta Educación, Meritocracia y Cohesión Social (EDUMERCO), realizada en el marco del proyecto “Meritocracia en la escuela: Fundamentos morales del mercado educativo y sus implicancias para la formación ciudadana en Chile” (EDUMER), FONDECYT Regular N.º 1210847. El proyecto es dirigido por Juan Carlos Castillo, del Departamento de Sociología de la Universidad de Chile, y financiado por la Agencia Nacional de Investigación y Desarrollo (ANID). EDUMERCO tiene como objetivo estudiar las creencias y actitudes sobre meritocracia, desigualdad y cohesión social en la población adulta en Chile.</p>
-<p>EDUMERCO surge como una extensión del Estudio Panel Educación y Meritocracia (EDUMER), desarrollado con estudiantes de enseñanza básica y media, sus profesores y apoderados. En este marco, se incorporó una encuesta dirigida exclusivamente a población adulta, orientada a ampliar el análisis de los temas centrales del proyecto y permitir la comparación de actitudes y creencias entre jóvenes y adultos.</p>
-<p>El cuestionario de EDUMERCO se estructuró en seis módulos temáticos. Los módulos de caracterización sociodemográfica, meritocracia y actitudes hacia la desigualdad fueron adaptados a partir de instrumentos utilizados previamente en EDUMER. Adicionalmente, el instrumento incorporó un experimento factorial basado en viñetas, una batería de valores sociales y una escala de ideales de convivencia social. Estos instrumentos y componentes fueron elaborados o adaptados a partir de instrumentos utilizados por el Research Institute Social Cohesion (RISC, Alemania), en el contexto de una colaboración académica orientada a la utilización de herramientas comparables para el estudio de la cohesión social.</p>
-<p>El componente experimental basado en viñetas fue desarrollado mediante un trabajo conjunto entre investigadores de COES y del equipo asociado al RISC y la Universidad de Bremen. La batería de valores sociales corresponde a una adaptación de la escala de Valores Humanos Básicos de Shalom Schwartz (PVQ-21) (<span class="citation" data-cites="schwartz_overview_2012">Schwartz (<a href="#ref-schwartz_overview_2012" role="doc-biblioref">2012</a>)</span>), mientras que la batería sobre ideales de convivencia social fue incorporada a partir del instrumento Ideals for Living Together, empleado en el Social Cohesion Panel del RISC (<span class="citation" data-cites="groh-samberg_german_2024">Groh-Samberg et al. (<a href="#ref-groh-samberg_german_2024" role="doc-biblioref">2024</a>)</span>).</p>
-<p>La encuesta EDUMERCO fue realizada entre diciembre de 2024 y enero de 2025 mediante un panel en línea dirigido a personas de 18 años o más residentes en Chile. La muestra fue proporcionada por Netquest, mientras que la programación y administración del cuestionario estuvieron a cargo del equipo de investigación, utilizando la plataforma Formr. El diseño contempló un tamaño muestral de 3.500 casos y cobertura nacional, con cuotas de sexo y edad. Durante el levantamiento, se incorporó además el nivel educacional como cuota adicional. La base final disponible contiene 3.484 casos.</p>
-<p>Este manual tiene como propósito sistematizar la información metodológica asociada a EDUMERCO Adultos y proporcionar la documentación necesaria para comprender y utilizar los datos producidos por el estudio. Para ello, se organiza en las secciones Diseño, Instrumento, Implementación, Base de datos, Libro de códigos y Apéndice. Estas secciones abordan, respectivamente, las características del diseño de la encuesta; la composición y procedencia del instrumento y del componente experimental; el proceso de programación y levantamiento de los datos; la base final disponible y sus condiciones de acceso; el libro de códigos interactivo; y el listado completo de variables y demás información complementaria.</p>
+<p>Esta sección documenta la base de datos utilizada para el procesamiento y análisis de EDUMERCO Adultos, incluyendo su estructura, la versión final disponible y las condiciones de acceso y reutilización de los datos.</p>
+<section id="estructura-de-la-base" class="level3" data-number="4.0.1">
+<h3 data-number="4.0.1" class="anchored" data-anchor-id="estructura-de-la-base"><span class="header-section-number">4.0.1</span> Estructura de la base</h3>
+<p>La base de datos final de EDUMERCO Adultos corresponde a la base integrada utilizada para el procesamiento y análisis de la encuesta. Contiene 3.484 casos y 526 variables, y se encuentra disponible en un único archivo en formato <code>.RData</code>. El archivo disponible es <code>completas-280125.RData</code>.</p>
+</section>
+<section id="acceso-a-los-datos-y-condiciones-de-uso" class="level3" data-number="4.0.2">
+<h3 data-number="4.0.2" class="anchored" data-anchor-id="acceso-a-los-datos-y-condiciones-de-uso"><span class="header-section-number">4.0.2</span> Acceso a los datos y condiciones de uso</h3>
+<p>La base de datos final de EDUMERCO Adultos se encuentra disponible en <a href="https://doi.org/10.5281/zenodo.22939453">Zenodo</a>.</p>
+<p><strong>Referencia:</strong> Castillo, J. C., Lafferte Tamayo, A. P., &amp; Carrasco, K. (2025). <em>EDUMERCO Adultos: base de datos</em> [Dataset]. Zenodo. <a href="https://doi.org/10.5281/zenodo.22939453" class="uri">https://doi.org/10.5281/zenodo.22939453</a></p>
+<p><strong>DOI:</strong> <a href="https://doi.org/10.5281/zenodo.22939453" class="uri">https://doi.org/10.5281/zenodo.22939453</a></p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-groh-samberg_german_2024" class="csl-entry" role="listitem">
-Groh-Samberg, Olaf, Julian B. Axenfeld, Jean-Yves Gerlitz, et al. 2024. <em>German <span>Social</span> <span>Cohesion</span> <span>Panel</span> 2021/22 – <span>Wave</span> 1: <span>Dataset</span> and <span>Documentation</span></em>. RDC-RISC, RDC-SOEP. <a href="https://doi.org/10.60532/SCP.2021_22.W1.V1">https://doi.org/10.60532/SCP.2021_22.W1.V1</a>.
-</div>
-<div id="ref-schwartz_overview_2012" class="csl-entry" role="listitem">
-Schwartz, Shalom H. 2012. <span>“An <span>Overview</span> of the <span>Schwartz</span> <span>Theory</span> of <span>Basic</span> <span>Values</span>.”</span> <em>Online Readings in Psychology and Culture</em> 2 (1). <a href="https://doi.org/10.9707/2307-0919.1116">https://doi.org/10.9707/2307-0919.1116</a>.
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
@@ -633,10 +617,13 @@ Schwartz, Shalom H. 2012. <span>“An <span>Overview</span> of the <span>Schwart
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./03-implementacion.html" class="pagination-link" aria-label="Implementación">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Implementación</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-diseno.html" class="pagination-link" aria-label="Diseño">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Diseño</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./05-libro-codigos.html" class="pagination-link" aria-label="Libro de códigos">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Libro de códigos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
